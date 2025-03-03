@@ -1,13 +1,44 @@
-import { Controller, Post, HttpCode, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  HttpCode,
+  Body,
+  HttpException,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { signupDto } from './dto/auth.dto';
+import { SignupDto } from './dto/auth.dto';
+import { UsersService } from 'src/users/users.service';
+import { AuthGuard } from './auth.guards';
+import { User } from '@prisma/client';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) {}
   @HttpCode(200)
   @Post('signup')
-  signup(@Body() signupDto: signupDto) {
-    return this.authService.signup(signupDto);
+  async signup(@Body() formdata: SignupDto) {
+    const user = await this.authService.signup(formdata);
+    if (!user) {
+      throw new HttpException('User not found', 404);
+    }
+    return user;
+  }
+
+  @HttpCode(200)
+  @Post('login')
+  async login(@Body() formdata: SignupDto) {
+    return await this.authService.login(formdata);
+  }
+
+  @UseGuards(AuthGuard)
+  // @HttpCode(200)
+  @Post('profile')
+  profile(@Request() req) {
+    return req.user as User;
   }
 }

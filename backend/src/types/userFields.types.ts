@@ -1,8 +1,8 @@
-export interface NewUser {
+export type NewUser = {
   username: string;
   password: string;
-}
-export interface UpdateUser {
+};
+export type UpdateUser = {
   username?: string;
   password?: string;
-}
+};

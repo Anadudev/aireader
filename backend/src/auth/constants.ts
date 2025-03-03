@@ -1,4 +1,5 @@
 export const jwtConstants = {
   secret: process.env.JWT_SECRET,
-  expiresIn: process.env.JWT_EXPIRES_IN,
+  // expiresIn: 1 week = 60 * 60 * 24 * 7
+  expiresIn: 60 * 60 * 24 * 7,
 };

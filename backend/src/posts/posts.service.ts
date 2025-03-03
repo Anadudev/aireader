@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
-import { NewPost, UpdatePost } from 'src/interfaces/postFields.interface';
+import { NewPost, UpdatePost } from 'src/types/postFields.types';
 
 @Injectable()
 export class PostsService {

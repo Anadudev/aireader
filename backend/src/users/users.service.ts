@@ -1,16 +1,29 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
-import { NewUser, UpdateUser } from 'src/interfaces/userFields.interface';
-// todo: implement comprehensive error handling
+import { NewUser, UpdateUser } from 'src/types/userFields.types';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaConfigService) {}
 
-  async findOne(id: string) {
+  async findOneById(id: string) {
     try {
       const user = await this.prisma.user.findUnique({ where: { id } });
+      if (!user) {
+        throw new HttpException('User not found', 404);
+      }
+      return user;
+    } catch (error) {
+      console.error(`[findOne]: ${error}`);
+      errorMessages.SERVER_ERROR(error);
+    }
+  }
+
+  async findOneByUsername(username: string) {
+    try {
+      const user = await this.prisma.user.findUnique({ where: { username } });
       if (!user) {
         throw new HttpException('User not found', 404);
       }
@@ -64,6 +77,7 @@ export class UsersService {
   async create(data: NewUser) {
     try {
       // todo: hash password before saving to db
+      data.password = await bcrypt.hash(data.password, 10);
       const user = await this.prisma.user.create({ data });
       if (!user) {
         throw new HttpException('User not found', 404);

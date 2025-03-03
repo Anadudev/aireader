@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { NewPost, UpdatePost } from 'src/interfaces/postFields.interface';
+import { NewPost, UpdatePost } from 'src/types/postFields.types';
 
 @Controller('posts')
 export class PostsController {
