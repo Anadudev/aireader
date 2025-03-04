@@ -19,22 +19,22 @@ const Navbar = () => {
   const toggleNav = () => setShowNav(!showNav);
 
   return (
-    <nav className="bg-transparent h-12 w-full flex">
+    <nav className="h-12 w-full flex ">
       <Button
-        className="sm:hidden fixed bottom-24 right-3 size-xl"
+        className="sm:hidden fixed bottom-24 right-3 size-xl cursor-pointer z-20"
         variant={"outline"}
         size="icon"
         onClick={toggleNav}
         title="Menu"
       >
-        <Menu className="size-xl" />
+        <Menu className="size-xl bg-zinc-200" />
       </Button>
-      <div className="w-full fixed top-0 z-10 flex items-center justify-between px-4 py-2">
+      <div className="w-full sm:bg-blur sm:bg-transparent/50 sm:backdrop-blur-md fixed top-0 z-10 flex items-center justify-between px-4 py-2">
         <div className="">
           <Logo />
         </div>
         <div
-          className={`fixed sm:static bottom-5 left-1/2 sm:left-0 flex justify-center border sm:border-none rounded-full transform -translate-x-1/2 sm:translate-x-0 w-fit gap-4 p-2 sm:p-0 ${
+          className={`fixed sm:static bg-zinc-200 sm:bg-transparent bottom-5 left-1/2 sm:left-0 flex justify-center border sm:border-none rounded-full transform -translate-x-1/2 sm:translate-x-0 w-fit gap-4 p-2 sm:p-0 ${
             showNav ? "block" : "hidden sm:block"
           }`}
         >
@@ -46,7 +46,7 @@ const Navbar = () => {
               className={`text-zinc-800 border hover:no-underline p-6
  hover:text-zinc-500 text-md ${
    pathName === item.href
-     ? "text-zinc-500 rounded-full border-zinc-300 sm:border-none"
+     ? "text-zinc-500 rounded-full bg-zinc-100 sm:bg-transparent border-zinc-300 sm:border-none"
      : "border-transparent"
  } `}
               title={item.name}

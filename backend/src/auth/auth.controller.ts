@@ -24,9 +24,9 @@ export class AuthController {
   @Post('signup')
   async signup(@Body() formdata: AuthDto) {
     const user = await this.authService.signup(formdata);
-    if (!user) {
-      throw new HttpException('User not found', 404);
-    }
+    // if (!user) {
+    //   throw new HttpException('User not found', 404);
+    // }
     return user;
   }
 

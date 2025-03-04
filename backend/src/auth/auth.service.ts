@@ -19,16 +19,11 @@ export class AuthService {
   ) {}
 
   async signup(data: NewUser) {
-    try {
-      const user = await this.userService.create(data);
-      if (!user) {
-        throw new HttpException('User not found', 404);
-      }
-
+    const user = await this.userService.create(data);
+    if (user) {
       return user;
-    } catch (error) {
-      errorMessages.SERVER_ERROR(error);
     }
+    throw new HttpException('Signup unsuccessful', 500);
   }
 
   async login(data: NewUser) {

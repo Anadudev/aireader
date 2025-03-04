@@ -35,7 +35,10 @@ export class UsersService {
       }
       return user;
     } catch (error) {
-      console.error(`[findOne]: ${error}`);
+      console.error(`[findOne]: ${error.code} ${error}`);
+      if (error.code == 'P2002') {
+        throw new HttpException('User already exists', 409);
+      }
       errorMessages.SERVER_ERROR(error);
     }
   }
@@ -63,7 +66,7 @@ export class UsersService {
       }
       return user;
     } catch (error) {
-      console.error(`[delete]: ${error}`);
+      console.error(`[delete]: ${error.code} ${error}`);
       errorMessages.SERVER_ERROR(error);
     }
   }
@@ -95,7 +98,10 @@ export class UsersService {
       }
       return user;
     } catch (error) {
-      console.error(`[create]: ${error}`);
+      console.error(`[create]: ${error.code} ${error}`);
+      if (error.code == 'P2002') {
+        throw new HttpException('User already exists', 409);
+      }
       errorMessages.SERVER_ERROR(error);
     }
   }
