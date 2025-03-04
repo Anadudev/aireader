@@ -1,17 +1,17 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
-import { NewPost, UpdatePost } from 'src/types/postFields.types';
+import { NewPost, PostInclude, UpdatePost } from 'src/types/postFields.types';
 
 @Injectable()
 export class PostsService {
   constructor(private prisma: PrismaConfigService) {}
 
-  async findAll(take = 10, skip?: number) {
+  async findAll(take = 10, skip?: number, include?: PostInclude) {
     try {
       if (take < 1) take = 1;
       if (skip && skip < 0) skip = 0;
-      const posts = await this.prisma.post.findMany({ take, skip });
+      const posts = await this.prisma.post.findMany({ take, skip, include });
       return posts;
     } catch (error) {
       console.error(`[findAll]: ${error}`);
@@ -19,9 +19,12 @@ export class PostsService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, include?: PostInclude) {
     try {
-      const post = await this.prisma.post.findUnique({ where: { id } });
+      const post = await this.prisma.post.findUnique({
+        where: { id },
+        include,
+      });
       if (!post) {
         throw new HttpException('Post not found', 404);
       }
@@ -36,7 +39,7 @@ export class PostsService {
     try {
       const post = await this.prisma.post.create({ data });
       if (!post) {
-        throw new HttpException('Post not found', 404);
+        throw new HttpException('Failed to create post', 500);
       }
       return post;
     } catch (error) {
@@ -52,7 +55,7 @@ export class PostsService {
         data,
       });
       if (!post) {
-        throw new HttpException('Post not found', 404);
+        throw new HttpException('Failed to update post', 500);
       }
       return post;
     } catch (error) {

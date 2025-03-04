@@ -14,5 +14,5 @@ export type UpdatePost = {
 };
 
 export type PostInclude = {
-  accounts?: boolean;
+  author?: boolean;
 };
