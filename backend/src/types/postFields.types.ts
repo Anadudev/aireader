@@ -1,6 +1,6 @@
 export type NewPost = {
   userId: string;
-  title: string | null;
+  title?: string;
   prompt: string;
   response: string;
 };

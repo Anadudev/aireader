@@ -13,21 +13,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Account {
+  id       String @id @unique @default(uuid())
+  userId   String @unique
+  password String
+
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
 model User {
   id       String @id @unique @default(uuid())
   username String @unique
-  password String
+  // password String
 
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
   posts Post[]
+
+  accounts Account []
 }
 
 model Post {
   id        String   @id @unique @default(uuid())
   userId    String
-  author User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  author    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   title     String?
   prompt    String
   response  String

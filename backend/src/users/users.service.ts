@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
-import { NewUser, UpdateUser } from 'src/types/userFields.types';
+import { Include, NewUser, UpdateUser } from 'src/types/userFields.types';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -21,9 +21,12 @@ export class UsersService {
     }
   }
 
-  async findOneByUsername(username: string) {
+  async findOneByUsername(username: string, include: Include) {
     try {
-      const user = await this.prisma.user.findUnique({ where: { username } });
+      const user = await this.prisma.user.findUnique({
+        where: { username },
+        include,
+      });
       if (!user) {
         throw new HttpException('User not found', 404);
       }
@@ -34,11 +37,11 @@ export class UsersService {
     }
   }
 
-  async findAll(take = 10, skip?: number) {
+  async findAll(include?: Include, take = 10, skip?: number) {
     try {
       if (take < 1) take = 1;
       if (skip && skip < 0) skip = 0;
-      const users = await this.prisma.user.findMany({ take, skip });
+      const users = await this.prisma.user.findMany({ take, skip, include });
       if (!users) {
         throw new HttpException('Users not found', 404);
       }
@@ -78,7 +81,12 @@ export class UsersService {
     try {
       // todo: hash password before saving to db
       data.password = await bcrypt.hash(data.password, 10);
-      const user = await this.prisma.user.create({ data });
+      const user = await this.prisma.user.create({
+        data: {
+          username: data.username,
+          accounts: { create: { password: data.password } },
+        },
+      });
       if (!user) {
         throw new HttpException('User not found', 404);
       }

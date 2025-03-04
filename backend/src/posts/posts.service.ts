@@ -54,6 +54,7 @@ export class PostsService {
       if (!post) {
         throw new HttpException('Post not found', 404);
       }
+      return post;
     } catch (error) {
       console.error(`[update]: ${error}`);
       errorMessages.SERVER_ERROR(error);

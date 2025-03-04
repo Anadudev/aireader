@@ -6,9 +6,10 @@ import {
   HttpException,
   UseGuards,
   Request,
+  Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignupDto } from './dto/auth.dto';
+import { AuthDto } from './dto/auth.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthGuard } from './auth.guards';
 import { User } from '@prisma/client';
@@ -21,7 +22,7 @@ export class AuthController {
   ) {}
   @HttpCode(200)
   @Post('signup')
-  async signup(@Body() formdata: SignupDto) {
+  async signup(@Body() formdata: AuthDto) {
     const user = await this.authService.signup(formdata);
     if (!user) {
       throw new HttpException('User not found', 404);
@@ -31,12 +32,12 @@ export class AuthController {
 
   @HttpCode(200)
   @Post('login')
-  async login(@Body() formdata: SignupDto) {
+  async login(@Body() formdata: AuthDto) {
     return await this.authService.login(formdata);
   }
 
   @UseGuards(AuthGuard)
-  @Post('profile')
+  @Get('profile')
   profile(@Request() req) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return req.user as User;
