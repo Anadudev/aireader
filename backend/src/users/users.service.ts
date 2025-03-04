@@ -1,14 +1,14 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
-import { Include, NewUser, UpdateUser } from 'src/types/userFields.types';
+import { UserInclude, NewUser, UpdateUser } from 'src/types/userFields.types';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaConfigService) {}
 
-  async findOneById(id: string, include?: Include) {
+  async findOneById(id: string, include?: UserInclude) {
     try {
       const user = await this.prisma.user.findUnique({
         where: { id },
@@ -24,7 +24,7 @@ export class UsersService {
     }
   }
 
-  async findOneByUsername(username: string, include: Include) {
+  async findOneByUsername(username: string, include: UserInclude) {
     try {
       const user = await this.prisma.user.findUnique({
         where: { username },
@@ -40,7 +40,7 @@ export class UsersService {
     }
   }
 
-  async findAll(include?: Include, take = 10, skip?: number) {
+  async findAll(include?: UserInclude, take = 10, skip?: number) {
     try {
       if (take < 1) take = 1;
       if (skip && skip < 0) skip = 0;

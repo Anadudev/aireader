@@ -8,13 +8,14 @@ import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { errorMessages } from 'errors/error-messages';
 import { JwtService } from '@nestjs/jwt';
-import { Account, User } from '@prisma/client';
+import { PrismaConfigService } from 'src/config/prisma.config.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UsersService,
     private jwtService: JwtService,
+    private prisma: PrismaConfigService,
   ) {}
 
   async signup(data: NewUser) {
@@ -32,23 +33,32 @@ export class AuthService {
 
   async login(data: NewUser) {
     // try {
-    const user = await this.userService.findOneByUsername(data.username, {
-      accounts: true,
+    const user = await this.prisma.user.findUnique({
+      where: { username: data.username },
+      include: { accounts: true },
     });
-    if (!user || !user.accounts || !user.accounts[0]) {
-      throw new UnauthorizedException();
-    }
 
-    const isPasswordValid = await bcrypt.compare(
-      data.password,
-      user?.accounts[0].password as string,
-    );
-
-    if (!isPasswordValid) {
+    if (!user) {
       throw new UnauthorizedException('Invalid Credentials');
     }
 
-    return { access_token: await this.jwtService.signAsync(user) };
+    const { accounts, ...userWithoutAccounts } = user;
+
+    if (accounts[0]) {
+      const isPasswordValid = await bcrypt.compare(
+        data.password,
+        accounts[0].password as string,
+      );
+
+      if (!isPasswordValid) {
+        throw new UnauthorizedException('Invalid Credentials');
+      }
+
+      return {
+        access_token: await this.jwtService.signAsync(userWithoutAccounts),
+      };
+    }
+    throw new UnauthorizedException('Invalid Credentials');
     // } catch (error) {
     //   console.error(`[login]: ${error}`);
     //   errorMessages.SERVER_ERROR(error);

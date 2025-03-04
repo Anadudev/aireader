@@ -7,7 +7,7 @@ export type UpdateUser = {
   password?: string;
 };
 
-export type Include = {
+export type UserInclude = {
   posts?: boolean;
   accounts?: boolean;
 };

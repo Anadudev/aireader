@@ -12,3 +12,7 @@ export type UpdatePost = {
   content?: string;
   authorId?: string;
 };
+
+export type PostInclude = {
+  accounts?: boolean;
+};
