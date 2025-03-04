@@ -1,7 +1,7 @@
 "use client";
-import { BookOpen, Home, Info, Settings, UserRound } from "lucide-react";
+import { BookOpen, Home, Info, Menu, Settings, UserRound } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
@@ -13,24 +13,55 @@ const navItems = [
 ];
 
 const Navbar = () => {
+  const [showNav, setShowNav] = useState(false);
   const pathName = usePathname();
+
+  const toggleNav = () => setShowNav(!showNav);
+
   return (
     <nav className="bg-transparent h-12 w-full flex">
+      <Button
+        className="sm:hidden fixed bottom-24 right-3 size-xl"
+        variant={"outline"}
+        size="icon"
+        onClick={toggleNav}
+        title="Menu"
+      >
+        <Menu className="size-xl" />
+      </Button>
       <div className="w-full fixed top-0 z-10 flex items-center justify-between px-4 py-2">
         <div className="">
           <Logo />
         </div>
-        <div className="">
+        <div
+          className={`fixed sm:static bottom-5 left-1/2 sm:left-0 flex justify-center border sm:border-none rounded-full transform -translate-x-1/2 sm:translate-x-0 w-fit gap-4 p-2 sm:p-0 ${
+            showNav ? "block" : "hidden sm:block"
+          }`}
+        >
           {navItems.map((item, index) => (
             <Button
               key={index}
               asChild
               variant={"link"}
-              className={`text-zinc-800 hover:no-underline
- hover:text-zinc-500 text-md ${pathName === item.href && "text-zinc-500"} `}
+              className={`text-zinc-800 border hover:no-underline p-6
+ hover:text-zinc-500 text-md ${
+   pathName === item.href
+     ? "text-zinc-500 rounded-full border-zinc-300 sm:border-none"
+     : "border-transparent"
+ } `}
+              title={item.name}
             >
-              <Link href={item.href} className="">
-                <item.Icon className="sm:hidden" /> {item.name}
+              <Link href={item.href} className="space-x-3">
+                <item.Icon className="sm:hidden size-xl" />
+                <p
+                  className={` ${
+                    pathName === item.href
+                      ? "text-zinc-500 block"
+                      : "hidden sm:block"
+                  }  `}
+                >
+                  {item.name}
+                </p>
               </Link>
             </Button>
           ))}
@@ -38,10 +69,13 @@ const Navbar = () => {
         <div className="flex gap-4">
           <Button
             size={"icon"}
-            variant={"outline"}
-            className="rounded-full cursor-pointer"
+            variant={"link"}
+            asChild
+            className="rounded-full cursor-pointer ring-1 ring-zinc-300"
           >
-            <UserRound />
+            <Link href="/login">
+              <UserRound />
+            </Link>
           </Button>
           <Button
             size={"icon"}
