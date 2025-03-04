@@ -36,9 +36,9 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  // @HttpCode(200)
   @Post('profile')
   profile(@Request() req) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return req.user as User;
   }
 }
