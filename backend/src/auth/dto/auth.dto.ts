@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsStrongPassword } from 'class-validator';
+import { IsNotEmpty, IsString, IsStrongPassword } from 'class-validator';
 
 export class AuthDto {
   @IsNotEmpty()
@@ -8,4 +8,10 @@ export class AuthDto {
   // todo: uncomment password validation before production
   // @IsStrongPassword()
   password: string;
+}
+
+export class RefreshDto {
+  @IsNotEmpty()
+  @IsString()
+  refresh_token: string;
 }

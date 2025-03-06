@@ -35,9 +35,11 @@ export class PostsService {
     }
   }
 
-  async create(data: NewPost) {
+  async create(userId: string, data: NewPost) {
     try {
-      const post = await this.prisma.post.create({ data });
+      const post = await this.prisma.post.create({
+        data: { ...data, author: { connect: { id: userId } } },
+      });
       if (!post) {
         throw new HttpException('Failed to create post', 500);
       }

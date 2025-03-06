@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,24 +20,16 @@ import useAuthStore from "@/lib/store/auth.store";
 import { useRouter } from "next/navigation";
 import { Eye, EyeClosed } from "lucide-react";
 
-const formSchema = z
-  .object({
-    username: z.string().min(3, {
-      message: "Username must be at least 3 characters.",
-    }),
-    password: z.string().min(6, {
-      message: "Password must be at least 6 characters.",
-    }),
-    confirmPassword: z.string().min(6, {
-      message: "Password must be at least 6 characters.",
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+const formSchema = z.object({
+  username: z.string().min(3, {
+    message: "Username must be at least 3 characters.",
+  }),
+  password: z.string().min(6, {
+    message: "Password must be at least 6 characters.",
+  }),
+});
 
-const SignupForm = () => {
+const LoginForm = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -49,14 +40,13 @@ const SignupForm = () => {
     defaultValues: {
       username: "",
       password: "",
-      confirmPassword: "",
     },
   });
 
-  const { signupHandler, loadingSignUp } = useAuthStore();
+  const { loginHandler, loadingLogin } = useAuthStore();
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    signupHandler(data).then(() => {
+    loginHandler(data).then(() => {
       form.reset();
       router.push("/login");
     });
@@ -67,7 +57,7 @@ const SignupForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-9">
           <FormDescription className="text-center text-2xl font-bold capitalize">
-            Create an account to continue
+            Welcome back
           </FormDescription>
           <FormField
             control={form.control}
@@ -79,7 +69,7 @@ const SignupForm = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    disabled={loadingSignUp}
+                    disabled={loadingLogin}
                     className="text-5 p-5"
                     placeholder="Username"
                     {...field}
@@ -98,7 +88,7 @@ const SignupForm = () => {
                 <FormControl className="relative">
                   <div className="">
                     <Input
-                      disabled={loadingSignUp}
+                      disabled={loadingLogin}
                       type={showPassword ? "text" : "password"}
                       className="text-5 p-5"
                       placeholder="Password"
@@ -121,43 +111,22 @@ const SignupForm = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-5 text-zinc-500">
-                  Confirm Password
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={loadingSignUp}
-                    type="password"
-                    className="text-5 p-5"
-                    placeholder="Confirm Password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <Button
-            disabled={loadingSignUp}
+            disabled={loadingLogin}
             type="submit"
             className="w-full mt-5 text-xl font-semibold py-5 cursor-pointer"
             variant={"default"}
           >
-            {loadingSignUp ? "Loading..." : "Submit"}
+            {loadingLogin ? "Loading..." : "Submit"}
           </Button>
         </form>
       </Form>
       <div className="flex justify-center text-sm mt-5 space-x-2">
-        <p className={`font-semibold`}>Already have an account?</p>
-        <Link href="/login" className="font-semibold text-blue-500">login</Link>
+        <p className={`font-semibold`}>Don&apos;t have an account yet?</p>
+        <Link href="/signup" className="font-semibold text-blue-500">Signup</Link>
       </div>
     </div>
   );
 };
 
-export default SignupForm;
+export default LoginForm;

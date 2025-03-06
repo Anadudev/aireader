@@ -24,11 +24,14 @@ export class PostsController {
   @Post()
   async createPost(@Body() data: NewPostDto, @Request() req) {
     const userId = (req.user as User).id;
+    // req['user'] = undefined;
     if (!userId) {
       throw new UnauthorizedException();
     }
     const payload = { userId, ...data };
-    return await this.postsService.create(payload);
+    console.log(req);
+    return payload;
+    return await this.postsService.create(userId, data);
   }
 
   @Get()

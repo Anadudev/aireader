@@ -1,5 +1,5 @@
 export type NewPost = {
-  userId: string;
+  // userId: string;
   title?: string;
   prompt: string;
   response: string;

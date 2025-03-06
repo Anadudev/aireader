@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 
 type AuthStore = {
   user: any;
+  access_token: string | null;
   loadingSignUp: boolean;
   loadingLogin: boolean;
   authUser: any;
@@ -12,8 +13,9 @@ type AuthStore = {
   signupHandler: (data: any) => Promise<void>;
 };
 
-const useAuthStore = create<AuthStore>((set, get) => ({
+const useAuthStore = create<AuthStore>((set) => ({
   user: null,
+  access_token: localStorage.getItem("access_token") || null,
   loadingSignUp: false,
   loadingLogin: false,
   authUser: null,
@@ -22,7 +24,9 @@ const useAuthStore = create<AuthStore>((set, get) => ({
     try {
       set({ loadingLogin: true });
       const response = await axiosInstance.post("/auth/login", data);
-      set({ user: response.data });
+      set({ access_token: response.data.access_token });
+      localStorage.setItem("access_token", response.data.access_token);
+      console.log(response.data);
       toast.success("Login successful");
     } catch (error) {
       console.error(error);
