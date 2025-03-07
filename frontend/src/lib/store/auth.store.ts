@@ -2,6 +2,7 @@ import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
 // import { persist } from "zustand/middleware";
 import toast from "react-hot-toast";
+import { accessTokenLocalStorage,removeItem } from "../localStorage";
 
 type AuthStore = {
   user: any;
@@ -11,11 +12,12 @@ type AuthStore = {
   authUser: any;
   loginHandler: (data: any) => Promise<void>;
   signupHandler: (data: any) => Promise<void>;
+  logoutHandler: () => void;
 };
 
 const useAuthStore = create<AuthStore>((set) => ({
   user: null,
-  access_token: localStorage.getItem("access_token") || null,
+  access_token: accessTokenLocalStorage || null,
   loadingSignUp: false,
   loadingLogin: false,
   authUser: null,
@@ -49,6 +51,10 @@ const useAuthStore = create<AuthStore>((set) => ({
       set({ loadingSignUp: false });
     }
   },
+
+  logoutHandler: () => {
+    removeItem("access_token");
+  }
 }));
 
 export default useAuthStore;

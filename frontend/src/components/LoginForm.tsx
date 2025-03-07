@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import useAuthStore from "@/lib/store/auth.store";
 import { useRouter } from "next/navigation";
 import { Eye, EyeClosed } from "lucide-react";
+import { PublicRoute } from "@/lib/protectedRoute";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -31,6 +32,7 @@ const formSchema = z.object({
 
 const LoginForm = () => {
   const router = useRouter();
+  PublicRoute();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
@@ -48,7 +50,7 @@ const LoginForm = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     loginHandler(data).then(() => {
       form.reset();
-      router.push("/login");
+      router.push(`/user/${'username'}`);
     });
   };
 
@@ -123,7 +125,9 @@ const LoginForm = () => {
       </Form>
       <div className="flex justify-center text-sm mt-5 space-x-2">
         <p className={`font-semibold`}>Don&apos;t have an account yet?</p>
-        <Link href="/signup" className="font-semibold text-blue-500">Signup</Link>
+        <Link href="/signup" className="font-semibold text-blue-500">
+          Signup
+        </Link>
       </div>
     </div>
   );
