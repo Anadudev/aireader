@@ -29,9 +29,7 @@ export class PostsController {
       throw new UnauthorizedException();
     }
     const payload = { userId, ...data };
-    console.log(req);
-    return payload;
-    return await this.postsService.create(userId, data);
+    return await this.postsService.create(payload);
   }
 
   @Get()
