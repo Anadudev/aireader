@@ -86,18 +86,29 @@ const Navbar = () => {
           >
             {authUser ? (
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+                <DropdownMenuTrigger className="cursor-pointer">
                   <Button variant={"outline"}>
                     <UserRound /> {authUser?.username}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent className="w-56">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Billing</DropdownMenuItem>
-                  <DropdownMenuItem>Team</DropdownMenuItem>
-                  <DropdownMenuItem onClick={logoutHandler}>Logout</DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
+                    Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
+                    Billing
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
+                    Team
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="bg-red-400 cursor-pointer"
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (

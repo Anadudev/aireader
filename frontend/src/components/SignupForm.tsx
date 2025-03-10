@@ -42,6 +42,12 @@ const SignupForm = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
 
+  const { signupHandler, loadingSignUp, authUser } = useAuthStore();
+
+  if (authUser) {
+    router.push(`/user/${authUser.username}`);
+  }
+
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,8 +58,6 @@ const SignupForm = () => {
       confirmPassword: "",
     },
   });
-
-  const { signupHandler, loadingSignUp } = useAuthStore();
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     signupHandler(data).then(() => {

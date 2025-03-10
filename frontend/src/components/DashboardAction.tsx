@@ -8,27 +8,29 @@ import {
   MessageSquareQuote,
 } from "lucide-react";
 import Link from "next/link";
-
-const actions = [
-  {
-    name: "New",
-    href: "/user/new",
-    Icon: BookPlus,
-  },
-  {
-    name: "posts",
-    href: "/user/posts",
-    Icon: LayoutList,
-  },
-  {
-    name: "Comments",
-    href: "/user/comments",
-    Icon: MessageSquareQuote,
-  },
-];
+import useAuthStore from "@/lib/store/auth.store";
 
 const DashboardAction = () => {
   const [showActions, setShowActions] = React.useState(false);
+  const { authUser } = useAuthStore();
+
+  const actions = [
+    {
+      name: "New",
+      href: `/user/${authUser?.username}new`,
+      Icon: BookPlus,
+    },
+    {
+      name: "posts",
+      href: `/user/po${authUser?.username}sts`,
+      Icon: LayoutList,
+    },
+    {
+      name: "Comments",
+      href: `/user/comme${authUser?.username}nts`,
+      Icon: MessageSquareQuote,
+    },
+  ];
   return (
     <div className="flex items-center gap-2 sm:bg-none size-xl rounded-full cursor-pointer z-20 ml-2">
       <Button
@@ -39,7 +41,11 @@ const DashboardAction = () => {
       >
         <AlignLeft />
       </Button>
-      <div className={`flex flex-wrap gap-2 w-fit  ${showActions ? "flex" : "hidden"}`}>
+      <div
+        className={`flex flex-wrap gap-2 w-fit  ${
+          showActions ? "flex" : "hidden"
+        }`}
+      >
         {actions.map((action, index) => (
           <Button
             key={index}

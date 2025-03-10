@@ -80,6 +80,7 @@ const useAuthStore = create<AuthStore>((set, get) => ({
     removeItem("access_token");
     set({ access_token: null });
     toast.success("Logout successful");
+    window.location.href = "/";
     set({ logoutLoading: false });
   },
 }));

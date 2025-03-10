@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
-import ProtectedRoute from "@/lib/protectedRoute";
+// import ProtectedRoute from "@/lib/protectedRoute";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ProtectedRoute />
+        {/* <ProtectedRoute /> */}
         <Navbar />
         {children}
         <Toaster />

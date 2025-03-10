@@ -33,6 +33,12 @@ const LoginForm = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
 
+  const { loginHandler, loadingLogin, authUser } = useAuthStore();
+
+  if (authUser) {
+    router.push(`/user/${authUser.username}`);
+  }
+
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,13 +49,9 @@ const LoginForm = () => {
     },
   });
 
-  const { loginHandler, loadingLogin } = useAuthStore();
-
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     loginHandler(data).then(() => {
       form.reset();
-      // todo: username should be dynamic
-      router.push(`/user/${'username'}`);
     });
   };
 
