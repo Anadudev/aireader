@@ -5,6 +5,15 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import useAuthStore from "@/lib/store/auth.store";
 
 const navItems = [
   { name: "Home", href: "/", Icon: Home },
@@ -17,6 +26,8 @@ const Navbar = () => {
   const pathName = usePathname();
 
   const toggleNav = () => setShowNav(!showNav);
+
+  const { authUser, logoutLoading, logoutHandler } = useAuthStore();
 
   return (
     <nav className="h-12 w-full flex ">
@@ -73,9 +84,27 @@ const Navbar = () => {
             asChild
             className="rounded-full cursor-pointer ring-1 ring-zinc-300"
           >
-            <Link href="/login">
-              <UserRound />
-            </Link>
+            {authUser ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant={"outline"}>
+                    <UserRound /> {authUser?.username}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Billing</DropdownMenuItem>
+                  <DropdownMenuItem>Team</DropdownMenuItem>
+                  <DropdownMenuItem onClick={logoutHandler}>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link href="/login">
+                <UserRound />
+              </Link>
+            )}
           </Button>
           <Button
             size={"icon"}

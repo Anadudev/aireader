@@ -148,13 +148,15 @@ const SignupForm = () => {
             className="w-full mt-5 text-xl font-semibold py-5 cursor-pointer"
             variant={"default"}
           >
-            {loadingSignUp ? "Loading..." : "Submit"}
+            {loadingSignUp ? "Loading..." : "Sign up"}
           </Button>
         </form>
       </Form>
       <div className="flex justify-center text-sm mt-5 space-x-2">
         <p className={`font-semibold`}>Already have an account?</p>
-        <Link href="/login" className="font-semibold text-blue-500">login</Link>
+        <Link href="/login" className="font-semibold text-blue-500">
+          login
+        </Link>
       </div>
     </div>
   );

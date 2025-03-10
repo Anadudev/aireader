@@ -19,7 +19,6 @@ import { Input } from "@/components/ui/input";
 import useAuthStore from "@/lib/store/auth.store";
 import { useRouter } from "next/navigation";
 import { Eye, EyeClosed } from "lucide-react";
-import { PublicRoute } from "@/lib/protectedRoute";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -32,7 +31,6 @@ const formSchema = z.object({
 
 const LoginForm = () => {
   const router = useRouter();
-  PublicRoute();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
@@ -120,7 +118,7 @@ const LoginForm = () => {
             className="w-full mt-5 text-xl font-semibold py-5 cursor-pointer"
             variant={"default"}
           >
-            {loadingLogin ? "Loading..." : "Submit"}
+            {loadingLogin ? "Loading..." : "Login"}
           </Button>
         </form>
       </Form>

@@ -1,6 +1,4 @@
 import DashboardAction from "@/components/DashboardAction";
-import { ProtectedRoute } from "@/lib/protectedRoute";
-import useAuthStore from "@/lib/store/auth.store";
 
 export default function RootLayout({
   children,
@@ -9,7 +7,6 @@ export default function RootLayout({
 }>) {
   return (
     <div className={``}>
-      <ProtectedRoute />
       <DashboardAction />
       {children}
     </div>

@@ -2,33 +2,57 @@ import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
 // import { persist } from "zustand/middleware";
 import toast from "react-hot-toast";
-import { accessTokenLocalStorage,removeItem } from "../localStorage";
-
+import { accessTokenLocalStorage, removeItem } from "../localStorage";
+type AuthUserType = {
+  username: string;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+};
 type AuthStore = {
-  user: any;
+  authUser: AuthUserType | null;
   access_token: string | null;
   loadingSignUp: boolean;
   loadingLogin: boolean;
-  authUser: any;
   loginHandler: (data: any) => Promise<void>;
   signupHandler: (data: any) => Promise<void>;
   logoutHandler: () => void;
+  logoutLoading: boolean;
+  authUserHandler: () => Promise<void>;
 };
 
-const useAuthStore = create<AuthStore>((set) => ({
-  user: null,
+const useAuthStore = create<AuthStore>((set, get) => ({
   access_token: accessTokenLocalStorage || null,
   loadingSignUp: false,
   loadingLogin: false,
   authUser: null,
+  logoutLoading: false,
 
-  loginHandler: async (data) => {
+  authUserHandler: async () => {
+    try {
+      const accessToken = get().access_token;
+      const request = await axiosInstance.get("/auth/profile", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      set({ authUser: request.data });
+      console.log(request);
+      // toast.success("Authentication successful");
+    } catch (error) {
+      console.error("[authUserHandler]: ", error);
+      toast.error(error.response.data.message);
+    }
+  },
+
+  loginHandler: async (loginPayload) => {
     try {
       set({ loadingLogin: true });
-      const response = await axiosInstance.post("/auth/login", data);
+      const response = await axiosInstance.post("/auth/login", loginPayload);
       set({ access_token: response.data.access_token });
       localStorage.setItem("access_token", response.data.access_token);
       console.log(response.data);
+      get().authUserHandler();
       toast.success("Login successful");
     } catch (error) {
       console.error(error);
@@ -42,7 +66,6 @@ const useAuthStore = create<AuthStore>((set) => ({
     try {
       set({ loadingSignUp: true });
       await axiosInstance.post("/auth/signup", data);
-      set({ user: null });
       toast.success("Account created successfully");
     } catch (error) {
       toast.error(error.response.data.message);
@@ -53,8 +76,12 @@ const useAuthStore = create<AuthStore>((set) => ({
   },
 
   logoutHandler: () => {
+    set({ logoutLoading: true });
     removeItem("access_token");
-  }
+    set({ access_token: null });
+    toast.success("Logout successful");
+    set({ logoutLoading: false });
+  },
 }));
 
 export default useAuthStore;
