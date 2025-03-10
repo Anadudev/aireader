@@ -15,48 +15,48 @@ datasource db {
 
 model Account {
   id       String @id @unique @default(uuid())
-  userId   String @unique
   password String
 
+  userId   String @unique
   user User @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
 
 model User {
   id       String @id @unique @default(uuid())
   username String @unique
-  // password String
 
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
   posts      Post[]
   postTitles Title[]
-
   accounts Account[]
 }
 
 model Title {
-  id        String   @id @unique @default(uuid())
-  username  String   @unique
-  userId    String
-  author    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id    String @id @unique @default(uuid())
+  title String @unique
+
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
-  posts Post[]
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  posts    Post[]
 }
 
 model Post {
   id        String   @id @unique @default(uuid())
-  userId    String
-  author    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  titleId   String
-  title     Title    @relation(fields: [titleId], references: [id], onDelete: Cascade)
-  // title     String?
   prompt    String
   response  String
+
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
-  @@unique([titleId, id, userId])
+  authorId    String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  titleId   String
+  title     Title    @relation(fields: [titleId], references: [id], onDelete: Cascade)
+
+  @@unique([titleId, id, authorId])
 }

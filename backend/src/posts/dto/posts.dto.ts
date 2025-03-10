@@ -1,8 +1,13 @@
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
+export class NewTitleDto {
+  @IsNotEmpty()
+  title: string;
+}
+
 export class NewPostDto {
-  @IsOptional()
-  title?: string;
+  @IsNotEmpty()
+  titleId: string;
 
   @IsNotEmpty()
   prompt: string;
@@ -12,11 +17,11 @@ export class NewPostDto {
 }
 
 export class UpdatePostDto {
-  @IsOptional()
-  title?: string;
+  @IsNotEmpty()
+  titleId: string;
 
   @IsOptional()
-  content?: string;
+  prompt?: string;
 
   @IsOptional()
   response?: string;

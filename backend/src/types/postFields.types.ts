@@ -1,16 +1,27 @@
+export type NewTitleType = {
+  authorId: string;
+  title: string;
+};
+
+export type UpdateTitleType = {
+  id: string;
+  authorId: string;
+  title: string;
+};
+
 export type NewPost = {
-  userId: string;
-  title?: string;
+  authorId: string;
+  titleId: string;
   prompt: string;
   response: string;
 };
 
 export type UpdatePost = {
   id: string;
-  userId: string;
-  title?: string;
-  content?: string;
-  authorId?: string;
+  authorId: string;
+  titleId: string;
+  prompt?: string;
+  response?: string;
 };
 
 export type PostInclude = {
