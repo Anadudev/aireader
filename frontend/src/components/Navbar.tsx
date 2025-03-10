@@ -1,5 +1,13 @@
 "use client";
-import { BookOpen, Home, Info, Menu, Settings, UserRound } from "lucide-react";
+import {
+  BookOpen,
+  Home,
+  Info,
+  Loader,
+  Menu,
+  Settings,
+  UserRound,
+} from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -14,6 +22,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useAuthStore from "@/lib/store/auth.store";
+import { useTheme } from "next-themes";
+import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
   { name: "Home", href: "/", Icon: Home },
@@ -24,7 +34,7 @@ const navItems = [
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
   const pathName = usePathname();
-
+  const { setTheme } = useTheme();
   const toggleNav = () => setShowNav(!showNav);
 
   const { authUser, logoutLoading, logoutHandler } = useAuthStore();
@@ -78,52 +88,47 @@ const Navbar = () => {
           ))}
         </div>
         <div className="flex gap-4">
-          <Button
-            size={"icon"}
-            variant={"link"}
-            asChild
-            className="rounded-full cursor-pointer ring-1 ring-zinc-300"
-          >
-            {authUser ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger className="cursor-pointer">
-                  <Button variant={"outline"}>
-                    <UserRound /> {authUser?.username}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer">
-                    Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    Billing
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    Team
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="bg-red-400 cursor-pointer"
-                    onClick={logoutHandler}
-                  >
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
+          {authUser ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="cursor-pointer">
+                <Button variant={"outline"}>
+                  <UserRound /> {authUser?.username}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="cursor-pointer">
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  Billing
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  Team
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="bg-red-400 cursor-pointer"
+                  onClick={logoutHandler}
+                >
+                  Logout {logoutLoading ? <Loader /> : ""}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button
+              size={"icon"}
+              variant={"link"}
+              asChild
+              className="rounded-full cursor-pointer ring-1 ring-zinc-300"
+            >
               <Link href="/login">
                 <UserRound />
               </Link>
-            )}
-          </Button>
-          <Button
-            size={"icon"}
-            variant={"outline"}
-            className="rounded-full cursor-pointer"
-          >
-            <Settings />
-          </Button>
+            </Button>
+          )}
+
+          <ThemeToggle />
         </div>
       </div>
     </nav>
