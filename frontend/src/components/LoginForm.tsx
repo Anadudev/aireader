@@ -50,6 +50,7 @@ const LoginForm = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     loginHandler(data).then(() => {
       form.reset();
+      // todo: username should be dynamic
       router.push(`/user/${'username'}`);
     });
   };

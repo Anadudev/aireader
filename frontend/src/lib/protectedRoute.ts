@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import useAuthStore from "./store/auth.store";
+import useAuthStore from "@/lib/store/auth.store";
 import { useRouter } from "next/navigation";
 
 export const ProtectedRoute = () => {
@@ -18,7 +18,8 @@ export const PublicRoute = () => {
   const { access_token } = useAuthStore();
   useEffect(() => {}, [access_token]);
   if (access_token) {
-    router.push("/dashboard");
+	// todo: username should be dynamic
+    router.push("/user/username");
   }
   return null;
 };

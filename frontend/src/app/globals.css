@@ -118,7 +118,12 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.ck-editor__editable_inline {
+  min-height: 30rem;
 }

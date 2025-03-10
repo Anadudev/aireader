@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import {
   AlignLeft,
   BookPlus,
@@ -12,17 +12,17 @@ import Link from "next/link";
 const actions = [
   {
     name: "New",
-    href: "/dashboard",
+    href: "/user/new",
     Icon: BookPlus,
   },
   {
     name: "posts",
-    href: "/dashboard/posts",
+    href: "/user/posts",
     Icon: LayoutList,
   },
   {
     name: "Comments",
-    href: "/dashboard/comments",
+    href: "/user/comments",
     Icon: MessageSquareQuote,
   },
 ];
@@ -30,7 +30,7 @@ const actions = [
 const DashboardAction = () => {
   const [showActions, setShowActions] = React.useState(false);
   return (
-    <div className="flex items-center gap-2 sm:bg-none size-xl rounded-full cursor-pointer z-20">
+    <div className="flex items-center gap-2 sm:bg-none size-xl rounded-full cursor-pointer z-20 ml-2">
       <Button
         onClick={() => setShowActions(!showActions)}
         variant="outline"
@@ -39,7 +39,7 @@ const DashboardAction = () => {
       >
         <AlignLeft />
       </Button>
-      <div className={`flex gap-2 w-fit  ${showActions ? "flex" : "hidden"}`}>
+      <div className={`flex flex-wrap gap-2 w-fit  ${showActions ? "flex" : "hidden"}`}>
         {actions.map((action, index) => (
           <Button
             key={index}

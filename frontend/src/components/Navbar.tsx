@@ -21,21 +21,21 @@ const Navbar = () => {
   return (
     <nav className="h-12 w-full flex ">
       <Button
-        className="sm:hidden fixed bottom-24 right-3 size-xl cursor-pointer z-20"
+        className="sm:hidden fixed bottom-16 right-3 cursor-pointer z-50"
         variant={"outline"}
         size="icon"
         onClick={toggleNav}
         title="Menu"
       >
-        <Menu className="size-xl bg-zinc-200" />
+        <Menu className="size-xl" />
       </Button>
       <div className="w-full sm:bg-blur sm:bg-transparent/50 sm:backdrop-blur-md fixed top-0 z-10 flex items-center justify-between px-4 py-2">
         <div className="">
           <Logo />
         </div>
         <div
-          className={`fixed sm:static bg-zinc-200 sm:bg-transparent bottom-5 left-1/2 sm:left-0 flex justify-center border sm:border-none rounded-full transform -translate-x-1/2 sm:translate-x-0 w-fit gap-4 p-2 sm:p-0 ${
-            showNav ? "block" : "hidden sm:block"
+          className={`fixed sm:static bg-zinc-200 sm:bg-transparent bottom-4 left-1/2 sm:left-0 flex justify-center border sm:border-none rounded-full transform -translate-x-1/2 sm:translate-x-0 w-fit gap-4 p-1 sm:p-0 ${
+            showNav ? "block" : "hidden sm:flex"
           }`}
         >
           {navItems.map((item, index) => (
@@ -43,7 +43,7 @@ const Navbar = () => {
               key={index}
               asChild
               variant={"link"}
-              className={`text-zinc-800 border hover:no-underline p-6
+              className={`text-zinc-800 border flex items-center hover:no-underline p-3
  hover:text-zinc-500 text-md ${
    pathName === item.href
      ? "text-zinc-500 rounded-full bg-zinc-100 sm:bg-transparent border-zinc-300 sm:border-none"
@@ -52,7 +52,7 @@ const Navbar = () => {
               title={item.name}
             >
               <Link href={item.href} className="space-x-3">
-                <item.Icon className="sm:hidden size-xl" />
+                <item.Icon className="sm:hidden size-lg" />
                 <p
                   className={` ${
                     pathName === item.href
