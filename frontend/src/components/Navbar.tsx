@@ -1,13 +1,5 @@
 "use client";
-import {
-  BookOpen,
-  Home,
-  Info,
-  Loader,
-  Menu,
-  Settings,
-  UserRound,
-} from "lucide-react";
+import { BookOpen, Home, Info, Loader, Menu, UserRound } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -22,7 +14,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useAuthStore from "@/lib/store/auth.store";
-import { useTheme } from "next-themes";
 import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
@@ -34,7 +25,6 @@ const navItems = [
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
   const pathName = usePathname();
-  const { setTheme } = useTheme();
   const toggleNav = () => setShowNav(!showNav);
 
   const { authUser, logoutLoading, logoutHandler } = useAuthStore();
@@ -99,19 +89,32 @@ const Navbar = () => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer">
-                  Profile
+                  <Button size={"sm"} variant={"link"} asChild>
+                    <Link href={`/user/${authUser?.username}`}>Dashboard</Link>
+                  </Button>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
-                  Billing
+                  <Button size={"sm"} variant={"link"} asChild>
+                    <Link href={`/user/${authUser?.username}/profile`}>
+                      Profile
+                    </Link>
+                  </Button>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
-                  Team
+                  <Button size={"sm"} variant={"link"} asChild>
+                    <Link href={`/user/${authUser?.username}/settings`}>
+                      Settings
+                    </Link>
+                  </Button>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="bg-red-400 cursor-pointer"
-                  onClick={logoutHandler}
-                >
-                  Logout {logoutLoading ? <Loader /> : ""}
+                <DropdownMenuItem className="">
+                  <Button
+                    size={"sm"}
+                    variant={"destructive"}
+                    onClick={logoutHandler}
+                  >
+                    Logout {logoutLoading ? <Loader /> : ""}
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

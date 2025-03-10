@@ -17,17 +17,17 @@ const DashboardAction = () => {
   const actions = [
     {
       name: "New",
-      href: `/user/${authUser?.username}new`,
+      href: `/user/${authUser?.username}/new`,
       Icon: BookPlus,
     },
     {
       name: "posts",
-      href: `/user/po${authUser?.username}sts`,
+      href: `/user/po${authUser?.username}/sts`,
       Icon: LayoutList,
     },
     {
       name: "Comments",
-      href: `/user/comme${authUser?.username}nts`,
+      href: `/user/comme${authUser?.username}/nts`,
       Icon: MessageSquareQuote,
     },
   ];

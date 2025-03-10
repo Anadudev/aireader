@@ -13,4 +13,4 @@ const NewPostPage = () => {
 };
 
 export default NewPostPage;
-WWWWWWWWW
+

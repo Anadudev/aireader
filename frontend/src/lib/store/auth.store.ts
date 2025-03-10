@@ -14,8 +14,11 @@ type AuthStore = {
   access_token: string | null;
   loadingSignUp: boolean;
   loadingLogin: boolean;
-  loginHandler: (data: any) => Promise<void>;
-  signupHandler: (data: any) => Promise<void>;
+  loginHandler: (data: { username: string; password: string }) => Promise<void>;
+  signupHandler: (data: {
+    username: string;
+    password: string;
+  }) => Promise<void>;
   logoutHandler: () => void;
   logoutLoading: boolean;
   authUserHandler: () => Promise<void>;
