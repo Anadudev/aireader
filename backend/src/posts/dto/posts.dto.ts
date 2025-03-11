@@ -5,15 +5,21 @@ export class NewTitleDto {
   title: string;
 }
 
+class ChatDto {
+  @IsNotEmpty()
+  prompt: string;
+  @IsNotEmpty()
+  response: string;
+  @IsOptional()
+  chatId?: string;
+}
+
 export class NewPostDto {
   @IsNotEmpty()
   titleId: string;
 
   @IsNotEmpty()
-  prompt: string;
-
-  @IsNotEmpty()
-  response: string;
+  chats: ChatDto[];
 }
 
 export class UpdatePostDto {

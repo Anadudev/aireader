@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
 import toast from "react-hot-toast";
-import axios from "axios";
+import useAuthStore from "./auth.store";
 
 type TitleType = {
   id: string;
@@ -25,8 +25,7 @@ type PostType = {
 
 type PostPayloadType = {
   titleId: string;
-  prompt?: string;
-  response?: string;
+  chats: { prompt?: string; response?: string }[];
 };
 
 type PostStoreType = {
@@ -40,14 +39,16 @@ type PostStoreType = {
   titleDeleteLoading: boolean;
   posts: PostType[];
   handlePostGet: () => void;
-  handlePostCreate: (postPayload: PostPayloadType[]) => void;
+  handlePostCreate: (postPayload: PostPayloadType) => void;
   handlePostDelete: (id: string) => void;
   handlePostUpdate: (id: string, postPayload: PostPayloadType[]) => void;
-  handleTitleCreate: (titlePayload: TitlePayloadType) => void;
+  handleTitleCreate: (
+    titlePayload: TitlePayloadType
+  ) => Promise<TitleType> | null;
   handleTitleUpdate: (id: string, titlePayload: TitlePayloadType) => void;
 };
 
-const postStore = create<PostStoreType>((set) => ({
+const usePostStore = create<PostStoreType>((set) => ({
   postGetLoading: false,
   postUpdateLoading: false,
   postCreateLoading: false,
@@ -58,10 +59,14 @@ const postStore = create<PostStoreType>((set) => ({
   titleDeleteLoading: false,
   posts: [],
 
-  handlePostCreate: async (postPayload: PostPayloadType[]) => {
+  handlePostCreate: async (postPayload: PostPayloadType) => {
     try {
       set({ postCreateLoading: true });
-      await axiosInstance.post("/posts", postPayload);
+      await axiosInstance.post("/posts", postPayload, {
+        headers: {
+          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
+        },
+      });
       toast.success("Post created successfully");
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -122,11 +127,17 @@ const postStore = create<PostStoreType>((set) => ({
       set({ postUpdateLoading: false });
     }
   },
-  handleTitleCreate: (titlePayload: TitlePayloadType) => {
+  handleTitleCreate: async (titlePayload: TitlePayloadType) => {
     try {
       set({ titleCreateLoading: true });
-      axiosInstance.post("/posts/title", titlePayload);
+      const response = await axiosInstance.post("/posts/title", titlePayload, {
+        headers: {
+          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
+        },
+      });
       toast.success("Title created successfully");
+      console.log(response.data);
+      return response.data;
     } catch (error) {
       toast.error(error.response.data.message);
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -137,6 +148,7 @@ const postStore = create<PostStoreType>((set) => ({
     } finally {
       set({ titleCreateLoading: false });
     }
+    return null;
   },
   handleTitleUpdate: (id: string, titlePayload: TitlePayloadType) => {
     try {
@@ -156,4 +168,4 @@ const postStore = create<PostStoreType>((set) => ({
   },
 }));
 
-export default postStore;
+export default usePostStore;

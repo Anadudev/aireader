@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PostDeleteToast from "./PostDeleteToast";
+import usePostStore from "@/lib/store/post.store";
 
 const formSchema = z.object({
   title: z.string().min(15, {
@@ -42,7 +43,12 @@ const PostForm = () => {
   const chatData = { chatId: 0, prompt: "", response: "" };
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
   const [trigger, setTrigger] = React.useState(false);
-
+  const {
+    handleTitleCreate,
+    handlePostCreate,
+    titleCreateLoading,
+    postCreateLoading,
+  } = usePostStore();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -126,8 +132,15 @@ const PostForm = () => {
   // console.log(form.watch().chats);
 
   const handleSubmit = () => {
-    toast.success("Ai Chat posted");
-    console.log(form.getValues().chats);
+    try {
+      const formValues = form.getValues();
+      const chats = formValues.chats;
+      handleTitleCreate({ title: formValues.title })?.then((response) =>
+        handlePostCreate({ titleId: response.id, chats })
+      );
+      console.log(formValues.chats);
+      // toast.success("Ai Chat posted");
+    } catch {}
   };
 
   return (

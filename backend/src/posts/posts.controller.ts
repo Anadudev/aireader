@@ -35,16 +35,22 @@ export class PostsController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async createPost(@Body() formPayload: NewPostDto[], @Request() req) {
+  async createPost(@Body() formPayload: NewPostDto, @Request() req) {
     const authorId = (req.user as User).id;
+    const { titleId } = formPayload;
     // req['user'] = undefined;
     if (!authorId) {
       throw new UnauthorizedException();
     }
     // const payload = { authorId, ...formPayload };
-    const payload = formPayload.map((post) => ({ authorId, ...post }));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const payload = formPayload.chats.map(({ chatId, ...post }) => ({
+      titleId,
+      authorId,
+      ...post,
+    }));
 
-    return await this.postsService.postCreate(formPayload[0].titleId, payload);
+    return await this.postsService.postCreate(formPayload.titleId, payload);
   }
 
   @Get()
