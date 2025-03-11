@@ -28,7 +28,6 @@ const Navbar = () => {
   const toggleNav = () => setShowNav(!showNav);
 
   const { authUser, logoutLoading, logoutHandler } = useAuthStore();
-  // useEffect(() => {}, [authUser, logoutLoading]);
 
   return (
     <nav className="h-12 w-full flex">

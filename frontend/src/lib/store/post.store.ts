@@ -64,7 +64,10 @@ const postStore = create<PostStoreType>((set) => ({
       await axiosInstance.post("/posts", postPayload);
       toast.success("Post created successfully");
     } catch (error) {
-      toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
       console.error("[handlePostCreate]: ", error);
     } finally {
       set({ postCreateLoading: false });
@@ -78,6 +81,10 @@ const postStore = create<PostStoreType>((set) => ({
       toast.success("Posts fetched successfully");
     } catch (error) {
       toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
       console.error("[handlePostGet]: ", error);
     } finally {
       set({ postGetLoading: false });
@@ -90,6 +97,10 @@ const postStore = create<PostStoreType>((set) => ({
       toast.success("Post deleted successfully");
     } catch (error) {
       toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
       console.error("[handlePostDelete]: ", error);
     } finally {
       set({ postDeleteLoading: false });
@@ -102,6 +113,10 @@ const postStore = create<PostStoreType>((set) => ({
       toast.success("Post updated successfully");
     } catch (error) {
       toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
       console.error("[handlePostUpdate]: ", error);
     } finally {
       set({ postUpdateLoading: false });
@@ -114,6 +129,10 @@ const postStore = create<PostStoreType>((set) => ({
       toast.success("Title created successfully");
     } catch (error) {
       toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
       console.error("[handleTitleCreate]: ", error);
     } finally {
       set({ titleCreateLoading: false });
@@ -126,6 +145,10 @@ const postStore = create<PostStoreType>((set) => ({
       toast.success("Title updated successfully");
     } catch (error) {
       toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
       console.error("[handleTitleUpdate]: ", error);
     } finally {
       set({ titleUpdateLoading: false });

@@ -2,7 +2,7 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Minus, Plus, TriangleAlert } from "lucide-react";
+import { ChevronDown, Minus, Plus } from "lucide-react";
 import toast from "react-hot-toast";
 // import { usePathname } from "next/navigation";
 // import { Form } from "@/components/ui/form";
@@ -23,7 +23,7 @@ import PostDeleteToast from "./PostDeleteToast";
 
 const formSchema = z.object({
   title: z.string().min(15, {
-    message: "Title must ,be at least 15 characters.",
+    message: "Title must be at least 15 characters.",
   }),
   chats: z.array(
     z.object({
@@ -41,6 +41,7 @@ const formSchema = z.object({
 const PostForm = () => {
   const chatData = { chatId: 0, prompt: "", response: "" };
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
+  const [trigger, setTrigger] = React.useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -74,8 +75,10 @@ const PostForm = () => {
       return;
     }
     const newChat = { ...chatData, chatId: lastChat.chatId + 1 };
-    form.setValue("chats", chats.concat(newChat));
+    form.setValue("chats", [...chats, newChat]);
     toast.success("Chat form extended");
+    setTrigger(!trigger);
+    scrollToBottom();
     // console.log(form.getValues().chats);
   };
 
@@ -85,17 +88,19 @@ const PostForm = () => {
       toast.error("Last chat cannot be removed");
       return;
     }
+    const filteredChat = chats.filter((chat) => chat.chatId !== chatId);
+
+    // for the custom deletion modal
     const remove = () => {
-      form.setValue(
-        "chats",
-        chats.filter((chat) => chat.chatId !== chatId)
-      );
+      form.setValue("chats", filteredChat);
       toast.success("Chat form shrunk");
       // remove(chatId);
-      toast.dismiss(t.id);
+      // toast.dismiss(t.id);
+      setTrigger(!trigger);
     };
 
     const chatToDelete = getChat(chatId);
+    // console.log(chatToDelete);
     if (!chatToDelete) return;
     if (
       !(
@@ -105,18 +110,18 @@ const PostForm = () => {
       toast.custom((t) => <PostDeleteToast t={t} onCLick={() => remove()} />);
       return;
     }
-    form.setValue(
-      "chats",
-      chats.filter((chat) => chat.chatId !== chatId)
-    );
+    form.setValue("chats", filteredChat);
     toast.success("Chat form shrunk");
+    setTrigger(!trigger);
   };
 
   const scrollToBottom = () =>
     chatEndRef?.current?.scrollIntoView({ behavior: "smooth" });
 
-  // const dep = form.watch().chats;
-  // React.useEffect(() => {}, [dep]);
+  const dep = form.watch().chats;
+  React.useEffect(() => {
+    // scrollToBottom();
+  }, [dep]);
 
   // console.log(form.watch().chats);
 
@@ -133,33 +138,38 @@ const PostForm = () => {
             control={form.control}
             name="title"
             render={({ field }) => (
-              <div className="">
-                <Input {...field} placeholder="Chat title" className="" />
-              </div>
+              <FormItem className="">
+                <FormLabel>AI post title:</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="Chat title" className="" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
           />
 
-          {form.getValues().chats.map((chat) => (
-            <div key={chat.chatId} className="space-y-4">
+          {form.getValues().chats.map((chat, index) => (
+            <div key={index} className="space-y-4">
               <div className="flex justify-end items-center w-full">
                 <Button
                   onClick={() => removeChat(chat.chatId)}
                   className="cursor-pointer"
                   variant="destructive"
+                  type="button"
                 >
                   <Minus />
                 </Button>
               </div>
               <FormField
                 control={form.control}
-                name={`chats.${chat.chatId}.prompt`}
+                name={`chats.${index}.prompt`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Prompt</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder={`Enter your prompt "${chat.chatId + 1}"`}
+                        placeholder={`Enter your prompt "${index + 1}"`}
                       />
                     </FormControl>
                     <FormMessage />
@@ -168,7 +178,7 @@ const PostForm = () => {
               />
               <FormField
                 control={form.control}
-                name={`chats.${chat.chatId}.response`}
+                name={`chats.${index}.response`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Response</FormLabel>
@@ -177,7 +187,7 @@ const PostForm = () => {
                         className="w-full h-96 p-2 "
                         {...field}
                         placeholder={`Enter your response for prompt "${
-                          chat.chatId + 1
+                          index + 1
                         }"`}
                       ></Textarea>
                     </FormControl>
