@@ -13,7 +13,7 @@ const AccessTokenGet = () => {
     }
     if (!token) return;
     setAccessToken(token);
-  }, []);
+  }, [setAccessToken, setAuthUser]);
 
   return null;
 };
