@@ -2,18 +2,21 @@ import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
 // import { persist } from "zustand/middleware";
 import toast from "react-hot-toast";
-import { accessTokenLocalStorage, removeItem } from "../localStorage";
+// import { AccessTokenLocalStorage, RemoveItem } from "../localStorage";
+
 type AuthUserType = {
   username: string;
   id: string;
   createdAt: string;
   updatedAt: string;
 };
+
 type AuthStore = {
   authUser: AuthUserType | null;
   access_token: string | null;
   loadingSignUp: boolean;
   loadingLogin: boolean;
+  setAuthUser: (user: AuthUserType | null) => void;
   loginHandler: (data: { username: string; password: string }) => Promise<void>;
   signupHandler: (data: {
     username: string;
@@ -22,14 +25,23 @@ type AuthStore = {
   logoutHandler: () => void;
   logoutLoading: boolean;
   authUserHandler: () => Promise<void>;
+  setAccessToken: (token: string) => void;
+  removeAccessToken: () => void;
 };
 
+// const getLocalStorage = (key: string) => {
+//   const item = window.localStorage.getItem(key);
+//   return item ? JSON.parse(item) : null;
+// };
+
 const useAuthStore = create<AuthStore>((set, get) => ({
-  access_token: accessTokenLocalStorage || null,
+  access_token: null,
   loadingSignUp: false,
   loadingLogin: false,
   authUser: null,
   logoutLoading: false,
+
+  setAuthUser: (user: AuthUserType | null) => set({ authUser: user }),
 
   authUserHandler: async () => {
     try {
@@ -40,11 +52,15 @@ const useAuthStore = create<AuthStore>((set, get) => ({
         },
       });
       set({ authUser: request.data });
-      console.log(request);
+      localStorage.setItem("authUser", JSON.stringify(request.data));
+      // console.log(request);
       // toast.success("Authentication successful");
     } catch (error) {
       console.error("[authUserHandler]: ", error);
-      toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
     }
   },
 
@@ -54,12 +70,14 @@ const useAuthStore = create<AuthStore>((set, get) => ({
       const response = await axiosInstance.post("/auth/login", loginPayload);
       set({ access_token: response.data.access_token });
       localStorage.setItem("access_token", response.data.access_token);
-      console.log(response.data);
+      // console.log(response.data);
       get().authUserHandler();
       toast.success("Login successful");
     } catch (error) {
-      console.error(error);
-      toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
     } finally {
       set({ loadingLogin: false });
     }
@@ -71,7 +89,10 @@ const useAuthStore = create<AuthStore>((set, get) => ({
       await axiosInstance.post("/auth/signup", data);
       toast.success("Account created successfully");
     } catch (error) {
-      toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
       console.error("[signupHandler]: ", error);
     } finally {
       set({ loadingSignUp: false });
@@ -80,11 +101,19 @@ const useAuthStore = create<AuthStore>((set, get) => ({
 
   logoutHandler: () => {
     set({ logoutLoading: true });
-    removeItem("access_token");
     set({ access_token: null });
+    set({ authUser: null });
+    window.localStorage.removeItem("access_token");
+    localStorage.removeItem("authUser");
     toast.success("Logout successful");
-    window.location.href = "/";
+    // window.location.href = "/";
     set({ logoutLoading: false });
+  },
+
+  setAccessToken: (token: string) => set({ access_token: token }),
+  removeAccessToken: () => {
+    set({ access_token: null });
+    window.localStorage.removeItem("access_token");
   },
 }));
 

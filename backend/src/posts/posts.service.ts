@@ -41,7 +41,7 @@ export class PostsService {
     }
   }
 
-  async postCreate(titleId: string, postPayload: NewPost) {
+  async postCreate(titleId: string, postPayload: NewPost[]) {
     try {
       const title = await this.prisma.title.findUnique({
         where: { id: titleId },
@@ -51,7 +51,7 @@ export class PostsService {
         throw new HttpException('Title not found', 404);
       }
 
-      const post = await this.prisma.post.create({
+      const post = await this.prisma.post.createMany({
         data: postPayload,
       });
 

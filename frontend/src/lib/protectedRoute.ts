@@ -3,21 +3,15 @@ import { useEffect } from "react";
 import useAuthStore from "@/lib/store/auth.store";
 import { useRouter } from "next/navigation";
 
-const ProtectedRoute = ({ protect = true }) => {
+const ProtectedRoute = () => {
   const router = useRouter();
-  const { authUser, authUserHandler } = useAuthStore();
+  const { authUser } = useAuthStore();
   useEffect(() => {
-    authUserHandler();
-  }, [authUserHandler]);
+    if (!authUser) {
+      router.push("/");
+    }
+  }, [authUser, router]);
 
-  if (!protect) return null;
-
-  if (!authUser) {
-    router.push("/");
-  } else {
-    // todo: username should be dynamic
-    router.push(`/user/${authUser?.username}`);
-  }
   return null;
 };
 export default ProtectedRoute;

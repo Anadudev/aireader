@@ -1,45 +1,136 @@
 import { create } from "zustand";
+import axiosInstance from "@/lib/axios.config";
+import toast from "react-hot-toast";
+import axios from "axios";
+
+type TitleType = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+};
+
+type TitlePayloadType = {
+  title: string;
+};
 
 type PostType = {
-	id: string;
-  title?: {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    title: string;
-  };
+  id: string;
+  title?: TitleType | null;
   createsAt: string;
   updatedAt: string;
   response: string;
   prompt: string;
 };
 
-type PostPayloadtype = {
-	title: string,
-	prompt: string,
-	response: string,
-}
+type PostPayloadType = {
+  titleId: string;
+  prompt?: string;
+  response?: string;
+};
 
 type PostStoreType = {
+  postGetLoading: boolean;
+  postUpdateLoading: boolean;
+  postCreateLoading: boolean;
+  postDeleteLoading: boolean;
+  titleGetLoading: boolean;
+  titleUpdateLoading: boolean;
+  titleCreateLoading: boolean;
+  titleDeleteLoading: boolean;
   posts: PostType[];
-  getPosts: (posts: PostType[]) => void;
-  addPost: (post: PostType) => void;
-  deletePost: (id: string) => void;
-  updatePost: (id: string, data: PostPayloadtype) => void;
+  handlePostGet: () => void;
+  handlePostCreate: (postPayload: PostPayloadType[]) => void;
+  handlePostDelete: (id: string) => void;
+  handlePostUpdate: (id: string, postPayload: PostPayloadType[]) => void;
+  handleTitleCreate: (titlePayload: TitlePayloadType) => void;
+  handleTitleUpdate: (id: string, titlePayload: TitlePayloadType) => void;
 };
 
 const postStore = create<PostStoreType>((set) => ({
+  postGetLoading: false,
+  postUpdateLoading: false,
+  postCreateLoading: false,
+  postDeleteLoading: false,
+  titleGetLoading: false,
+  titleUpdateLoading: false,
+  titleCreateLoading: false,
+  titleDeleteLoading: false,
   posts: [],
-  getPosts: (posts) => set({ posts }),
-  addPost: (post) => set((state) => ({ posts: [...state.posts, post] })),
-  deletePost: (id) =>
-    set((state) => ({ posts: state.posts.filter((post) => post.id !== id) })),
-  updatePost: (id, data) =>
-    set((state) => ({
-	  posts: state.posts.map((post) =>
-		post.id === id ? { ...post, ...data } : post
-	  ),
-	})),
+
+  handlePostCreate: async (postPayload: PostPayloadType[]) => {
+    try {
+      set({ postCreateLoading: true });
+      await axiosInstance.post("/posts", postPayload);
+      toast.success("Post created successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("[handlePostCreate]: ", error);
+    } finally {
+      set({ postCreateLoading: false });
+    }
+  },
+  handlePostGet: async () => {
+    try {
+      set({ postGetLoading: true });
+      const response = axiosInstance.get("/posts");
+      set({ posts: response.data });
+      toast.success("Posts fetched successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("[handlePostGet]: ", error);
+    } finally {
+      set({ postGetLoading: false });
+    }
+  },
+  handlePostDelete: (id: string) => {
+    try {
+      set({ postDeleteLoading: true });
+      axiosInstance.delete(`/posts/${id}`);
+      toast.success("Post deleted successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("[handlePostDelete]: ", error);
+    } finally {
+      set({ postDeleteLoading: false });
+    }
+  },
+  handlePostUpdate: (id: string, postPayload: PostPayloadType[]) => {
+    try {
+      set({ postUpdateLoading: true });
+      axiosInstance.patch(`/posts/${id}`, postPayload);
+      toast.success("Post updated successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("[handlePostUpdate]: ", error);
+    } finally {
+      set({ postUpdateLoading: false });
+    }
+  },
+  handleTitleCreate: (titlePayload: TitlePayloadType) => {
+    try {
+      set({ titleCreateLoading: true });
+      axiosInstance.post("/posts/title", titlePayload);
+      toast.success("Title created successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("[handleTitleCreate]: ", error);
+    } finally {
+      set({ titleCreateLoading: false });
+    }
+  },
+  handleTitleUpdate: (id: string, titlePayload: TitlePayloadType) => {
+    try {
+      set({ titleUpdateLoading: true });
+      axiosInstance.patch(`/posts/title/${id}`, titlePayload);
+      toast.success("Title updated successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("[handleTitleUpdate]: ", error);
+    } finally {
+      set({ titleUpdateLoading: false });
+    }
+  },
 }));
 
 export default postStore;

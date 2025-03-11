@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 // import ProtectedRoute from "@/lib/protectedRoute";
 import ThemeProvider from "@/components/ThemeProvider";
+import AccessTokenGet from "@/hooks/localStorage/AccessTokenGet";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {/* <ProtectedRoute /> */}
+          <AccessTokenGet/>
           <Navbar />
           {children}
           <Toaster />

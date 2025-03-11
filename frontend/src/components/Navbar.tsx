@@ -1,7 +1,7 @@
 "use client";
 import { BookOpen, Home, Info, Loader, Menu, UserRound } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
@@ -28,9 +28,10 @@ const Navbar = () => {
   const toggleNav = () => setShowNav(!showNav);
 
   const { authUser, logoutLoading, logoutHandler } = useAuthStore();
+  // useEffect(() => {}, [authUser, logoutLoading]);
 
   return (
-    <nav className="h-12 w-full flex ">
+    <nav className="h-12 w-full flex">
       <Button
         className="sm:hidden fixed bottom-16 right-3 cursor-pointer z-50"
         variant={"outline"}
@@ -81,40 +82,28 @@ const Navbar = () => {
           {authUser ? (
             <DropdownMenu>
               <DropdownMenuTrigger className="cursor-pointer">
-                <Button variant={"outline"}>
-                  <UserRound /> {authUser?.username}
-                </Button>
+                <div className="flex items-center gap-1 rounded border cursor-pointer hover:shadow border-zinc-300 p-1 transition-shadow duration-300">
+                  <UserRound size="20" /> {authUser?.username}
+                </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer">
-                  <Button size={"sm"} variant={"link"} asChild>
-                    <Link href={`/user/${authUser?.username}`}>Dashboard</Link>
-                  </Button>
+                  <Link href={`/user/${authUser?.username}`}>Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
-                  <Button size={"sm"} variant={"link"} asChild>
-                    <Link href={`/user/${authUser?.username}/profile`}>
-                      Profile
-                    </Link>
-                  </Button>
+                  <Link href={`/user/${authUser?.username}/profile`}>
+                    Profile
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
-                  <Button size={"sm"} variant={"link"} asChild>
-                    <Link href={`/user/${authUser?.username}/settings`}>
-                      Settings
-                    </Link>
-                  </Button>
+                  <Link href={`/user/${authUser?.username}/settings`}>
+                    Settings
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="">
-                  <Button
-                    size={"sm"}
-                    variant={"destructive"}
-                    onClick={logoutHandler}
-                  >
-                    Logout {logoutLoading ? <Loader /> : ""}
-                  </Button>
+                <DropdownMenuItem onClick={logoutHandler} className="">
+                  Logout {logoutLoading ? <Loader /> : ""}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

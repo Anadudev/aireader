@@ -2,7 +2,7 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, TriangleAlert } from "lucide-react";
+import { ChevronDown, Minus, Plus, TriangleAlert } from "lucide-react";
 import toast from "react-hot-toast";
 // import { usePathname } from "next/navigation";
 // import { Form } from "@/components/ui/form";
@@ -19,43 +19,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import PostDeleteToast from "./PostDeleteToast";
 
-type ChatFormProps = {
-  remove: (chatId: number) => void;
-  chatId: number;
-  prompt: string;
-  response: string;
-  onPromptChange: (chatId: number, prompt: string) => void;
-  onResponseChange: (chatId: number, response: string) => void;
-};
-
-const formSchema = z
-  .object({
-    title: z.string().optional(),
-    chats: z.array(
-      z.object({
-        chatId: z.number(),
-        prompt: z.string().min(2, {
-          message: "Prompt must be at least 2 characters.",
-        }),
-        response: z.string().min(50, {
-          message: "Response must be at least 50 characters.",
-        }),
-      })
-    ),
-  })
-  .refine(
-    (data) => {
-      if (data.chats.length > 2 && !data.title) {
-        return false;
-      }
-      return true;
-    },
-    {
-      message: "Title is required when there are more than 2 chats.",
-      path: ["title"],
-    }
-  );
+const formSchema = z.object({
+  title: z.string().min(15, {
+    message: "Title must ,be at least 15 characters.",
+  }),
+  chats: z.array(
+    z.object({
+      chatId: z.number(),
+      prompt: z.string().min(2, {
+        message: "Prompt must be at least 2 characters.",
+      }),
+      response: z.string().min(50, {
+        message: "Response must be at least 50 characters.",
+      }),
+    })
+  ),
+});
 
 const PostForm = () => {
   const chatData = { chatId: 0, prompt: "", response: "" };
@@ -104,6 +85,15 @@ const PostForm = () => {
       toast.error("Last chat cannot be removed");
       return;
     }
+    const remove = () => {
+      form.setValue(
+        "chats",
+        chats.filter((chat) => chat.chatId !== chatId)
+      );
+      toast.success("Chat form shrunk");
+      // remove(chatId);
+      toast.dismiss(t.id);
+    };
 
     const chatToDelete = getChat(chatId);
     if (!chatToDelete) return;
@@ -112,51 +102,7 @@ const PostForm = () => {
         chatToDelete.prompt.trim() === "" || chatToDelete.response.trim() === ""
       )
     ) {
-      toast.custom((t) => (
-        <div
-          className={` max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-zinc-500 p-2 items-center`}
-        >
-          <div className="flex items-start"></div>
-          <div className="ml-3 flex-1">
-            <p className="text-sm flex space-x-2 items-center font-medium text-gray-900">
-              <TriangleAlert />
-              <span>Confirm Action</span>
-              {/* Confirm Action */}
-            </p>
-            <p className="mt-1 text-sm text-gray-500">
-              Are you sure you want to delete this chat form?
-            </p>
-            <p className="mt-1 text-sm text-gray-500">
-              The action cannot be undone!
-            </p>
-          </div>
-          <div className="space-y-2 grid ">
-            <Button
-              variant="outline"
-              onClick={() => toast.dismiss(t.id)}
-              className=""
-            >
-              Close
-            </Button>
-            <Button
-              size={"sm"}
-              variant="destructive"
-              onClick={() => {
-                form.setValue(
-                  "chats",
-                  chats.filter((chat) => chat.chatId !== chatId)
-                );
-                toast.success("Chat form shrunk");
-                // remove(chatId);
-                toast.dismiss(t.id);
-              }}
-              className=""
-            >
-              Delete
-            </Button>
-          </div>
-        </div>
-      ));
+      toast.custom((t) => <PostDeleteToast t={t} onCLick={() => remove()} />);
       return;
     }
     form.setValue(
@@ -166,12 +112,11 @@ const PostForm = () => {
     toast.success("Chat form shrunk");
   };
 
-  const dep = form.watch().chats;
-  React.useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [dep]);
+  const scrollToBottom = () =>
+    chatEndRef?.current?.scrollIntoView({ behavior: "smooth" });
+
+  // const dep = form.watch().chats;
+  // React.useEffect(() => {}, [dep]);
 
   // console.log(form.watch().chats);
 
@@ -194,7 +139,7 @@ const PostForm = () => {
             )}
           />
 
-          {form.getValues().chats.map((chat, index) => (
+          {form.getValues().chats.map((chat) => (
             <div key={chat.chatId} className="space-y-4">
               <div className="flex justify-end items-center w-full">
                 <Button
@@ -257,6 +202,14 @@ const PostForm = () => {
           </div>
         </form>
       </Form>
+      <Button
+        onClick={scrollToBottom}
+        variant={"outline"}
+        size={"icon"}
+        className="fixed rounded-full bottom-36 right-3"
+      >
+        <ChevronDown />
+      </Button>
       <div ref={chatEndRef} />
     </div>
   );

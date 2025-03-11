@@ -35,15 +35,16 @@ export class PostsController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async createPost(@Body() formPayload: NewPostDto, @Request() req) {
+  async createPost(@Body() formPayload: NewPostDto[], @Request() req) {
     const authorId = (req.user as User).id;
     // req['user'] = undefined;
     if (!authorId) {
       throw new UnauthorizedException();
     }
-    const payload = { authorId, ...formPayload };
+    // const payload = { authorId, ...formPayload };
+    const payload = formPayload.map((post) => ({ authorId, ...post }));
 
-    return await this.postsService.postCreate(formPayload.titleId, payload);
+    return await this.postsService.postCreate(formPayload[0].titleId, payload);
   }
 
   @Get()
