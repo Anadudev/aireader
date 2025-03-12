@@ -1,4 +1,10 @@
 import { PostType } from "@/types/Post.type";
+import { QueryType } from '@/types/Query.type';
+
+
+export type PostQueryType = QueryType & {
+  title?: boolean;
+};
 
 export type TitlePayloadType = {
   title: string;
