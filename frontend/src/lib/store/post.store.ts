@@ -1,66 +1,15 @@
 import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
 import toast from "react-hot-toast";
-import useAuthStore from "./auth.store";
-
-type TitleType = {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  title: string;
-};
-
-type TitlePayloadType = {
-  title: string;
-};
-
-type PostType = {
-  id: string;
-  title?: TitleType | null;
-  createsAt: string;
-  updatedAt: string;
-  response: string;
-  prompt: string;
-};
-
-type PostPayloadType = {
-  titleId: string;
-  chats: { prompt?: string; response?: string }[];
-};
-
-type PostStoreType = {
-  postGetLoading: boolean;
-  postUpdateLoading: boolean;
-  postCreateLoading: boolean;
-  postDeleteLoading: boolean;
-  titleGetLoading: boolean;
-  titleUpdateLoading: boolean;
-  titleCreateLoading: boolean;
-  titleDeleteLoading: boolean;
-  posts: PostType[];
-  titles: TitleType[];
-  handlePostGet: () => void;
-  handleTitleGet: () => void;
-  handlePostCreate: (postPayload: PostPayloadType) => void;
-  handlePostDelete: (id: string) => void;
-  handlePostUpdate: (id: string, postPayload: PostPayloadType[]) => void;
-  handleTitleCreate: (
-    titlePayload: TitlePayloadType
-  ) => Promise<TitleType> | null;
-  handleTitleUpdate: (id: string, titlePayload: TitlePayloadType) => void;
-};
+import useAuthStore from "@/lib/store/auth.store";
+import { PostStoreType, PostPayloadType } from "@/types/Post.type";
 
 const usePostStore = create<PostStoreType>((set) => ({
   postGetLoading: false,
   postUpdateLoading: false,
   postCreateLoading: false,
   postDeleteLoading: false,
-  titleGetLoading: false,
-  titleUpdateLoading: false,
-  titleCreateLoading: false,
-  titleDeleteLoading: false,
   posts: [],
-  titles: [],
 
   handlePostCreate: async (postPayload: PostPayloadType) => {
     try {
@@ -98,23 +47,6 @@ const usePostStore = create<PostStoreType>((set) => ({
       set({ postGetLoading: false });
     }
   },
-  handleTitleGet: async () => {
-    try {
-      set({ titleGetLoading: true });
-      const response = await axiosInstance.get("/posts/titles");
-      set({ titles: response.data });
-      toast.success("Posts fetched successfully");
-    } catch (error) {
-      toast.error(error.response.data.message);
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      error.response && error.response.data.message
-        ? toast.error(error.response.data.message)
-        : toast.error("Something went wrong");
-      console.error("[handlePostGet]: ", error);
-    } finally {
-      set({ titleGetLoading: false });
-    }
-  },
   handlePostDelete: (id: string) => {
     try {
       set({ postDeleteLoading: true });
@@ -145,45 +77,6 @@ const usePostStore = create<PostStoreType>((set) => ({
       console.error("[handlePostUpdate]: ", error);
     } finally {
       set({ postUpdateLoading: false });
-    }
-  },
-  handleTitleCreate: async (titlePayload: TitlePayloadType) => {
-    try {
-      set({ titleCreateLoading: true });
-      const response = await axiosInstance.post("/posts/title", titlePayload, {
-        headers: {
-          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
-        },
-      });
-      toast.success("Title created successfully");
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      toast.error(error.response.data.message);
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      error.response && error.response.data.message
-        ? toast.error(error.response.data.message)
-        : toast.error("Something went wrong");
-      console.error("[handleTitleCreate]: ", error);
-    } finally {
-      set({ titleCreateLoading: false });
-    }
-    return null;
-  },
-  handleTitleUpdate: (id: string, titlePayload: TitlePayloadType) => {
-    try {
-      set({ titleUpdateLoading: true });
-      axiosInstance.patch(`/posts/title/${id}`, titlePayload);
-      toast.success("Title updated successfully");
-    } catch (error) {
-      toast.error(error.response.data.message);
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      error.response && error.response.data.message
-        ? toast.error(error.response.data.message)
-        : toast.error("Something went wrong");
-      console.error("[handleTitleUpdate]: ", error);
-    } finally {
-      set({ titleUpdateLoading: false });
     }
   },
 }));

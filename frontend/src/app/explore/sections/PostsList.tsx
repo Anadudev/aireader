@@ -1,10 +1,10 @@
 "use client";
 import PostCard from "@/components/PostCard";
-import usePostStore from "@/lib/store/post.store";
+import TitleStoreType from "@/lib/store/title.store";
 import React, { useEffect } from "react";
 
 const PostsList = () => {
-  const { titles, handleTitleGet, titleGetLoading } = usePostStore();
+  const { titles, handleTitleGet, titleGetLoading } = TitleStoreType();
   useEffect(() => {
     handleTitleGet();
   }, [handleTitleGet]);
