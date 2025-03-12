@@ -15,6 +15,7 @@ import { PostsService } from './posts.service';
 import { AuthGuard } from 'src/auth/auth.guards';
 import { NewPostDto, UpdatePostDto } from './dto/posts.dto';
 import { User } from '@prisma/client';
+import { PostQueryType } from 'src/types/postQuery.types';
 
 @Controller('posts')
 export class PostsController {
@@ -41,7 +42,7 @@ export class PostsController {
   }
 
   @Get()
-  async getAllPosts(@Query() query: { take: number; skip?: number }) {
+  async getAllPosts(@Query() query: PostQueryType) {
     return await this.postsService.postFindAll(query.take, query.skip);
   }
 

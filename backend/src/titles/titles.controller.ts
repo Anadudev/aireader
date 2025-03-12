@@ -15,12 +15,13 @@ import { User } from '@prisma/client';
 import { AuthGuard } from 'src/auth/auth.guards';
 import { NewTitleDto } from 'src/posts/dto/posts.dto';
 import { TitlesService } from './titles.service';
+import { TitleQueryType } from 'src/types/titleQuery.types';
 
 @Controller('titles')
 export class TitlesController {
   constructor(private titlesService: TitlesService) {}
   @UseGuards(AuthGuard)
-  @Post('/titles')
+  @Post()
   async createTitle(@Body() formPayload: NewTitleDto, @Request() req) {
     const authorId = (req.user as User).id;
     // req['user'] = undefined;
@@ -33,18 +34,18 @@ export class TitlesController {
   }
 
   @Get()
-  async getAllTitle(@Query() query: { take: number; skip?: number }) {
+  async getAllTitle(@Query() query: TitleQueryType) {
     return await this.titlesService.titleFindAll(query.take, query.skip);
   }
 
   @UseGuards(AuthGuard)
-  @Delete('/titles/:id')
+  @Delete(':id')
   async deleteTitle(@Param('id') id: string) {
     return await this.titlesService.titleDelete(id);
   }
 
   @UseGuards(AuthGuard)
-  @Patch('/titles/:id')
+  @Patch(':id')
   async updateTitle(
     @Param('id') id: string,
     @Body() formPayload: NewTitleDto,
