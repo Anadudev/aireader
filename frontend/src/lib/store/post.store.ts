@@ -38,7 +38,9 @@ type PostStoreType = {
   titleCreateLoading: boolean;
   titleDeleteLoading: boolean;
   posts: PostType[];
+  titles: TitleType[];
   handlePostGet: () => void;
+  handleTitleGet: () => void;
   handlePostCreate: (postPayload: PostPayloadType) => void;
   handlePostDelete: (id: string) => void;
   handlePostUpdate: (id: string, postPayload: PostPayloadType[]) => void;
@@ -58,6 +60,7 @@ const usePostStore = create<PostStoreType>((set) => ({
   titleCreateLoading: false,
   titleDeleteLoading: false,
   posts: [],
+  titles: [],
 
   handlePostCreate: async (postPayload: PostPayloadType) => {
     try {
@@ -81,7 +84,7 @@ const usePostStore = create<PostStoreType>((set) => ({
   handlePostGet: async () => {
     try {
       set({ postGetLoading: true });
-      const response = axiosInstance.get("/posts");
+      const response = await axiosInstance.get("/posts");
       set({ posts: response.data });
       toast.success("Posts fetched successfully");
     } catch (error) {
@@ -93,6 +96,23 @@ const usePostStore = create<PostStoreType>((set) => ({
       console.error("[handlePostGet]: ", error);
     } finally {
       set({ postGetLoading: false });
+    }
+  },
+  handleTitleGet: async () => {
+    try {
+      set({ titleGetLoading: true });
+      const response = await axiosInstance.get("/posts/titles");
+      set({ titles: response.data });
+      toast.success("Posts fetched successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
+      console.error("[handlePostGet]: ", error);
+    } finally {
+      set({ titleGetLoading: false });
     }
   },
   handlePostDelete: (id: string) => {

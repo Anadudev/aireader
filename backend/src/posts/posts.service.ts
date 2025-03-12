@@ -25,6 +25,18 @@ export class PostsService {
     }
   }
 
+  async titleFindAll(take = 10, skip?: number, include?: PostInclude) {
+    try {
+      if (take < 1) take = 1;
+      if (skip && skip < 0) skip = 0;
+      const titles = await this.prisma.title.findMany({ take, skip, include });
+      return titles;
+    } catch (error) {
+      console.error(`[postFindAll]: ${error}`);
+      errorMessages.SERVER_ERROR(error);
+    }
+  }
+
   async postFindOne(id: string, include?: PostInclude) {
     try {
       const post = await this.prisma.post.findUnique({

@@ -21,7 +21,7 @@ export class PostsController {
   constructor(private postsService: PostsService) {}
 
   @UseGuards(AuthGuard)
-  @Post('/title')
+  @Post('/titles')
   async createTitle(@Body() formPayload: NewTitleDto, @Request() req) {
     const authorId = (req.user as User).id;
     // req['user'] = undefined;
@@ -58,13 +58,18 @@ export class PostsController {
     return await this.postsService.postFindAll(query.take, query.skip);
   }
 
+  @Get('/titles')
+  async getAllTitle(@Query() query: { take: number; skip?: number }) {
+    return await this.postsService.titleFindAll(query.take, query.skip);
+  }
+
   @Get(':id')
   async getPost(@Param('id') id: string) {
     return await this.postsService.postFindOne(id);
   }
 
   @UseGuards(AuthGuard)
-  @Delete('/title/:id')
+  @Delete('/titles/:id')
   async deleteTitle(@Param('id') id: string) {
     return await this.postsService.titleDelete(id);
   }
@@ -76,7 +81,7 @@ export class PostsController {
   }
 
   @UseGuards(AuthGuard)
-  @Patch('/title/:id')
+  @Patch('/titles/:id')
   async updateTitle(
     @Param('id') id: string,
     @Body() formPayload: NewTitleDto,
