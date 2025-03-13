@@ -5,7 +5,6 @@ const ExplorePage = () => {
   return (
     <div>
       {/* todo: implement breadcrumbs */}
-      <h1>ExplorePage</h1>
       <div className="p-2">
         <PostsList />
       </div>

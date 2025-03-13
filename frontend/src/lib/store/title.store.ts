@@ -20,7 +20,6 @@ const useTitleStore = create<TitleStoreType>((set) => ({
   handleTitlesGet: async (queries?: TitleQueryType) => {
     try {
       set({ titleGetLoading: true });
-      // await new Promise(resolve => setTimeout(resolve, 5000)); // Simulate a 5 seconds delay
       const response = await axiosInstance.get("/titles", {
         params: queries,
       });
@@ -43,6 +42,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
   handleTitleGet: async (slug: string, include?: TitleIncludeType) => {
     try {
       set({ titleGetLoading: true });
+      // await new Promise(resolve => setTimeout(resolve, 5000)); // Simulate a 5 seconds delay
       const response = await axiosInstance.get(`/titles/${slug}`, {
         params: include,
       });
