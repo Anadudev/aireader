@@ -16,6 +16,8 @@ import { NewTitleDto } from 'src/posts/dto/posts.dto';
 import { TitlesService } from './titles.service';
 import { TitleIncludeType, TitleQueryType } from 'src/types/titleQuery.types';
 import { ExtendedRequest } from 'src/types/ExtendRequest';
+import slugify from 'slugify';
+import { v4 as uuidv4 } from 'uuid';
 
 @Controller('titles')
 export class TitlesController {
@@ -31,7 +33,11 @@ export class TitlesController {
     if (!authorId) {
       throw new UnauthorizedException();
     }
-    const payload = { authorId, ...formPayload };
+    const payload = {
+      slug: `${slugify(formPayload.title, '-')}${uuidv4()}`,
+      authorId,
+      ...formPayload,
+    };
 
     return await this.titlesService.titleCreate(payload);
   }
@@ -51,15 +57,15 @@ export class TitlesController {
   }
 
   @UseGuards(AuthGuard)
-  @Delete(':id')
-  async deleteTitle(@Param('id') id: string) {
-    return await this.titlesService.titleDelete(id);
+  @Delete(':slug')
+  async deleteTitle(@Param('slug') slug: string) {
+    return await this.titlesService.titleDelete(slug);
   }
 
   @UseGuards(AuthGuard)
-  @Patch(':id')
+  @Patch(':slug')
   async updateTitle(
-    @Param('id') id: string,
+    @Param('slug') slug: string,
     @Body() formPayload: NewTitleDto,
     @Request() req: ExtendedRequest,
   ) {
@@ -68,7 +74,11 @@ export class TitlesController {
       throw new UnauthorizedException();
     }
 
-    const payload = { id, authorId, ...formPayload };
-    return await this.titlesService.titleUpdate(payload);
+    const payload = {
+      slug,
+      authorId,
+      ...formPayload,
+    };
+    return await this.titlesService.titleUpdate(slug, payload);
   }
 }

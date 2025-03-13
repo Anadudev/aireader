@@ -18,7 +18,7 @@ const PostCard = ({
 
   return (
     <Link
-      href={`/explore/${title?.id}`}
+      href={`/explore/${title?.slug}`}
       className="flex-1 cursor-pointer group card backdrop-blur-lg shadow-sm transition-all ease-in-out duration-500 p-4 rounded-3xl sm:min-h-60 border-2 hover:border-slate-300/35 border-slate-300/10 max-w-[32rem] min-w-72 sm:min-w-80"
     >
       <div className="float-left relative size-8 bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500 mb-4  mr-4 rounded-full border-2">

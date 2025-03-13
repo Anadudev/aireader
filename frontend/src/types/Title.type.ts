@@ -5,7 +5,7 @@ import { UserType } from "@/types/User.type";
 export type PaginationType = {
   take: number;
   skip?: number;
-}
+};
 
 export type TitleQueryType = QueryType & {
   posts?: boolean;
@@ -17,6 +17,7 @@ export type TitlePayloadType = {
 
 export type TitleType = {
   id: string;
+  slug: string;
   createdAt: string;
   updatedAt: string;
   title: string;

@@ -1,12 +1,13 @@
 export type NewTitleType = {
+  slug: string;
   authorId: string;
   title: string;
 };
 
 export type UpdateTitleType = {
-  id: string;
   authorId: string;
   title: string;
+  slug: string;
 };
 
 export type NewPost = {

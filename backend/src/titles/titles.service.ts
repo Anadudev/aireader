@@ -3,6 +3,8 @@ import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
 import { NewTitleType, UpdateTitleType } from 'src/types/postFields.types';
 import { TitleIncludeType, TitleQueryType } from 'src/types/titleQuery.types';
+import slugify from 'slugify';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class TitlesService {
@@ -39,10 +41,10 @@ export class TitlesService {
     }
   }
 
-  async titleFindOne(id: string, include?: TitleIncludeType) {
+  async titleFindOne(slug: string, include?: TitleIncludeType) {
     try {
       const title = await this.prisma.title.findUnique({
-        where: { id },
+        where: { slug },
         include: {
           posts: Boolean(include?.posts || false),
           author: Boolean(include?.author || false),
@@ -60,7 +62,7 @@ export class TitlesService {
 
   async titleDelete(slug: string) {
     try {
-      const title = await this.prisma.title.delete({ where: { title: slug } });
+      const title = await this.prisma.title.delete({ where: { slug } });
       if (!title) {
         throw new HttpException('Title not found', 404);
       }
@@ -71,10 +73,11 @@ export class TitlesService {
     }
   }
 
-  async titleUpdate(titlePayload: UpdateTitleType) {
+  async titleUpdate(slug: string, titlePayload: UpdateTitleType) {
     try {
+      titlePayload.slug = `${slugify(titlePayload.title, '-')}${uuidv4()}`;
       const title = await this.prisma.title.update({
-        where: { id: titlePayload.id },
+        where: { slug },
         data: titlePayload,
       });
       if (!title) {
