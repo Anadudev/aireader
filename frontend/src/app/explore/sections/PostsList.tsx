@@ -11,7 +11,7 @@ const PostsList = () => {
   }, [handleTitlesGet]);
   //   handlePostGet();
   return (
-    <div className="flex flex-wrap gap-2 w-full items-center justify-center">
+    <div className="flex flex-wrap gap-2 w-full items-center justify-center p-2">
       {titleGetLoading &&
         [...Array(3)].map((_, index) => <PostCardSkeleton key={index} />)}
       {titles?.map((title, index) => (

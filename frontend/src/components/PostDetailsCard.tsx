@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import useTitleStore from "@/lib/store/title.store";
 import ChatCard from "@/components/ChatCard";
+import { CircleUserRound } from "lucide-react";
 
 const PostDetailsCard = ({ slug }: { slug: string }) => {
   const { handleTitleGet, post, titleGetLoading } = useTitleStore();
@@ -15,6 +16,10 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
       <div>PostDetailsCard</div>
       {post && (
         <div className="p-2">
+          <div className="text-slate-500 capitalize font-extrabold">
+            <CircleUserRound />
+            {post?.author?.username}
+          </div>
           <div>
             <h1 className="ext-xl font-extrabold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500 text-4xl sm:text-5xl text-center">
               {post.title}
