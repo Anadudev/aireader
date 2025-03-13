@@ -1,15 +1,15 @@
 "use client";
 import React, { useEffect } from "react";
-import TitleStoreType from "@/lib/store/title.store";
 import PostCardSkeleton from "@/components/loading/skeleton/PostCardSkeleton";
 import PostCard from "@/components/PostCard";
+import useTitleStore from "@/lib/store/title.store";
 
 const PostsList = () => {
-  const { titles, handleTitlesGet, titleGetLoading } = TitleStoreType();
+  const { titles, handleTitlesGet, titleGetLoading } = useTitleStore();
   useEffect(() => {
-    handleTitlesGet({ posts: true });
+    handleTitlesGet({posts: true});
   }, [handleTitlesGet]);
-  //   handlePostGet();
+
   return (
     <div className="flex flex-wrap gap-2 w-full items-center justify-center p-2">
       {titleGetLoading &&

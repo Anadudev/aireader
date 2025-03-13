@@ -2,6 +2,11 @@ import { PostType } from "@/types/Post.type";
 import { QueryType } from "@/types/Query.type";
 import { UserType } from "@/types/User.type";
 
+export type PaginationType = {
+  take: number;
+  skip?: number;
+}
+
 export type TitleQueryType = QueryType & {
   posts?: boolean;
 };

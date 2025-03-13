@@ -14,8 +14,8 @@ import {
 import { PostsService } from './posts.service';
 import { AuthGuard } from 'src/auth/auth.guards';
 import { NewPostDto, UpdatePostDto } from './dto/posts.dto';
-import { User } from '@prisma/client';
 import { PostQueryType } from 'src/types/postQuery.types';
+import { ExtendedRequest } from 'src/types/ExtendRequest';
 
 @Controller('posts')
 export class PostsController {
@@ -23,8 +23,11 @@ export class PostsController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async createPost(@Body() formPayload: NewPostDto, @Request() req) {
-    const authorId = (req.user as User).id;
+  async createPost(
+    @Body() formPayload: NewPostDto,
+    @Request() req: ExtendedRequest,
+  ) {
+    const authorId = req.user?.id;
     const { titleId } = formPayload;
     // req['user'] = undefined;
     if (!authorId) {
@@ -43,7 +46,7 @@ export class PostsController {
 
   @Get()
   async getAllPosts(@Query() query: PostQueryType) {
-    return await this.postsService.postFindAll(query.take, query.skip);
+    return await this.postsService.postFindAll(query);
   }
 
   @Get(':id')
@@ -62,9 +65,9 @@ export class PostsController {
   async updatePost(
     @Param('id') id: string,
     @Body() formPayload: UpdatePostDto,
-    @Request() req,
+    @Request() req: ExtendedRequest,
   ) {
-    const authorId = (req.user as User).id;
+    const authorId = req?.user?.id;
     if (!authorId) {
       throw new UnauthorizedException();
     }

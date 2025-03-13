@@ -34,7 +34,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
       error.response && error.response.data.message
         ? toast.error(error.response.data.message)
         : toast.error("Something went wrong");
-      console.error("[handlePostGet]: ", error);
+      console.error("[handleTitlesGet]: ", error);
     } finally {
       set({ titleGetLoading: false });
     }
@@ -57,7 +57,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
       error.response && error.response.data.message
         ? toast.error(error.response.data.message)
         : toast.error("Something went wrong");
-      console.error("[handlePostGet]: ", error);
+      console.error("[handleTitlesGet]: ", error);
     } finally {
       set({ titleGetLoading: false });
     }
@@ -76,7 +76,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
       error.response && error.response.data.message
         ? toast.error(error.response.data.message)
         : toast.error("Something went wrong");
-      console.error("[handlePostGet]: ", error);
+      console.error("[handleTitlesGet]: ", error);
     } finally {
       set({ titleDeleteLoading: false });
     }

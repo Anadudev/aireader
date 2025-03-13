@@ -2,16 +2,19 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
 import { NewPost, PostInclude, UpdatePost } from 'src/types/postFields.types';
+import { PostQueryType } from 'src/types/postQuery.types';
 
 @Injectable()
 export class PostsService {
   constructor(private prisma: PrismaConfigService) {}
 
-  async postFindAll(take = 10, skip?: number, include?: PostInclude) {
+  async postFindAll(query: PostQueryType) {
     try {
-      if (take < 1) take = 1;
-      if (skip && skip < 0) skip = 0;
-      const posts = await this.prisma.post.findMany({ take, skip, include });
+      const posts = await this.prisma.post.findMany({
+        where: { titleId: query.titleId },
+        take: Number(query.take || 10),
+        skip: Number(query.skip || 0),
+      });
       return posts;
     } catch (error) {
       console.error(`[postFindAll]: ${error}`);

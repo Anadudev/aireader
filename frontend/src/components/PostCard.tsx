@@ -1,20 +1,21 @@
+import React from "react";
 import stringLimiter from "@/lib/stringLimiter";
 import { PostType } from "@/types/Post.type";
 import { TitleType } from "@/types/Title.type";
 import { MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 const PostCard = ({
   title,
-  post,
   total,
+  post,
 }: {
   title: TitleType;
-  post?: PostType;
   total?: number;
+  post: PostType;
 }) => {
+
   return (
     <Link
       href={`/explore/${title?.id}`}
@@ -34,7 +35,10 @@ const PostCard = ({
         <span className="underline">{total}</span>{" "}
       </div>
       <div className="space-y-5">
-        <h2 title={title?.title} className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500">
+        <h2
+          title={title?.title}
+          className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500"
+        >
           {stringLimiter(title?.title, 30)}
         </h2>
         <div className="space-y-2 transition-all duration-200">

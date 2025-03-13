@@ -2,7 +2,11 @@ import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
 import toast from "react-hot-toast";
 import useAuthStore from "@/lib/store/auth.store";
-import { PostStoreType, PostPayloadType } from "@/types/Post.type";
+import {
+  PostStoreType,
+  PostPayloadType,
+  PostQueryType,
+} from "@/types/Post.type";
 
 const usePostStore = create<PostStoreType>((set) => ({
   postGetLoading: false,
@@ -30,10 +34,14 @@ const usePostStore = create<PostStoreType>((set) => ({
       set({ postCreateLoading: false });
     }
   },
-  handlePostGet: async () => {
+  handlePostsGet: async (
+    query?: PostQueryType
+  ) => {
     try {
       set({ postGetLoading: true });
-      const response = await axiosInstance.get("/posts");
+      const response = await axiosInstance.get("/posts", {
+        params: query,
+      });
       set({ posts: response.data });
       toast.success("Posts fetched successfully", {
         id: "get-many",
@@ -44,7 +52,7 @@ const usePostStore = create<PostStoreType>((set) => ({
       error.response && error.response.data.message
         ? toast.error(error.response.data.message)
         : toast.error("Something went wrong");
-      console.error("[handlePostGet]: ", error);
+      console.error("[handlePostsGet]: ", error);
     } finally {
       set({ postGetLoading: false });
     }

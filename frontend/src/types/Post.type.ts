@@ -1,9 +1,10 @@
 import { TitleType } from "@/types/Title.type";
-import { QueryType } from '@/types/Query.type';
-
+import { QueryType } from "@/types/Query.type";
 
 export type PostQueryType = QueryType & {
   title?: boolean;
+  titleId?: string;
+  authorId?: string;
 };
 
 export type PostType = {
@@ -26,7 +27,7 @@ export type PostStoreType = {
   postCreateLoading: boolean;
   postDeleteLoading: boolean;
   posts: PostType[];
-  handlePostGet: () => void;
+  handlePostsGet: (query?: PostQueryType) => void;
   handlePostCreate: (postPayload: PostPayloadType) => void;
   handlePostDelete: (id: string) => void;
   handlePostUpdate: (id: string, postPayload: PostPayloadType[]) => void;
