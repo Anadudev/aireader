@@ -2,7 +2,11 @@ import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
 import toast from "react-hot-toast";
 import useAuthStore from "@/lib/store/auth.store";
-import { TitleStoreType, TitlePayloadType } from "@/types/Title.type";
+import {
+  TitleStoreType,
+  TitlePayloadType,
+  TitleQueryType,
+} from "@/types/Title.type";
 
 const useTitleStore = create<TitleStoreType>((set) => ({
   titleGetLoading: false,
@@ -11,10 +15,12 @@ const useTitleStore = create<TitleStoreType>((set) => ({
   titleDeleteLoading: false,
   titles: [],
 
-  handleTitleGet: async () => {
+  handleTitleGet: async (queries?: TitleQueryType) => {
     try {
       set({ titleGetLoading: true });
-      const response = await axiosInstance.get("/titles");
+      const response = await axiosInstance.get("/titles", {
+        params: queries,
+      });
       set({ titles: response.data });
       toast.success("Posts fetched successfully");
     } catch (error) {
@@ -28,6 +34,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
       set({ titleGetLoading: false });
     }
   },
+
   handleTitleDelete: async () => {
     try {
       set({ titleDeleteLoading: true });
@@ -46,10 +53,11 @@ const useTitleStore = create<TitleStoreType>((set) => ({
       set({ titleDeleteLoading: false });
     }
   },
+
   handleTitleCreate: async (titlePayload: TitlePayloadType) => {
     try {
       set({ titleCreateLoading: true });
-      const response = await axiosInstance.post("/posts/title", titlePayload, {
+      const response = await axiosInstance.post("/titles", titlePayload, {
         headers: {
           Authorization: `Bearer ${useAuthStore.getState().access_token}`,
         },
@@ -73,7 +81,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
   handleTitleUpdate: (id: string, titlePayload: TitlePayloadType) => {
     try {
       set({ titleUpdateLoading: true });
-      axiosInstance.patch(`/posts/title/${id}`, titlePayload);
+      axiosInstance.patch(`/titles/${id}`, titlePayload);
       toast.success("Title updated successfully");
     } catch (error) {
       toast.error(error.response.data.message);

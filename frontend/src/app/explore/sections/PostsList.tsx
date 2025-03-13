@@ -6,14 +6,19 @@ import React, { useEffect } from "react";
 const PostsList = () => {
   const { titles, handleTitleGet, titleGetLoading } = TitleStoreType();
   useEffect(() => {
-    handleTitleGet();
+    handleTitleGet({ posts: true });
   }, [handleTitleGet]);
   //   handlePostGet();
   return (
     <div className="flex flex-wrap gap-2 w-full items-center justify-center">
       {titleGetLoading && <span className="">loading titles...</span>}
-      {titles?.map((title, i) => (
-        <PostCard title={title.title} key={i} />
+      {titles?.map((title, index) => (
+        <PostCard
+          title={title}
+          key={index}
+          post={title?.posts && title?.posts[0]}
+          total={title?.posts?.length}
+        />
       ))}
     </div>
   );

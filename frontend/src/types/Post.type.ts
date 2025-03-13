@@ -2,8 +2,8 @@ import { TitleType } from "@/types/Title.type";
 import { QueryType } from '@/types/Query.type';
 
 
-export type TitleQueryType = QueryType & {
-  posts?: boolean;
+export type PostQueryType = QueryType & {
+  title?: boolean;
 };
 
 export type PostType = {

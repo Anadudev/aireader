@@ -35,7 +35,8 @@ export class TitlesController {
 
   @Get()
   async getAllTitle(@Query() query: TitleQueryType) {
-    return await this.titlesService.titleFindAll(query.take, query.skip);
+    // console.log(query);
+    return await this.titlesService.titleFindAll(query);
   }
 
   @UseGuards(AuthGuard)

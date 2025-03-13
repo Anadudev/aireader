@@ -1,11 +1,8 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
-import {
-  NewTitleType,
-  PostInclude,
-  UpdateTitleType,
-} from 'src/types/postFields.types';
+import { NewTitleType, UpdateTitleType } from 'src/types/postFields.types';
+import { TitleQueryType } from 'src/types/titleQuery.types';
 
 @Injectable()
 export class TitlesService {
@@ -26,11 +23,15 @@ export class TitlesService {
     }
   }
 
-  async titleFindAll(take = 10, skip?: number, include?: PostInclude) {
+  async titleFindAll(queries?: TitleQueryType) {
     try {
-      if (take < 1) take = 1;
-      if (skip && skip < 0) skip = 0;
-      const titles = await this.prisma.title.findMany({ take, skip, include });
+      const titles = await this.prisma.title.findMany({
+        take: Number(queries?.take || 10),
+        skip: Number(queries?.skip || 0),
+        include: {
+          posts: Boolean(queries?.posts),
+        },
+      });
       return titles;
     } catch (error) {
       console.error(`[postFindAll]: ${error}`);

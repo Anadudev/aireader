@@ -21,6 +21,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import PostDeleteToast from "./PostDeleteToast";
 import usePostStore from "@/lib/store/post.store";
+import useTitleStore from "@/lib/store/title.store";
 
 const formSchema = z.object({
   title: z.string().min(15, {
@@ -43,12 +44,8 @@ const PostForm = () => {
   const chatData = { chatId: 0, prompt: "", response: "" };
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
   const [trigger, setTrigger] = React.useState(false);
-  const {
-    handleTitleCreate,
-    handlePostCreate,
-    titleCreateLoading,
-    postCreateLoading,
-  } = usePostStore();
+  const { handlePostCreate, postCreateLoading } = usePostStore();
+  const { titleCreateLoading, handleTitleCreate } = useTitleStore();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -154,7 +151,12 @@ const PostForm = () => {
               <FormItem className="">
                 <FormLabel>AI post title:</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Chat title" className="" />
+                  <Input
+                    disabled={postCreateLoading || titleCreateLoading}
+                    {...field}
+                    placeholder="Chat title"
+                    className=""
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -165,6 +167,7 @@ const PostForm = () => {
             <div key={index} className="space-y-4">
               <div className="flex justify-end items-center w-full">
                 <Button
+                  disabled={postCreateLoading || titleCreateLoading}
                   onClick={() => removeChat(chat.chatId)}
                   className="cursor-pointer"
                   variant="destructive"
@@ -181,6 +184,7 @@ const PostForm = () => {
                     <FormLabel>Prompt</FormLabel>
                     <FormControl>
                       <Input
+                        disabled={postCreateLoading || titleCreateLoading}
                         {...field}
                         placeholder={`Enter your prompt "${index + 1}"`}
                       />
@@ -197,6 +201,7 @@ const PostForm = () => {
                     <FormLabel>Response</FormLabel>
                     <FormControl>
                       <Textarea
+                        disabled={postCreateLoading || titleCreateLoading}
                         className="w-full h-96 p-2 "
                         {...field}
                         placeholder={`Enter your response for prompt "${
@@ -213,6 +218,7 @@ const PostForm = () => {
 
           <div className="flex gap-2 items-center justify-end">
             <Button
+              disabled={postCreateLoading || titleCreateLoading}
               onClick={addMoreChatForm}
               className="cursor-pointer"
               variant={"outline"}
@@ -226,6 +232,7 @@ const PostForm = () => {
         </form>
       </Form>
       <Button
+        disabled={postCreateLoading || titleCreateLoading}
         onClick={scrollToBottom}
         variant={"outline"}
         size={"icon"}
