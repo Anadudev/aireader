@@ -13,7 +13,7 @@ const PostCard = ({
 }: {
   title: TitleType;
   total?: number;
-  post: PostType;
+  post?: PostType;
 }) => {
 
   return (
