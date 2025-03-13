@@ -11,19 +11,22 @@ import {
   Param,
   Patch,
 } from '@nestjs/common';
-import { User } from '@prisma/client';
 import { AuthGuard } from 'src/auth/auth.guards';
 import { NewTitleDto } from 'src/posts/dto/posts.dto';
 import { TitlesService } from './titles.service';
 import { TitleIncludeType, TitleQueryType } from 'src/types/titleQuery.types';
+import { ExtendedRequest } from 'src/types/ExtendRequest';
 
 @Controller('titles')
 export class TitlesController {
   constructor(private titlesService: TitlesService) {}
   @UseGuards(AuthGuard)
   @Post()
-  async createTitle(@Body() formPayload: NewTitleDto, @Request() req) {
-    const authorId = (req.user as User).id;
+  async createTitle(
+    @Body() formPayload: NewTitleDto,
+    @Request() req: ExtendedRequest,
+  ) {
+    const authorId = req.user?.id;
     // req['user'] = undefined;
     if (!authorId) {
       throw new UnauthorizedException();
@@ -58,9 +61,9 @@ export class TitlesController {
   async updateTitle(
     @Param('id') id: string,
     @Body() formPayload: NewTitleDto,
-    @Request() req,
+    @Request() req: ExtendedRequest,
   ) {
-    const authorId = (req.user as User).id;
+    const authorId = req.user?.id;
     if (!authorId) {
       throw new UnauthorizedException();
     }
