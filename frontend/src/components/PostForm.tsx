@@ -19,7 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import PostDeleteToast from "./PostDeleteToast";
+import PostDeleteToast from "@/components/PostDeleteToast";
 import usePostStore from "@/lib/store/post.store";
 import useTitleStore from "@/lib/store/title.store";
 

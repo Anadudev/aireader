@@ -1,7 +1,7 @@
 import { TriangleAlert } from "lucide-react";
 import React from "react";
 import toast, { Toast } from "react-hot-toast";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 const PostDeleteToast = ({ t, onCLick }: { t: Toast; onCLick: () => void }) => {
   return (

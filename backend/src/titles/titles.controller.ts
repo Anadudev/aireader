@@ -15,7 +15,7 @@ import { User } from '@prisma/client';
 import { AuthGuard } from 'src/auth/auth.guards';
 import { NewTitleDto } from 'src/posts/dto/posts.dto';
 import { TitlesService } from './titles.service';
-import { TitleQueryType } from 'src/types/titleQuery.types';
+import { TitleIncludeType, TitleQueryType } from 'src/types/titleQuery.types';
 
 @Controller('titles')
 export class TitlesController {
@@ -37,6 +37,14 @@ export class TitlesController {
   async getAllTitle(@Query() query: TitleQueryType) {
     // console.log(query);
     return await this.titlesService.titleFindAll(query);
+  }
+
+  @Get(':slug')
+  async getTitle(
+    @Query() include: TitleIncludeType,
+    @Param('slug') slug: string,
+  ) {
+    return await this.titlesService.titleFindOne(slug, include);
   }
 
   @UseGuards(AuthGuard)

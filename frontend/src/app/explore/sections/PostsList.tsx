@@ -5,10 +5,10 @@ import PostCardSkeleton from "@/components/loading/skeleton/PostCardSkeleton";
 import PostCard from "@/components/PostCard";
 
 const PostsList = () => {
-  const { titles, handleTitleGet, titleGetLoading } = TitleStoreType();
+  const { titles, handleTitlesGet, titleGetLoading } = TitleStoreType();
   useEffect(() => {
-    handleTitleGet({ posts: true });
-  }, [handleTitleGet]);
+    handleTitlesGet({ posts: true });
+  }, [handleTitlesGet]);
   //   handlePostGet();
   return (
     <div className="flex flex-wrap gap-2 w-full items-center justify-center">

@@ -17,8 +17,8 @@ model Account {
   id       String @id @unique @default(uuid())
   password String
 
-  userId   String @unique
-  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+  userId String @unique
+  user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
 
 model User {
@@ -30,10 +30,12 @@ model User {
 
   posts      Post[]
   postTitles Title[]
-  accounts Account[]
+  accounts   Account[]
 }
 
 model Title {
+  // TODO: implement slug field
+
   id    String @id @unique @default(uuid())
   title String @unique
 
@@ -46,17 +48,17 @@ model Title {
 }
 
 model Post {
-  id        String   @id @unique @default(uuid())
-  prompt    String
-  response  String
+  id       String @id @unique @default(uuid())
+  prompt   String
+  response String
 
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
-  authorId    String
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  titleId   String
-  title     Title    @relation(fields: [titleId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  titleId  String
+  title    Title  @relation(fields: [titleId], references: [id], onDelete: Cascade)
 
   @@unique([titleId, id, authorId])
 }

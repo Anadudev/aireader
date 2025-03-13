@@ -6,6 +6,7 @@ import {
   TitleStoreType,
   TitlePayloadType,
   TitleQueryType,
+  TitleIncludeType,
 } from "@/types/Title.type";
 
 const useTitleStore = create<TitleStoreType>((set) => ({
@@ -14,17 +15,41 @@ const useTitleStore = create<TitleStoreType>((set) => ({
   titleCreateLoading: false,
   titleDeleteLoading: false,
   titles: [],
+  post: null,
 
-  handleTitleGet: async (queries?: TitleQueryType) => {
+  handleTitlesGet: async (queries?: TitleQueryType) => {
     try {
       set({ titleGetLoading: true });
-      await new Promise(resolve => setTimeout(resolve, 5000)); // Simulate a 5 seconds delay
+      // await new Promise(resolve => setTimeout(resolve, 5000)); // Simulate a 5 seconds delay
       const response = await axiosInstance.get("/titles", {
         params: queries,
       });
       set({ titles: response.data });
       toast.success("Posts fetched successfully", {
         id: "get-many",
+      });
+    } catch (error) {
+      toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      error.response && error.response.data.message
+        ? toast.error(error.response.data.message)
+        : toast.error("Something went wrong");
+      console.error("[handlePostGet]: ", error);
+    } finally {
+      set({ titleGetLoading: false });
+    }
+  },
+
+  handleTitleGet: async (slug: string, include?: TitleIncludeType) => {
+    try {
+      set({ titleGetLoading: true });
+      const response = await axiosInstance.get(`/titles/${slug}`, {
+        params: include,
+      });
+      set({ post: response.data });
+      console.log(response.data);
+      toast.success("Post fetched successfully", {
+        id: "get-one",
       });
     } catch (error) {
       toast.error(error.response.data.message);

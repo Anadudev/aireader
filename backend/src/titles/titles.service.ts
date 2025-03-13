@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
 import { NewTitleType, UpdateTitleType } from 'src/types/postFields.types';
-import { TitleQueryType } from 'src/types/titleQuery.types';
+import { TitleIncludeType, TitleQueryType } from 'src/types/titleQuery.types';
 
 @Injectable()
 export class TitlesService {
@@ -38,9 +38,29 @@ export class TitlesService {
       errorMessages.SERVER_ERROR(error);
     }
   }
-  async titleDelete(id: string) {
+
+  async titleFindOne(id: string, include?: TitleIncludeType) {
     try {
-      const title = await this.prisma.title.delete({ where: { id } });
+      const title = await this.prisma.title.findUnique({
+        where: { id },
+        include: {
+          posts: Boolean(include?.posts || false),
+          author: Boolean(include?.author || false),
+        },
+      });
+      if (!title) {
+        throw new HttpException('Title not found', 404);
+      }
+      return title;
+    } catch (error) {
+      console.error(`[titleFindOne]: ${error}`);
+      errorMessages.SERVER_ERROR(error);
+    }
+  }
+
+  async titleDelete(slug: string) {
+    try {
+      const title = await this.prisma.title.delete({ where: { title: slug } });
       if (!title) {
         throw new HttpException('Title not found', 404);
       }

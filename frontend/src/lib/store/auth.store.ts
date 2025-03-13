@@ -2,21 +2,16 @@ import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
 // import { persist } from "zustand/middleware";
 import toast from "react-hot-toast";
+import { UserType } from "@/types/User.type";
 // import { AccessTokenLocalStorage, RemoveItem } from "../localStorage";
 
-type AuthUserType = {
-  username: string;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
 
 type AuthStore = {
-  authUser: AuthUserType | null;
+  authUser: UserType | null;
   access_token: string | null;
   loadingSignUp: boolean;
   loadingLogin: boolean;
-  setAuthUser: (user: AuthUserType | null) => void;
+  setAuthUser: (user: UserType | null) => void;
   loginHandler: (data: { username: string; password: string }) => Promise<void>;
   signupHandler: (data: {
     username: string;
@@ -41,7 +36,7 @@ const useAuthStore = create<AuthStore>((set, get) => ({
   authUser: null,
   logoutLoading: false,
 
-  setAuthUser: (user: AuthUserType | null) => set({ authUser: user }),
+  setAuthUser: (user: UserType | null) => set({ authUser: user }),
 
   authUserHandler: async () => {
     try {

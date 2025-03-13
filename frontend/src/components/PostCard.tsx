@@ -17,7 +17,7 @@ const PostCard = ({
 }) => {
   return (
     <Link
-      href={"#"}
+      href={`/explore/${title?.id}`}
       className="flex-1 cursor-pointer group card backdrop-blur-lg shadow-sm transition-all ease-in-out duration-200 p-4 rounded-3xl sm:min-h-60 border-2 hover:border-slate-300/35 border-slate-300/10 max-w-[32rem] min-w-80"
     >
       <div className="float-left relative size-8 bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500 mb-4  mr-4 rounded-full border-2">
@@ -34,7 +34,7 @@ const PostCard = ({
         <span className="underline">{total}</span>{" "}
       </div>
       <div className="space-y-5">
-        <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500">
+        <h2 title={title?.title} className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500">
           {stringLimiter(title?.title, 30)}
         </h2>
         <div className="space-y-2 transition-all duration-200">
