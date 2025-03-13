@@ -1,7 +1,7 @@
 "use client";
 import { BookOpen, Home, Info, Loader, Menu, UserRound } from "lucide-react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
@@ -40,12 +40,12 @@ const Navbar = () => {
       >
         <Menu className="size-xl" />
       </Button>
-      <div className="w-full sm:bg-blur sm:bg-transparent/50 sm:backdrop-blur-md fixed top-0 z-10 flex items-center justify-between px-4 py-2">
+      <div className="w-full fixed bg-zinc-200/60 sm:bg-blur sm:bg-transparent/50 sm:backdrop-blur-md  top-0 z-10 flex items-center justify-between px-4 py-2">
         <div className="">
           <Logo />
         </div>
         <div
-          className={`fixed sm:static bg-zinc-200 sm:bg-transparent bottom-4 left-1/2 sm:left-0 flex justify-center border sm:border-none rounded-full transform -translate-x-1/2 sm:translate-x-0 w-fit gap-4 p-1 sm:p-0 ${
+          className={`fixed sm:static bg-zinc-200/50 sm:bg-transparent bottom-4 left-1/2 sm:left-0 flex justify-center border sm:border-none rounded-full transform -translate-x-1/2 sm:translate-x-0 w-fit gap-4 p-1 sm:p-0 backdrop-blur-sm ${
             showNav ? "block" : "hidden sm:flex"
           }`}
         >
@@ -54,10 +54,10 @@ const Navbar = () => {
               key={index}
               asChild
               variant={"link"}
-              className={`text-zinc-800 border flex items-center hover:no-underline p-3
- hover:text-zinc-500 text-md ${
+              className={`hover:text-zinc-800 border flex items-center hover:no-underline p-3
+ text-zinc-500 text-md ${
    pathName === item.href
-     ? "text-zinc-500 rounded-full bg-zinc-100 sm:bg-transparent border-zinc-300 sm:border-none"
+     ? "rounded-full bg-zinc-100 sm:bg-transparent border-zinc-300 sm:border-none"
      : "border-transparent"
  } `}
               title={item.name}
@@ -67,8 +67,8 @@ const Navbar = () => {
                 <p
                   className={` ${
                     pathName === item.href
-                      ? "text-zinc-500 block"
-                      : "hidden sm:block"
+                      ? "text-zinc-800 block"
+                      : "text-zinc-500 hidden sm:block"
                   }  `}
                 >
                   {item.name}
@@ -88,15 +88,15 @@ const Navbar = () => {
               <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem asChild className="cursor-pointer">
                   <Link href={`/user/${authUser?.username}`}>Dashboard</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem asChild className="cursor-pointer">
                   <Link href={`/user/${authUser?.username}/profile`}>
                     Profile
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem asChild className="cursor-pointer">
                   <Link href={`/user/${authUser?.username}/settings`}>
                     Settings
                   </Link>

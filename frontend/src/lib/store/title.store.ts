@@ -18,11 +18,14 @@ const useTitleStore = create<TitleStoreType>((set) => ({
   handleTitleGet: async (queries?: TitleQueryType) => {
     try {
       set({ titleGetLoading: true });
+      await new Promise(resolve => setTimeout(resolve, 5000)); // Simulate a 5 seconds delay
       const response = await axiosInstance.get("/titles", {
         params: queries,
       });
       set({ titles: response.data });
-      toast.success("Posts fetched successfully");
+      toast.success("Posts fetched successfully", {
+        id: "get-many",
+      });
     } catch (error) {
       toast.error(error.response.data.message);
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions

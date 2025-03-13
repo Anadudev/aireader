@@ -1,7 +1,8 @@
 "use client";
-import PostCard from "@/components/PostCard";
-import TitleStoreType from "@/lib/store/title.store";
 import React, { useEffect } from "react";
+import TitleStoreType from "@/lib/store/title.store";
+import PostCardSkeleton from "@/components/loading/skeleton/PostCardSkeleton";
+import PostCard from "@/components/PostCard";
 
 const PostsList = () => {
   const { titles, handleTitleGet, titleGetLoading } = TitleStoreType();
@@ -11,7 +12,8 @@ const PostsList = () => {
   //   handlePostGet();
   return (
     <div className="flex flex-wrap gap-2 w-full items-center justify-center">
-      {titleGetLoading && <span className="">loading titles...</span>}
+      {titleGetLoading &&
+        [...Array(3)].map((_, index) => <PostCardSkeleton key={index} />)}
       {titles?.map((title, index) => (
         <PostCard
           title={title}

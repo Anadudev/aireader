@@ -35,7 +35,9 @@ const usePostStore = create<PostStoreType>((set) => ({
       set({ postGetLoading: true });
       const response = await axiosInstance.get("/posts");
       set({ posts: response.data });
-      toast.success("Posts fetched successfully");
+      toast.success("Posts fetched successfully", {
+        id: "get-many",
+      });
     } catch (error) {
       toast.error(error.response.data.message);
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
