@@ -56,10 +56,14 @@ const usePostStore = create<PostStoreType>((set) => ({
       set({ postGetLoading: false });
     }
   },
-  handlePostDelete: (id: string) => {
+  handlePostDelete: async (id: string) => {
     try {
       set({ postDeleteLoading: true });
-      axiosInstance.delete(`/posts/${id}`);
+      await axiosInstance.delete(`/posts/${id}`, {
+        headers: {
+          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
+        },
+      });
       toast.success("Post deleted successfully");
     } catch (error) {
       toast.error(error.response.data.message);
@@ -75,15 +79,11 @@ const usePostStore = create<PostStoreType>((set) => ({
   handlePostUpdate: async (postPayload: ChatPayload) => {
     try {
       set({ postUpdateLoading: true });
-      await axiosInstance.patch(
-        `/posts/${postPayload.id}`,
-        postPayload,
-        {
-          headers: {
-            Authorization: `Bearer ${useAuthStore.getState().access_token}`,
-          },
-        }
-      );
+      await axiosInstance.patch(`/posts/${postPayload.id}`, postPayload, {
+        headers: {
+          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
+        },
+      });
       toast.success("Post updated successfully");
     } catch (error) {
       toast.error(error.response.data.message);

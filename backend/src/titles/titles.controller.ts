@@ -57,9 +57,9 @@ export class TitlesController {
   }
 
   @UseGuards(AuthGuard)
-  @Delete(':slug')
-  async deleteTitle(@Param('slug') slug: string) {
-    return await this.titlesService.titleDelete(slug);
+  @Delete(':id')
+  async deleteTitle(@Param('id') id: string) {
+    return await this.titlesService.titleDelete(id);
   }
 
   @UseGuards(AuthGuard)

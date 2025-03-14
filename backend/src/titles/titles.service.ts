@@ -60,9 +60,9 @@ export class TitlesService {
     }
   }
 
-  async titleDelete(slug: string) {
+  async titleDelete(id: string) {
     try {
-      const title = await this.prisma.title.delete({ where: { slug } });
+      const title = await this.prisma.title.delete({ where: { id } });
       if (!title) {
         throw new HttpException('Title not found', 404);
       }

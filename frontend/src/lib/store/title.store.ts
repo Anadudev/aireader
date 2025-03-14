@@ -47,7 +47,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
         params: include,
       });
       set({ post: response.data });
-      console.log(response.data);
+      // console.log(response.data);
       toast.success("Post fetched successfully", {
         id: "get-one",
       });
@@ -63,11 +63,15 @@ const useTitleStore = create<TitleStoreType>((set) => ({
     }
   },
 
-  handleTitleDelete: async () => {
+  handleTitleDelete: async (id: string) => {
     try {
       set({ titleDeleteLoading: true });
       //   const response =
-      await axiosInstance.delete("/titles");
+      await axiosInstance.delete(`/titles/${id}`, {
+        headers: {
+          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
+        },
+      });
       //   set({ titles: response.data });
       toast.success("Posts fetched successfully");
     } catch (error) {

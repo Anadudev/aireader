@@ -7,9 +7,10 @@ import ChatCard from "@/components/ChatCard";
 import ChatFormModal from "@/components/ChatFormModal";
 import usePostStore from "@/lib/store/post.store";
 import { Button } from "@/components/ui/button";
-import { Pen, Save } from "lucide-react";
+import { Pen, Plus, Save } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
+import DeleteModal from "@/components/DeleteModal";
 
 const PostsListSection = () => {
   const [editTitle, setEditTitle] = useState(false);
@@ -20,8 +21,11 @@ const PostsListSection = () => {
     titleGetLoading,
     handleTitleUpdate,
     titleUpdateLoading,
+    titleDeleteLoading,
+    handleTitleDelete,
   } = useTitleStore();
-  const { postUpdateLoading } = usePostStore();
+  const { postUpdateLoading, handlePostDelete, postDeleteLoading } =
+    usePostStore();
 
   const handleTitleEdit = (title: string) => {
     setEditTitle(true);
@@ -46,7 +50,12 @@ const PostsListSection = () => {
 
   useEffect(() => {
     handleTitlesGet({ posts: true });
-  }, [handleTitlesGet, postUpdateLoading, titleUpdateLoading]);
+  }, [
+    handleTitlesGet,
+    postUpdateLoading,
+    titleUpdateLoading,
+    postDeleteLoading,
+  ]);
 
   return (
     <div className="">
@@ -58,7 +67,7 @@ const PostsListSection = () => {
             <div className="space-y-1" key={index}>
               <div className="flex gap-2 justify-center flex-wrap">
                 {editTitle ? (
-                  <div className="flex gap-2">
+                  <div className="flex-1 flex gap-2">
                     <Input
                       type="text"
                       className=""
@@ -79,7 +88,7 @@ const PostsListSection = () => {
                     </Button>
                   </div>
                 ) : (
-                  <div className="flex gap-2">
+                  <div className="flex-1 flex gap-2">
                     <h2
                       title={title?.title}
                       className="text-center text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500"
@@ -96,6 +105,16 @@ const PostsListSection = () => {
                     </Button>
                   </div>
                 )}
+                <DeleteModal
+                  title="Delete Post"
+                  description="Are you sure you want to proceed with this action?"
+                  detail="This will delete all chats of this title and action cannot be undone"
+                  onClick={() => handleTitleDelete(title?.id)}
+                  loading={titleDeleteLoading}
+                />
+                <Button>
+                  <Plus />
+                </Button>
               </div>
               <div className="flex flex-wrap gap-2">
                 {title?.posts?.map((chat, index) => (
@@ -103,7 +122,16 @@ const PostsListSection = () => {
                     className="flex-1 border rounded-lg min-w-72 p-2"
                     key={index}
                   >
-                    <ChatFormModal post={chat} triggerText="Edit" />
+                    <div className="flex gap-2">
+                      <DeleteModal
+                        title="Delete Chat"
+                        description="Are you sure you want to delete this chat?"
+                        detail="This will delete only this one chat and action cannot be undone"
+                        onClick={() => handlePostDelete(chat?.id)}
+                        loading={postDeleteLoading}
+                      />
+                      <ChatFormModal post={chat} triggerText="Edit" />
+                    </div>
                     <ChatCard post={chat} />
                   </div>
                 ))}
