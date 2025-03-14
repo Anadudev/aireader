@@ -7,7 +7,7 @@ import {
 import ChatForm from "./ChatForm";
 import { PostType } from "@/types/Post.type";
 // ------------------------
-import { Copy, Pen } from "lucide-react";
+import { Copy, LucideIcon, Pen } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,28 +24,35 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 type ChatFormModalProps = {
-  post: PostType;
-  triggerText: string;
+  post?: PostType;
+  title: string;
+  description: string;
+  Icon: LucideIcon;
+  titleId?: string;
 };
 
-const ChatFormModal: React.FC<ChatFormModalProps> = ({ post, triggerText }) => {
+const ChatFormModal: React.FC<ChatFormModalProps> = ({
+  post,
+  title,
+  description,
+  Icon,
+  titleId,
+}) => {
   return (
     <div>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size={"icon"} className="cursor-pointer">
-            <Pen />
+            <Icon />
           </Button>
         </DialogTrigger>
         <DialogContent className="px-2 max-h-[90vh]">
           <DialogHeader>
-            <DialogTitle>Update this chat</DialogTitle>
-            <DialogDescription>
-              Modify any of the input fields update and click done
-            </DialogDescription>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
           <div className="flex items-center space-x-2">
-            <ChatForm formPayload={post} />
+            <ChatForm formUpdatePayload={post} titleId={titleId} />
           </div>
           <DialogFooter className="sm:justify-start">
             <DialogClose asChild>

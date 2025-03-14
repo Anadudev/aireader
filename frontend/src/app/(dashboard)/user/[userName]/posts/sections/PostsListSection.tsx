@@ -24,8 +24,12 @@ const PostsListSection = () => {
     titleDeleteLoading,
     handleTitleDelete,
   } = useTitleStore();
-  const { postUpdateLoading, handlePostDelete, postDeleteLoading } =
-    usePostStore();
+  const {
+    postUpdateLoading,
+    handlePostDelete,
+    postDeleteLoading,
+    postCreateLoading,
+  } = usePostStore();
 
   const handleTitleEdit = (title: string) => {
     setEditTitle(true);
@@ -55,6 +59,7 @@ const PostsListSection = () => {
     postUpdateLoading,
     titleUpdateLoading,
     postDeleteLoading,
+    // postCreateLoading,
   ]);
 
   return (
@@ -88,7 +93,7 @@ const PostsListSection = () => {
                     </Button>
                   </div>
                 ) : (
-                  <div className="flex-1 flex gap-2">
+                  <div className="flex-1 flex gap-2 flex-wrap-reverse">
                     <h2
                       title={title?.title}
                       className="text-center text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500"
@@ -103,18 +108,22 @@ const PostsListSection = () => {
                     >
                       <Pen />
                     </Button>
+                    <DeleteModal
+                      title="Delete Post"
+                      description="Are you sure you want to proceed with this action?"
+                      detail="This will delete all chats of this title and action cannot be undone"
+                      onClick={() => handleTitleDelete(title?.id)}
+                      loading={titleDeleteLoading}
+                    />
+                    <ChatFormModal
+                      title={"Attach a new chat"}
+                      description=" Create a new chat under the current title"
+                      // post={chat}
+                      Icon={Plus}
+                      titleId={title?.id}
+                    />
                   </div>
                 )}
-                <DeleteModal
-                  title="Delete Post"
-                  description="Are you sure you want to proceed with this action?"
-                  detail="This will delete all chats of this title and action cannot be undone"
-                  onClick={() => handleTitleDelete(title?.id)}
-                  loading={titleDeleteLoading}
-                />
-                <Button>
-                  <Plus />
-                </Button>
               </div>
               <div className="flex flex-wrap gap-2">
                 {title?.posts?.map((chat, index) => (
@@ -130,7 +139,12 @@ const PostsListSection = () => {
                         onClick={() => handlePostDelete(chat?.id)}
                         loading={postDeleteLoading}
                       />
-                      <ChatFormModal post={chat} triggerText="Edit" />
+                      <ChatFormModal
+                        title={"Update this chat"}
+                        description=" Modify any of the input fields update and click done"
+                        post={chat}
+                        Icon={Pen}
+                      />
                     </div>
                     <ChatCard post={chat} />
                   </div>

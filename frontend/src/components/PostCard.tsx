@@ -30,9 +30,9 @@ const PostCard = ({
           fill
         />
       </div>
-      <div className="flex items-start float-right relative size-12 bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500 mb-4 text-2xl font-bold">
-        <MessageCircle className="size-6 ml-2 text-card-foreground/60" />
-        <span className="underline">{total}</span>{" "}
+      <div className="flex items-center float-right relative size-12 mb-4 text-2xl font-bold rounded-full bg-slate-100">
+        <MessageCircle className="size-5 ml-2 text-card-foreground/60" />
+        <sup className="text-sm">{total}</sup>
       </div>
       <div className="space-y-5">
         <h2

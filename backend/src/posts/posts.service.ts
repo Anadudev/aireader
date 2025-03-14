@@ -40,6 +40,8 @@ export class PostsService {
 
   async postCreate(titleId: string, postPayload: NewPost[]) {
     try {
+      // console.log(titleId, postPayload);
+      // return;
       const title = await this.prisma.title.findUnique({
         where: { id: titleId },
       });

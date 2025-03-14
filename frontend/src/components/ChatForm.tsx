@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -30,12 +28,28 @@ const formSchema = z.object({
   }),
 });
 
-const ChatForm = ({ formPayload }: { formPayload: PostType }) => {
-  const { handlePostUpdate, postUpdateLoading } = usePostStore();
+const ChatForm = ({
+  formUpdatePayload,
+  titleId,
+}: {
+  formUpdatePayload?: PostType;
+  titleId?: string;
+}) => {
+  const emptyPayload = {
+    id: "",
+    prompt: "",
+    response: "",
+  };
+  const {
+    handlePostUpdate,
+    postUpdateLoading,
+    postCreateLoading,
+    handlePostCreate,
+  } = usePostStore();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      chat: formPayload,
+      chat: formUpdatePayload || emptyPayload,
     },
   });
 
@@ -43,11 +57,22 @@ const ChatForm = ({ formPayload }: { formPayload: PostType }) => {
     try {
       const formValues = form.getValues();
       const chat = formValues.chat;
-      handlePostUpdate(chat).then(() => {
-        form.reset();
-      });
+      if (formUpdatePayload) {
+        handlePostUpdate(chat).then(() => {
+          form.reset();
+        });
+      } else {
+        if (titleId)
+          handlePostCreate({
+            titleId: titleId,
+            // authorId: formCreatePayload?.authorId,
+            chats: [{ prompt: chat.prompt, response: chat.response }],
+          }).then(() => {
+            form.reset();
+          });
+        console.log(titleId);
+      }
 
-      console.log(formValues.chat);
       // toast.success("Ai Chat posted");
     } catch {}
   };
@@ -65,10 +90,10 @@ const ChatForm = ({ formPayload }: { formPayload: PostType }) => {
                   <FormControl>
                     <Textarea
                       rows={3}
-                      disabled={postUpdateLoading}
+                      disabled={postUpdateLoading || postCreateLoading}
                       className="max-h-40 p-2 "
                       {...field}
-                      placeholder={`Enter your prompt response`}
+                      placeholder={`Enter your prompt`}
                     />
                   </FormControl>
                   <FormMessage />
@@ -83,10 +108,10 @@ const ChatForm = ({ formPayload }: { formPayload: PostType }) => {
                   <FormControl>
                     <Textarea
                       rows={3}
-                      disabled={postUpdateLoading}
+                      disabled={postUpdateLoading || postCreateLoading}
                       className="max-h-40 p-2 "
                       {...field}
-                      placeholder={`Enter your prompt response`}
+                      placeholder={`Enter your response`}
                     />
                   </FormControl>
                   <FormMessage />
@@ -96,7 +121,13 @@ const ChatForm = ({ formPayload }: { formPayload: PostType }) => {
           </div>
 
           <Button disabled={postUpdateLoading} className="w-full" type="submit">
-            {postUpdateLoading ? "Updating..." : "Update"}
+            {formUpdatePayload
+              ? postUpdateLoading
+                ? "Updating..."
+                : "Update"
+              : postCreateLoading
+              ? "Creating..."
+              : "Create"}
           </Button>
         </form>
       </Form>
