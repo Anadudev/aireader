@@ -59,7 +59,7 @@ const PostsListSection = () => {
     postUpdateLoading,
     titleUpdateLoading,
     postDeleteLoading,
-    // postCreateLoading,
+    postCreateLoading,
   ]);
 
   return (
