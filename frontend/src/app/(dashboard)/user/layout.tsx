@@ -1,4 +1,3 @@
-import DashboardAction from "@/components/DashboardAction";
 import ProtectedRoute from "@/lib/protectedRoute";
 
 export default function RootLayout({
@@ -9,7 +8,6 @@ export default function RootLayout({
   return (
     <div className={``}>
       <ProtectedRoute />
-      <DashboardAction />
       {children}
     </div>
   );

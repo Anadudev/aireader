@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
-// import ProtectedRoute from "@/lib/protectedRoute";
+import DashboardAction from "@/components/DashboardAction";
 import ThemeProvider from "@/components/ThemeProvider";
 import AccessTokenGet from "@/hooks/localStorage/AccessTokenGet";
 
@@ -38,9 +38,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <ProtectedRoute /> */}
-          <AccessTokenGet/>
+          <AccessTokenGet />
           <Navbar />
+          <DashboardAction />
           {children}
           <Toaster />
         </ThemeProvider>

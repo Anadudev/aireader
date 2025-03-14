@@ -73,11 +73,11 @@ export class TitlesService {
     }
   }
 
-  async titleUpdate(slug: string, titlePayload: UpdateTitleType) {
+  async titleUpdate(id: string, titlePayload: UpdateTitleType) {
     try {
       titlePayload.slug = `${slugify(titlePayload.title, '-')}${uuidv4()}`;
       const title = await this.prisma.title.update({
-        where: { slug },
+        where: { id },
         data: titlePayload,
       });
       if (!title) {

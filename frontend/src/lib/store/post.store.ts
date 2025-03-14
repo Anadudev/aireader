@@ -6,6 +6,7 @@ import {
   PostStoreType,
   PostPayloadType,
   PostQueryType,
+  ChatPayload,
 } from "@/types/Post.type";
 
 const usePostStore = create<PostStoreType>((set) => ({
@@ -34,9 +35,7 @@ const usePostStore = create<PostStoreType>((set) => ({
       set({ postCreateLoading: false });
     }
   },
-  handlePostsGet: async (
-    query?: PostQueryType
-  ) => {
+  handlePostsGet: async (query?: PostQueryType) => {
     try {
       set({ postGetLoading: true });
       const response = await axiosInstance.get("/posts", {
@@ -73,10 +72,18 @@ const usePostStore = create<PostStoreType>((set) => ({
       set({ postDeleteLoading: false });
     }
   },
-  handlePostUpdate: (id: string, postPayload: PostPayloadType[]) => {
+  handlePostUpdate: async (postPayload: ChatPayload) => {
     try {
       set({ postUpdateLoading: true });
-      axiosInstance.patch(`/posts/${id}`, postPayload);
+      await axiosInstance.patch(
+        `/posts/${postPayload.id}`,
+        postPayload,
+        {
+          headers: {
+            Authorization: `Bearer ${useAuthStore.getState().access_token}`,
+          },
+        }
+      );
       toast.success("Post updated successfully");
     } catch (error) {
       toast.error(error.response.data.message);

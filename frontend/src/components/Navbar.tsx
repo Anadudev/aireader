@@ -30,7 +30,7 @@ const Navbar = () => {
   const { authUser, logoutLoading, logoutHandler } = useAuthStore();
 
   return (
-    <nav className="h-12 w-full flex">
+    <nav className="h-14 w-full flex">
       <Button
         className="sm:hidden fixed bottom-16 right-3 cursor-pointer z-50"
         variant={"outline"}

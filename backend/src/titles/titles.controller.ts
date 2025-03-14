@@ -63,9 +63,9 @@ export class TitlesController {
   }
 
   @UseGuards(AuthGuard)
-  @Patch(':slug')
+  @Patch(':id')
   async updateTitle(
-    @Param('slug') slug: string,
+    @Param('id') id: string,
     @Body() formPayload: NewTitleDto,
     @Request() req: ExtendedRequest,
   ) {
@@ -75,10 +75,10 @@ export class TitlesController {
     }
 
     const payload = {
-      slug,
+      id,
       authorId,
       ...formPayload,
     };
-    return await this.titlesService.titleUpdate(slug, payload);
+    return await this.titlesService.titleUpdate(id, payload);
   }
 }

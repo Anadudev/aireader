@@ -22,7 +22,7 @@ const DashboardAction = () => {
     },
     {
       name: "posts",
-      href: `/user/po${authUser?.username}/sts`,
+      href: `/user/${authUser?.username}/posts`,
       Icon: LayoutList,
     },
     {
@@ -31,7 +31,7 @@ const DashboardAction = () => {
       Icon: MessageSquareQuote,
     },
   ];
-  return (
+  return authUser ? (
     <div className="flex items-center gap-2 sm:bg-none size-xl rounded-full cursor-pointer z-20 ml-2">
       <Button
         onClick={() => setShowActions(!showActions)}
@@ -61,7 +61,7 @@ const DashboardAction = () => {
         ))}
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default DashboardAction;

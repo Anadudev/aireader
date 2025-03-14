@@ -7,7 +7,8 @@ export type NewTitleType = {
 export type UpdateTitleType = {
   authorId: string;
   title: string;
-  slug: string;
+  slug?: string;
+  id: string;
 };
 
 export type NewPost = {

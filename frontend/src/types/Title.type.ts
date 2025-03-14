@@ -12,6 +12,7 @@ export type TitleQueryType = QueryType & {
 };
 
 export type TitlePayloadType = {
+  id: string;
   title: string;
 };
 
@@ -41,5 +42,5 @@ export type TitleStoreType = {
   handleTitleGet: (slug: string, include?: TitleIncludeType) => void;
   handleTitleCreate: (titlePayload: TitlePayloadType) => void;
   handleTitleDelete: (id: string) => void;
-  handleTitleUpdate: (id: string, titlePayload: TitlePayloadType) => void;
+  handleTitleUpdate: (titlePayload: TitlePayloadType) => void;
 };

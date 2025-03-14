@@ -16,6 +16,8 @@ export type PostType = {
   prompt: string;
 };
 
+export type ChatPayload = { id: string; prompt: string; response: string };
+
 export type PostPayloadType = {
   titleId: string;
   chats: { prompt?: string; response?: string }[];
@@ -30,5 +32,5 @@ export type PostStoreType = {
   handlePostsGet: (query?: PostQueryType) => void;
   handlePostCreate: (postPayload: PostPayloadType) => void;
   handlePostDelete: (id: string) => void;
-  handlePostUpdate: (id: string, postPayload: PostPayloadType[]) => void;
+  handlePostUpdate: (postPayload: ChatPayload) => void;
 };

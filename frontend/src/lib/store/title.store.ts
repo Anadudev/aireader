@@ -106,10 +106,14 @@ const useTitleStore = create<TitleStoreType>((set) => ({
     return null;
   },
 
-  handleTitleUpdate: (id: string, titlePayload: TitlePayloadType) => {
+  handleTitleUpdate: async (titlePayload: TitlePayloadType) => {
     try {
       set({ titleUpdateLoading: true });
-      axiosInstance.patch(`/titles/${id}`, titlePayload);
+      await axiosInstance.patch(`/titles/${titlePayload.id}`, titlePayload, {
+        headers: {
+          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
+        },
+      });
       toast.success("Title updated successfully");
     } catch (error) {
       toast.error(error.response.data.message);
