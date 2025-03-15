@@ -1,0 +1,41 @@
+services:
+  aireader-frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - aireader-backend
+  aireader-backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - aireader-db
+    env_file:
+      - ./backend/.env
+    networks:
+      - aireader-network
+  aireader-db:
+    image: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=aireader
+      - POSTGRES_DB=aireader-db
+      - POSTGRES_PASSWORD=aireader-password
+    ports:
+      - "5432:5432"
+    networks:
+      - aireader-network
+
+networks:
+  aireader-network:
+    driver: bridge
+
+# To connect to the db, use the following connection string:
+# postgres://aireader:aireader-password@localhost:5432/aireader-db
+
+volumes:
+  db-data:
