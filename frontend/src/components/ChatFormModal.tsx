@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import ChatForm from "./ChatForm";
 import { PostType } from "@/types/Post.type";
 // ------------------------
-import { Copy, LucideIcon, Pen } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,8 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 type ChatFormModalProps = {
   post?: PostType;

@@ -29,8 +29,8 @@ export type PostStoreType = {
   postCreateLoading: boolean;
   postDeleteLoading: boolean;
   posts: PostType[];
-  handlePostsGet: (query?: PostQueryType) => void;
-  handlePostCreate: (postPayload: PostPayloadType) => void;
-  handlePostDelete: (id: string) => void;
-  handlePostUpdate: (postPayload: ChatPayload) => void;
+  handlePostsGet: (query?: PostQueryType) => Promise<void>;
+  handlePostCreate: (postPayload: PostPayloadType) => Promise<void>;
+  handlePostDelete: (id: string) => Promise<void>;
+  handlePostUpdate: (postPayload: ChatPayload) => Promise<void>;
 };

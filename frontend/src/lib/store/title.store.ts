@@ -86,7 +86,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
     }
   },
 
-  handleTitleCreate: async (titlePayload: TitlePayloadType) => {
+  handleTitleCreate: async (titlePayload: { title: string }) => {
     try {
       set({ titleCreateLoading: true });
       const response = await axiosInstance.post("/titles", titlePayload, {

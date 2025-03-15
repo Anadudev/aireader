@@ -132,10 +132,12 @@ const PostForm = () => {
     try {
       const formValues = form.getValues();
       const chats = formValues.chats;
-      handleTitleCreate({ title: formValues.title })?.then((response) =>
-        handlePostCreate({ titleId: response.id, chats })?.then(() => {
-          form.reset();
-        })
+      handleTitleCreate({ title: formValues.title })?.then(
+        (response) =>
+          response &&
+          handlePostCreate({ titleId: response?.id, chats })?.then(() => {
+            form.reset();
+          })
       );
       console.log(formValues.chats);
       // toast.success("Ai Chat posted");

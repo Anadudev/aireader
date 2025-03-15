@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import useTitleStore from "@/lib/store/title.store";
 import PostCardSkeleton from "@/components/loading/skeleton/PostCardSkeleton";
-import PostCard from "@/components/PostCard";
 import ChatCard from "@/components/ChatCard";
 import ChatFormModal from "@/components/ChatFormModal";
 import usePostStore from "@/lib/store/post.store";

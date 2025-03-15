@@ -23,9 +23,9 @@ const TipTapRichText = ({ description }: { description: string }) => {
     ],
 
     content: description,
-    onUpdate({ editor }) {
-      onChange(editor.getHTML());
-    },
+    // onUpdate({ editor }) {
+    //   onChange(editor.getHTML());
+    // },
     // content: "<p>Hello World! 🌎️</p>",
     editorProps: {
       attributes: {

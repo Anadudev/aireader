@@ -38,9 +38,11 @@ export type TitleStoreType = {
   titleDeleteLoading: boolean;
   titles: TitleType[];
   post: TitleType | null;
-  handleTitlesGet: (queries?: TitleQueryType) => void;
-  handleTitleGet: (slug: string, include?: TitleIncludeType) => void;
-  handleTitleCreate: (titlePayload: TitlePayloadType) => void;
-  handleTitleDelete: (id: string) => void;
-  handleTitleUpdate: (titlePayload: TitlePayloadType) => void;
+  handleTitlesGet: (queries?: TitleQueryType) => Promise<void>;
+  handleTitleGet: (slug: string, include?: TitleIncludeType) => Promise<void>;
+  handleTitleCreate: (titlePayload: {
+    title: string;
+  }) => Promise<TitleType | void>;
+  handleTitleDelete: (id: string) => Promise<void>;
+  handleTitleUpdate: (titlePayload: TitlePayloadType) => Promise<void>;
 };
