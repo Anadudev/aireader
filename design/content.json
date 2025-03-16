@@ -1,0 +1,80 @@
+{
+	"landingPage": {
+		"heroSection": {
+			"text": [
+				"Shape the Future of Content: Write, Read, and Share AI-Powered Dialogues, Powered by Advanced LLMs.",
+				"Unlock the Future of AI Conversations. Join a vibrant community where you can create, share, and explore insightful AI chat dialogues. Discover unlimited possibilities and connect with others who are passionate about AI content."
+			],
+			"action": [
+				"Join now",
+				"Start exploring"
+			],
+			"image": [
+				"from pexel"
+			]
+		},
+		"featuresSection": {
+			"title": "Features",
+			"description": "Our platform offers unique features to enhance your learning experience with LLM chat bots.",
+			"features": [
+				"Learn and share with online community",
+				"No need to sound professional just be you",
+				"Learn and understand llm capabilities",
+				"Learn and Understand ai prompting from experts"
+			]
+		},
+		"benefitSection": {
+			"title": "",
+			"description": "Unlock your writing potential: ase time and elevate your content engagement to the next level",
+			"paragraph": "Our platform streamlines your writing process, allowing you to focus on what truly matters. Experience enhanced writing and quality improved SEO to attract more readers and drive engagement",
+			"images": [
+				"should be an auto swipe carousel"
+			]
+		},
+		"testimonialSection": {
+			"testimonials": [
+				{
+					"testimony": "AIreader has completely transformed how I interact with AI. It's like having a conversation with a friend who's also a genius!",
+					"username": "TechEnthusiast22",
+					"avatar": "/avatar1.jpg"
+				},
+				{
+					"testimony": "I've learned so much about AI prompting from the community here. It's incredibly valuable to see how others are using these tools. I cont recommend it enough",
+					"username": "PromptMaster99",
+					"avatar": "/avatar2.jpg"
+				},
+				{
+					"testimony": "The ability to share and discuss AI chats has opened up a whole new world of learning for me. I highly recommend AIreader to anyone interested in AI.",
+					"username": "AICurious",
+					"avatar": "/avatar3.jpg"
+				}
+			]
+		},
+		"howItWorksSection": {
+			"title": "How It Works",
+			"description": "Discover how our platform empowers you",
+			"paragraph": "getting started with writing, reading and sharing has never felt so easy. first signup with a username to unlock a world of creative possibilities. Once registered you ca easily create, edit, publish and share your ai contents with few clicks",
+			"steps": [
+				"step 1: sign up for an account",
+				"step 2: create your first ai content",
+				"step 3: edit refine and share with others"
+			],
+			"buttons": [
+				"Get Started",
+				"Learn More"
+			]
+		},
+		"ctaSection": {
+			"description": "Unlock your writing potential",
+			"paragraph": "Join us today for free and elevate your content creation experience effortlessly",
+			"button": "Get Started"
+		},
+		"footer": {
+			"copyright": "© 2024 AIreader. All rights reserved.",
+			"links": [
+				"Terms of Service",
+				"Privacy Policy"
+			]
+		}
+	}
+}
