@@ -6,7 +6,7 @@ const ChatCard = ({ post }: { post: PostType }) => {
   return (
     <div className="space-y-2 transition-all duration-200 p-2">
       {post?.prompt && (
-        <div className="w-[80%] ml-auto">
+        <div className="sm:w-[80%] ml-auto">
           <div className="shadow-md bg-gradient-to-r from-indigo-400 to-indigo-700 p-4 rounded-2xl rounded-tr-none text-indigo-50 font-semibold text-sm">
             <p className="">{post?.prompt}</p>
           </div>
@@ -16,7 +16,7 @@ const ChatCard = ({ post }: { post: PostType }) => {
         </div>
       )}
       {post?.response && (
-        <div className="grid w-[80%]">
+        <div className="grid sm:w-[80%]">
           <div className="shadow-md bg-gradient-to-r from-pink-700 to-pink-400 p-4 rounded-2xl rounded-tl-none text-indigo-50 font-semibold text-sm">
             {post?.response}
           </div>
