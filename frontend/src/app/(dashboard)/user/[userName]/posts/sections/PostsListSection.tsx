@@ -62,14 +62,14 @@ const PostsListSection = () => {
   ]);
 
   return (
-    <div className="">
+    <div className=""> and modify axios baseURL for production
       <div className="flex flex-wrap gap-2 w-full items-center justify-center p-2">
         {titleGetLoading &&
           [...Array(3)].map((_, index) => <PostCardSkeleton key={index} />)}
         <div className=" space-y-8">
           {titles?.map((title, index) => (
-            <div className="space-y-1" key={index}>
-              <div className="flex gap-2 justify-center flex-wrap">
+            <div className="space-y-1 flex flex-col" key={index}>
+              <div className="flex gap-2 justify-center flex-wrap mx-auto">
                 {editTitle ? (
                   <div className="flex-1 flex gap-2">
                     <Input
@@ -92,7 +92,7 @@ const PostsListSection = () => {
                     </Button>
                   </div>
                 ) : (
-                  <div className="flex-1 flex gap-2 flex-wrap-reverse">
+                  <div className="flex-1 flex gap-2">
                     <h2
                       title={title?.title}
                       className="text-center text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500"
@@ -127,10 +127,10 @@ const PostsListSection = () => {
               <div className="flex flex-wrap gap-2">
                 {title?.posts?.map((chat, index) => (
                   <div
-                    className="flex-1 border rounded-lg min-w-72 p-2"
+                    className="flex-1 border rounded-lg min-w-72 p-2  max-w-4xl mx-auto"
                     key={index}
                   >
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 justify-end">
                       <DeleteModal
                         title="Delete Chat"
                         description="Are you sure you want to delete this chat?"
