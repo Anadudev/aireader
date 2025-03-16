@@ -15,12 +15,24 @@
 		},
 		"featuresSection": {
 			"title": "Features",
-			"description": "Our platform offers unique features to enhance your learning experience with LLM chat bots.",
+			"description": "Explore the unique benefits our platform offers",
 			"features": [
-				"Learn and share with online community",
-				"No need to sound professional just be you",
-				"Learn and understand llm capabilities",
-				"Learn and Understand ai prompting from experts"
+				{
+					"title": "Community Learning & Sharing",
+					"description": "Engage with a vibrant online community to learn, share, and discuss AI dialogues and insights."
+				},
+				{
+					"title": "Authentic Conversations",
+					"description": "Express yourself freely. Forget rigid formalities and embrace natural, genuine interactions."
+				},
+				{
+					"title": "LLM Capability Discovery",
+					"description": "Explore and understand the vast potential of Large Language Models through hands-on AI dialogue experiences."
+				},
+				{
+					"title": "Expert Prompting Guidance",
+					"description": "Gain expert insights and practical skills in AI prompting to maximize the power of AI interactions."
+				}
 			]
 		},
 		"benefitSection": {
@@ -34,7 +46,7 @@
 		"testimonialSection": {
 			"testimonials": [
 				{
-					"testimony": "AIreader has completely transformed how I interact with AI. It's like having a conversation with a friend who's also a genius!",
+					"testimony": "AIlogue has completely transformed how I interact with AI. It's like having a conversation with a friend who's also a genius!",
 					"username": "TechEnthusiast22",
 					"avatar": "/avatar1.jpg"
 				},
@@ -44,7 +56,7 @@
 					"avatar": "/avatar2.jpg"
 				},
 				{
-					"testimony": "The ability to share and discuss AI chats has opened up a whole new world of learning for me. I highly recommend AIreader to anyone interested in AI.",
+					"testimony": "The ability to share and discuss AI chats has opened up a whole new world of learning for me. I highly recommend AIlogue to anyone interested in AI.",
 					"username": "AICurious",
 					"avatar": "/avatar3.jpg"
 				}
@@ -70,7 +82,7 @@
 			"button": "Get Started"
 		},
 		"footer": {
-			"copyright": "© 2024 AIreader. All rights reserved.",
+			"copyright": "© 2024 AIlogue. All rights reserved.",
 			"links": [
 				"Terms of Service",
 				"Privacy Policy"

@@ -7,7 +7,7 @@ const HeroSection = () => {
   return (
     <section className="min-h-[80vh] h-fit flex flex-col justify-center gap-8">
       <div className="text-center max-w-4xl mx-auto space-y-4 p-2">
-        <div className="text-4xl sm:text-5xl font-extrabold">
+        <div className="text-4xl sm:text-5xl font-extrabold [text-shadow:_0_2px_4px_rgb(99_102_241_/_0.8)] ">
           <h1 className="">Shape the Future of Content:</h1>
           <h1 className="">
             {/* todo: effect should be a neon text of pink and blue */}
