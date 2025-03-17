@@ -3,6 +3,7 @@ import FeaturesSection from "@/app/homeSections/FeaturesSection";
 import BenefitSection from "@/app/homeSections/BenefitSection";
 import TestimonialSection from "@/app/homeSections/TestimonialSection";
 import GettingStartedSection from "@/app/homeSections/GettingStartedSection";
+import CTASection from "@/app/homeSections/CTASection";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <BenefitSection />
       <TestimonialSection />
       <GettingStartedSection />
+      <CTASection />
     </div>
   );
 }
