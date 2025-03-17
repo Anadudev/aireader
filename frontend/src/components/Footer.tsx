@@ -43,7 +43,7 @@ const Footer = () => {
                 type="email"
                 required
                 placeholder="Subscribe to our newsletter"
-                className=""
+                className="bg-white"
               />
               <Button type="submit" className="ml-auto">
                 Subscribe

@@ -34,7 +34,6 @@ model User {
 }
 
 model Title {
-  // TODO: implement slug field
 
   id    String @id @unique @default(uuid())
   title String

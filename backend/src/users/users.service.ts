@@ -85,7 +85,6 @@ export class UsersService {
 
   async create(data: NewUser) {
     try {
-      // todo: hash password before saving to db
       data.password = await bcrypt.hash(data.password, 10);
       const user = await this.prisma.user.create({
         data: {

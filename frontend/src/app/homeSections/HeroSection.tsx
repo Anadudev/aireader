@@ -11,7 +11,6 @@ const HeroSection = () => {
         <div className="text-4xl sm:text-5xl font-extrabold [text-shadow:_0_2px_4px_rgb(99_102_241_/_0.8)] ">
           <h1 className="">Shape the Future of Content:</h1>
           <h1 className="flex items-center justify-center">
-            {/* todo: effect should be a neon text of pink and blue */}
             <Typewriter
               options={{
                 strings: ["Write", "Read", "Share", "Create"],
