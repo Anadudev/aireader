@@ -1,41 +1,41 @@
 services:
-  aireader-frontend:
+  AILogue-frontend:
     build:
       context: ./frontend
     ports:
       - "3000:3000"
     depends_on:
-      - aireader-backend
-  aireader-backend:
+      - AILogue-backend
+  AILogue-backend:
     build:
       context: ./backend
     ports:
       - "5000:5000"
     depends_on:
-      - aireader-db
+      - AILogue-db
     env_file:
       - ./backend/.env
     networks:
-      - aireader-network
-  aireader-db:
+      - AILogue-network
+  AILogue-db:
     image: postgres
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=aireader
-      - POSTGRES_DB=aireader-db
-      - POSTGRES_PASSWORD=aireader-password
+      - POSTGRES_USER=AILogue
+      - POSTGRES_DB=AILogue-db
+      - POSTGRES_PASSWORD=AILogue-password
     ports:
       - "5432:5432"
     networks:
-      - aireader-network
+      - AILogue-network
 
 networks:
-  aireader-network:
+  AILogue-network:
     driver: bridge
 
 # To connect to the db, use the following connection string:
-# postgres://aireader:aireader-password@localhost:5432/aireader-db
+# postgres://AILogue:AILogue-password@localhost:5432/AILogue-db
 
 volumes:
   db-data:

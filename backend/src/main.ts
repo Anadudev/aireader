@@ -13,10 +13,10 @@ async function bootstrap() {
   // app.use(cookieParser(process.env.COOKIE_SECRET, { sameSite: 'strict' }));
   app.enableCors();
   const config = new DocumentBuilder()
-    .setTitle('AIreader')
-    .setDescription('The aireader API description')
+    .setTitle('AILogue')
+    .setDescription('The AILogue API description')
     .setVersion('1.0')
-    .addTag('AIreader')
+    .addTag('AILogue')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, documentFactory);

@@ -1,7 +1,7 @@
 export const testimonials = [
   {
     testimony:
-      "AIlogue has completely transformed how I interact with AI. It's like having a conversation with a friend who's also a genius!",
+      "AILogue has completely transformed how I interact with AI. It's like having a conversation with a friend who's also a genius!",
     username: "TechEnthusiast22",
     avatar: "/avatar1.jpg",
   },
@@ -13,7 +13,7 @@ export const testimonials = [
   },
   {
     testimony:
-      "The ability to share and discuss AI chats has opened up a whole new world of learning for me. I highly recommend AIlogue to anyone interested in AI.",
+      "The ability to share and discuss AI chats has opened up a whole new world of learning for me. I highly recommend AILogue to anyone interested in AI.",
     username: "AICurious",
     avatar: "/avatar3.jpg",
   },
