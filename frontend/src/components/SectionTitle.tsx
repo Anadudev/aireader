@@ -2,9 +2,9 @@ import { Minus } from "lucide-react";
 import React from "react";
 type SectionTitleProps = {
   title?: string;
-  descriptionLeft: string;
-  descriptionKeyWord: string;
-  descriptionRight: string;
+  descriptionLeft?: string;
+  descriptionKeyWord?: string;
+  descriptionRight?: string;
   className?: string;
   titleClassName?: string;
   descriptionClassName?: string;
@@ -34,11 +34,11 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
       <h2
         className={`sm:text-center text-2xl sm:text-3xl font-bold ${descriptionClassName}`}
       >
-        {descriptionLeft}{" "}
+        {descriptionLeft || ""}{" "}
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-pink-500">
-          {descriptionKeyWord}
+          {descriptionKeyWord || ""}
         </span>{" "}
-        {descriptionRight}
+        {descriptionRight || ""}
       </h2>
     </div>
   );

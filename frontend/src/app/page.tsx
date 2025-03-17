@@ -1,6 +1,7 @@
 import HeroSection from "@/app/homeSections/HeroSection";
 import FeaturesSection from "@/app/homeSections/FeaturesSection";
 import BenefitSection from "@/app/homeSections/BenefitSection";
+import TestimonialSection from "@/app/homeSections/TestimonialSection";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <HeroSection />
       <FeaturesSection />
       <BenefitSection />
+      <TestimonialSection />
     </div>
   );
 }
