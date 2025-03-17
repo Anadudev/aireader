@@ -20,7 +20,7 @@ const GettingStartedSection = () => {
         descriptionLeft="Learn how to create, share, and explore AI dialogues on"
         descriptionKeyWord="AILogue"
       />
-      <div className="p-2">
+      <div className="p-2 space-y-4">
         <p className="text-gray-600 text-sm text-center max-w-4xl mx-auto">
           Getting started with creating, reading, and sharing AI dialogues on
           AILogue is seamless. First, sign up with a username to unlock a world

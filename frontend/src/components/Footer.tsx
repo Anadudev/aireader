@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <footer className="flex  flex-col gap-4 bg-gradient-to-br from-indigo-900/10 to-pink-900/10">
-      <div className="px-4 py-8 flex flex-wrap items-center sm:items-baseline justify-center gap-8">
+    <footer className="flex flex-col gap-4 bg-gradient-to-br from-indigo-900/10 to-pink-900/10">
+      <div className="max-w-4xl w-full mx-auto px-4 py-8 flex flex-wrap items-center sm:items-baseline justify-center gap-8">
         <Logo />
         <div className="flex-1 flex gap-8">
           <div className="space-y-2">
@@ -18,7 +18,7 @@ const Footer = () => {
             <ul className="space-y-1">
               {links.map((link, index) => (
                 <li key={index}>
-                  <Link href={link.href} className="text-sm">
+                  <Link href={link.href} className="text-sm text-nowrap">
                     {link.text}
                   </Link>
                 </li>
@@ -28,9 +28,14 @@ const Footer = () => {
           <div className="flex-2 sm:flex-1 flex flex-col gap-4 justify-between">
             <div className="flex-1 flex gap-4 items-center justify-center">
               {socials.map((social, index) => (
-                <div key={index} title={social.name}>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  key={index}
+                  title={social.name}
+                >
                   <Link href={social.href}>{<social.Icon />}</Link>
-                </div>
+                </Button>
               ))}
             </div>
             <form className="flex flex-col gap-4">

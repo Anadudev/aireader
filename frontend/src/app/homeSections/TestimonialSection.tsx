@@ -19,9 +19,9 @@ const TestimonialSection = () => {
     slidesToScroll: 1,
   };
   return (
-    <section className="space-y-8">
+    <section className="space-y-8 pb-8">
       <SectionTitle title="Testimonials" titleClassName="mx-auto" />
-      <div className="sm:max-w-2xl mx-auto">
+      <div className="sm:max-w-2xl mx-auto py-4">
         <Slider {...settings} className="">
           {testimonials.map((testimonial, index) => (
             <TestimonialCard key={index} {...testimonial} />

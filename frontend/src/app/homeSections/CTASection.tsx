@@ -6,7 +6,7 @@ import Link from "next/link";
 const CTASection = () => {
   return (
     <section className="p-2">
-      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-4 p-4 py-8 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-2xl">
+      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-4 px-4 py-24 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-2xl">
         <SectionTitle
           title="Join AILogue"
           descriptionLeft="Start Crafting AI Dialogues"

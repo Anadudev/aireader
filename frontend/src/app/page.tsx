@@ -7,13 +7,13 @@ import CTASection from "@/app/homeSections/CTASection";
 
 export default function Home() {
   return (
-    <div className="">
+    <main className="space-y-16">
       <HeroSection />
       <FeaturesSection />
       <BenefitSection />
       <TestimonialSection />
       <GettingStartedSection />
       <CTASection />
-    </div>
+    </main>
   );
 }
