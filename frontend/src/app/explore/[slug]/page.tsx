@@ -1,5 +1,5 @@
-import PostDetailsCard from "@/components/PostDetailsCard";
 import React from "react";
+import PostDetailsCard from "@/components/PostDetailsCard";
 
 
 const PostsDetailPage = async ({ params }: { params: Promise<{ slug: string }> }) => {

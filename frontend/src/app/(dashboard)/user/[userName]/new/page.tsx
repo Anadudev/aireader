@@ -1,5 +1,5 @@
-import PostForm from "@/components/PostForm";
 import React from "react";
+import PostForm from "@/components/PostForm";
 
 const NewPostPage = () => {
   return (
@@ -13,4 +13,3 @@ const NewPostPage = () => {
 };
 
 export default NewPostPage;
-
