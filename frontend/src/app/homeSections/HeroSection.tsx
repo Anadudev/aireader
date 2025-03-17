@@ -1,7 +1,8 @@
+"use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-// import Typewriter from "typewriter-effect";
+import Typewriter from "typewriter-effect";
 
 const HeroSection = () => {
   return (
@@ -9,19 +10,17 @@ const HeroSection = () => {
       <div className="text-center max-w-4xl mx-auto space-y-4 p-2">
         <div className="text-4xl sm:text-5xl font-extrabold [text-shadow:_0_2px_4px_rgb(99_102_241_/_0.8)] ">
           <h1 className="">Shape the Future of Content:</h1>
-          <h1 className="">
+          <h1 className="flex items-center justify-center">
             {/* todo: effect should be a neon text of pink and blue */}
-            {/* <Typewriter
-            options={{
-              strings: ["Write", "Read", "Share", "Create"],
-              autoStart: true,
-              loop: true,
-              wrapperClassName: "",
-            }}
-          /> */}{" "}
-            <span className=" bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500 ">
-              Write
-            </span>{" "}
+            <Typewriter
+              options={{
+                strings: ["Write", "Read", "Share", "Create"],
+                autoStart: true,
+                loop: true,
+                wrapperClassName:
+                  "bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500",
+              }}
+            />{" "}
             AI Dialogues.
           </h1>
         </div>
