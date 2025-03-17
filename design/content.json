@@ -62,10 +62,10 @@
 				}
 			]
 		},
-		"howItWorksSection": {
-			"title": "How It Works",
-			"description": "Discover how our platform empowers you",
-			"paragraph": "getting started with writing, reading and sharing has never felt so easy. first signup with a username to unlock a world of creative possibilities. Once registered you ca easily create, edit, publish and share your ai contents with few clicks",
+		"gettingStartedSection": {
+			"title": "Getting Started with AILogue",
+			"description": "Learn how to create, share, and explore AI dialogues on AILogue.",
+			"paragraph": "Getting started with creating, reading, and sharing AI dialogues on AILogue is seamless. First, sign up with a username to unlock a world of creative possibilities. Once registered, you can easily create, edit, publish, and share your AI-powered dialogues with just a few clicks. Dive into our community forums, explore expert prompting examples, and begin crafting your own unique AI conversations.",
 			"steps": [
 				"step 1: sign up for an account",
 				"step 2: create your first ai content",
