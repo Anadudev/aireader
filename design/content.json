@@ -82,11 +82,47 @@
 			"button": "Create Your Free Account"
 		},
 		"footer": {
-			"copyright": "© 2024 AIlogue. All rights reserved.",
+			"copyright": "© 2024 AILogue. All rights reserved.",
 			"links": [
-				"Terms of Service",
-				"Privacy Policy"
-			]
+				{
+					"text": "About Us",
+					"url": "/about"
+				},
+				{
+					"text": "Contact Us",
+					"url": "/contact"
+				},
+				{
+					"text": "Terms of Service",
+					"url": "/terms"
+				},
+				{
+					"text": "Privacy Policy",
+					"url": "/privacy"
+				},
+				{
+					"text": "FAQ",
+					"url": "/faq"
+				}
+			],
+			"social": [
+				{
+					"icon": "facebook",
+					"url": "your_facebook_url"
+				},
+				{
+					"icon": "twitter",
+					"url": "your_twitter_url"
+				},
+				{
+					"icon": "linkedin",
+					"url": "your_linkedin_url"
+				}
+			],
+			"newsletter": {
+				"text": "Subscribe to our newsletter for updates!",
+				"form": "newsletter_form_code"
+			}
 		}
 	}
 }
