@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 import { UserType } from "@/types/User.type";
 // import { AccessTokenLocalStorage, RemoveItem } from "../localStorage";
 
-
 type AuthStore = {
   authUser: UserType | null;
   access_token: string | null;
@@ -37,6 +36,7 @@ const useAuthStore = create<AuthStore>((set, get) => ({
   logoutLoading: false,
 
   setAuthUser: (user: UserType | null) => set({ authUser: user }),
+
 
   authUserHandler: async () => {
     try {
@@ -101,7 +101,7 @@ const useAuthStore = create<AuthStore>((set, get) => ({
     window.localStorage.removeItem("access_token");
     localStorage.removeItem("authUser");
     toast.success("Logout successful");
-    // window.location.href = "/";
+    window.location.href = "/";
     set({ logoutLoading: false });
   },
 

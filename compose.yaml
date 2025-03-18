@@ -1,41 +1,41 @@
 services:
-  AILogue-frontend:
+  ailogue-frontend:
     build:
       context: ./frontend
     ports:
       - "3000:3000"
     depends_on:
-      - AILogue-backend
-  AILogue-backend:
+      - ailogue-backend
+  ailogue-backend:
     build:
       context: ./backend
     ports:
       - "5000:5000"
     depends_on:
-      - AILogue-db
+      - ailogue-db
     env_file:
       - ./backend/.env
     networks:
-      - AILogue-network
-  AILogue-db:
+      - ailogue-network
+  ailogue-db:
     image: postgres
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=AILogue
-      - POSTGRES_DB=AILogue-db
-      - POSTGRES_PASSWORD=AILogue-password
+      - POSTGRES_USER=ailogue
+      - POSTGRES_DB=ailogue-db
+      - POSTGRES_PASSWORD=ailogue-password
     ports:
       - "5432:5432"
     networks:
-      - AILogue-network
+      - ailogue-network
 
 networks:
-  AILogue-network:
+  ailogue-network:
     driver: bridge
 
 # To connect to the db, use the following connection string:
-# postgres://AILogue:AILogue-password@localhost:5432/AILogue-db
+# postgres://ailogue:ailogue-password@localhost:5432/ailogue-db
 
 volumes:
   db-data:

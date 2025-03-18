@@ -1,8 +1,10 @@
 "use client";
 import useAuthStore from "@/lib/store/auth.store";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const AccessTokenGet = () => {
+  const router = useRouter();
   const { setAccessToken, setAuthUser } = useAuthStore();
 
   useEffect(() => {
@@ -10,10 +12,12 @@ const AccessTokenGet = () => {
     const authUser = window.localStorage.getItem("authUser");
     if (token && authUser) {
       setAuthUser(JSON.parse(authUser));
+    } else {
+      router.push("/");
     }
     if (!token) return;
     setAccessToken(token);
-  }, [setAccessToken, setAuthUser]);
+  }, [setAccessToken, setAuthUser, router]);
 
   return null;
 };
