@@ -62,96 +62,100 @@ const PostsListSection = () => {
   ]);
 
   return (
-    <div className=""> and modify axios baseURL for production
+    <div className="">
+      {" "}
+      and modify axios baseURL for production
       <div className="flex flex-wrap gap-2 w-full items-center justify-center p-2">
-        {titleGetLoading &&
-          [...Array(3)].map((_, index) => <PostCardSkeleton key={index} />)}
-        <div className=" space-y-8">
-          {titles?.map((title, index) => (
-            <div className="space-y-1 flex flex-col" key={index}>
-              <div className="flex gap-2 justify-center flex-wrap mx-auto">
-                {editTitle ? (
-                  <div className="flex-1 flex gap-2">
-                    <Input
-                      type="text"
-                      className=""
-                      disabled={titleUpdateLoading}
-                      onChange={(e) => setTitlePayload(e.target.value)}
-                      value={titlePayload}
-                      defaultValue={title?.title}
-                    />
-                    <Button
-                      variant="outline"
-                      className="cursor-pointer"
-                      size={"icon"}
-                      onClick={() =>
-                        handleTitleOnSubmit(title?.id, title?.title)
-                      }
-                    >
-                      <Save />
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex-1 flex gap-2">
-                    <h2
-                      title={title?.title}
-                      className="text-center text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500"
-                    >
-                      {title?.title}
-                    </h2>
-                    <Button
-                      variant="outline"
-                      size={"icon"}
-                      className="cursor-pointer"
-                      onClick={() => handleTitleEdit(title?.title)}
-                    >
-                      <Pen />
-                    </Button>
-                    <DeleteModal
-                      title="Delete Post"
-                      description="Are you sure you want to proceed with this action?"
-                      detail="This will delete all chats of this title and action cannot be undone"
-                      onClick={() => handleTitleDelete(title?.id)}
-                      loading={titleDeleteLoading}
-                    />
-                    <ChatFormModal
-                      title={"Attach a new chat"}
-                      description=" Create a new chat under the current title"
-                      // post={chat}
-                      Icon={Plus}
-                      titleId={title?.id}
-                    />
-                  </div>
-                )}
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {title?.posts?.map((chat, index) => (
-                  <div
-                    className="flex-1 border rounded-lg min-w-72 p-2  max-w-4xl mx-auto"
-                    key={index}
-                  >
-                    <div className="flex gap-2 justify-end">
+        {titleGetLoading ? (
+          [...Array(3)].map((_, index) => <PostCardSkeleton key={index} />)
+        ) : (
+          <div className=" space-y-8">
+            {titles?.map((title, index) => (
+              <div className="space-y-1 flex flex-col" key={index}>
+                <div className="flex gap-2 justify-center flex-wrap mx-auto">
+                  {editTitle ? (
+                    <div className="flex-1 flex gap-2">
+                      <Input
+                        type="text"
+                        className=""
+                        disabled={titleUpdateLoading}
+                        onChange={(e) => setTitlePayload(e.target.value)}
+                        value={titlePayload}
+                        defaultValue={title?.title}
+                      />
+                      <Button
+                        variant="outline"
+                        className="cursor-pointer"
+                        size={"icon"}
+                        onClick={() =>
+                          handleTitleOnSubmit(title?.id, title?.title)
+                        }
+                      >
+                        <Save />
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex-1 flex gap-2">
+                      <h2
+                        title={title?.title}
+                        className="text-center text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500"
+                      >
+                        {title?.title}
+                      </h2>
+                      <Button
+                        variant="outline"
+                        size={"icon"}
+                        className="cursor-pointer"
+                        onClick={() => handleTitleEdit(title?.title)}
+                      >
+                        <Pen />
+                      </Button>
                       <DeleteModal
-                        title="Delete Chat"
-                        description="Are you sure you want to delete this chat?"
-                        detail="This will delete only this one chat and action cannot be undone"
-                        onClick={() => handlePostDelete(chat?.id)}
-                        loading={postDeleteLoading}
+                        title="Delete Post"
+                        description="Are you sure you want to proceed with this action?"
+                        detail="This will delete all chats of this title and action cannot be undone"
+                        onClick={() => handleTitleDelete(title?.id)}
+                        loading={titleDeleteLoading}
                       />
                       <ChatFormModal
-                        title={"Update this chat"}
-                        description=" Modify any of the input fields update and click done"
-                        post={chat}
-                        Icon={Pen}
+                        title={"Attach a new chat"}
+                        description=" Create a new chat under the current title"
+                        // post={chat}
+                        Icon={Plus}
+                        titleId={title?.id}
                       />
                     </div>
-                    <ChatCard post={chat} />
-                  </div>
-                ))}
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {title?.posts?.map((chat, index) => (
+                    <div
+                      className="flex-1 border rounded-lg min-w-72 p-2  max-w-4xl mx-auto"
+                      key={index}
+                    >
+                      <div className="flex gap-2 justify-end">
+                        <DeleteModal
+                          title="Delete Chat"
+                          description="Are you sure you want to delete this chat?"
+                          detail="This will delete only this one chat and action cannot be undone"
+                          onClick={() => handlePostDelete(chat?.id)}
+                          loading={postDeleteLoading}
+                        />
+                        <ChatFormModal
+                          title={"Update this chat"}
+                          description=" Modify any of the input fields update and click done"
+                          post={chat}
+                          Icon={Pen}
+                        />
+                      </div>
+                      <ChatCard post={chat} />
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
