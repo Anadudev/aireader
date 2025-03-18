@@ -9,5 +9,6 @@ export type UpdateUser = {
 
 export type UserInclude = {
   posts?: boolean;
+  title?: boolean;
   accounts?: boolean;
 };

@@ -8,11 +8,18 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
   constructor(private prisma: PrismaConfigService) {}
 
-  async findOneById(id: string, include?: UserInclude) {
+  async findOneById(id: string, toInclude?: UserInclude) {
     try {
       const user = await this.prisma.user.findUnique({
         where: { id },
-        include,
+        include: {
+          accounts: Boolean(toInclude?.accounts || false),
+          postTitles: toInclude?.title && {
+            include: {
+              posts: Boolean(toInclude?.posts || false),
+            },
+          },
+        },
       });
       if (!user) {
         throw new HttpException('User not found', 404);

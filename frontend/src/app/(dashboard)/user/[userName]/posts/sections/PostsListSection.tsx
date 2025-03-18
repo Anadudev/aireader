@@ -10,10 +10,16 @@ import { Pen, Plus, Save } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import DeleteModal from "@/components/DeleteModal";
+import useAuthStore from "@/lib/store/auth.store";
+import { useRouter } from "next/navigation";
 
 const PostsListSection = () => {
+  const router = useRouter();
   const [editTitle, setEditTitle] = useState(false);
   const [titlePayload, setTitlePayload] = useState<string>("");
+  // const { authUser } = useAuthStore();
+  // if (!authUser) router.push("/login");
+
   const {
     titles,
     handleTitlesGet,
@@ -64,7 +70,6 @@ const PostsListSection = () => {
   return (
     <div className="">
       {" "}
-      and modify axios baseURL for production
       <div className="flex flex-wrap gap-2 w-full items-center justify-center p-2">
         {titleGetLoading ? (
           [...Array(3)].map((_, index) => <PostCardSkeleton key={index} />)

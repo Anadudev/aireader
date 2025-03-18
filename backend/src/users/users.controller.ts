@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Put, Query, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthGuard } from 'src/auth/auth.guards';
 import { UpdateUserDto } from './dto/user.dto';
+import { UserInclude } from 'src/types/userFields.types';
 
 @Controller('users')
 export class UsersController {
@@ -14,9 +15,10 @@ export class UsersController {
   }
 
   @Get(':id')
-  async getOne(id: string) {
+  async getOne(id: string, @Query() query: UserInclude) {
+    query.accounts = true,
     const user = await this.usersService.findOneById(id, {
-      accounts: true,
+      ...query,
     });
     return user;
   }

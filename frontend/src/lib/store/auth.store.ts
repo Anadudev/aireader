@@ -37,7 +37,6 @@ const useAuthStore = create<AuthStore>((set, get) => ({
 
   setAuthUser: (user: UserType | null) => set({ authUser: user }),
 
-
   authUserHandler: async () => {
     try {
       const accessToken = get().access_token;
@@ -101,7 +100,9 @@ const useAuthStore = create<AuthStore>((set, get) => ({
     window.localStorage.removeItem("access_token");
     localStorage.removeItem("authUser");
     toast.success("Logout successful");
-    window.location.href = "/";
+    if (window.location.pathname !== "/") {
+      window.location.href = "/";
+    }
     set({ logoutLoading: false });
   },
 
