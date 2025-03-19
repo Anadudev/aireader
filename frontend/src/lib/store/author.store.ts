@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
 import toast from "react-hot-toast";
-import useAuthStore from "@/lib/store/auth.store";
 import {
   AuthorStoreType,
   AuthorQueryType,
