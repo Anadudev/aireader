@@ -10,20 +10,19 @@ import { Pen, Plus, Save } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import DeleteModal from "@/components/DeleteModal";
-import useAuthStore from "@/lib/store/auth.store";
-import { useRouter } from "next/navigation";
+// import useAuthStore from "@/lib/store/auth.store";
+import { useParams } from "next/navigation";
+// import { useRouter } from "next/router";
+import useAuthorStore from "@/lib/store/author.store";
 
 const PostsListSection = () => {
-  const router = useRouter();
+  const { userName } = useParams();
+
   const [editTitle, setEditTitle] = useState(false);
   const [titlePayload, setTitlePayload] = useState<string>("");
   // const { authUser } = useAuthStore();
   // if (!authUser) router.push("/login");
-
   const {
-    titles,
-    handleTitlesGet,
-    titleGetLoading,
     handleTitleUpdate,
     titleUpdateLoading,
     titleDeleteLoading,
@@ -35,6 +34,8 @@ const PostsListSection = () => {
     postDeleteLoading,
     postCreateLoading,
   } = usePostStore();
+
+  const { author, handleAuthorGet, authorGetLoading } = useAuthorStore();
 
   const handleTitleEdit = (title: string) => {
     setEditTitle(true);
@@ -51,31 +52,36 @@ const PostsListSection = () => {
         handleTitleUpdate({ id, title: titlePayload });
       setTitlePayload("");
       setEditTitle(false);
-      console.log(titlePayload);
+      // console.log(titlePayload);
     } catch {}
     setTitlePayload("");
     setEditTitle(false);
   };
 
   useEffect(() => {
-    handleTitlesGet({ posts: true });
+    handleAuthorGet(
+      { titles: true, posts: true },
+      userName as string,
+      undefined
+    );
   }, [
-    handleTitlesGet,
     postUpdateLoading,
     titleUpdateLoading,
     postDeleteLoading,
     postCreateLoading,
+    handleAuthorGet,
+    userName,
   ]);
 
   return (
     <div className="">
       {" "}
       <div className="flex flex-wrap gap-2 w-full items-center justify-center p-2">
-        {titleGetLoading ? (
+        {authorGetLoading ? (
           [...Array(3)].map((_, index) => <PostCardSkeleton key={index} />)
         ) : (
           <div className=" space-y-8">
-            {titles?.map((title, index) => (
+            {author?.titles?.map((title, index) => (
               <div className="space-y-1 flex flex-col" key={index}>
                 <div className="flex gap-2 justify-center flex-wrap mx-auto">
                   {editTitle ? (

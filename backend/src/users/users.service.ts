@@ -3,24 +3,28 @@ import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
 import { UserInclude, NewUser, UpdateUser } from 'src/types/userFields.types';
 import * as bcrypt from 'bcrypt';
+import { QueryType } from 'src/types/query.types';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaConfigService) {}
 
-  async findOneById(id: string, toInclude?: UserInclude) {
+  async findOne(id: string, toInclude?: UserInclude) {
     try {
-      const user = await this.prisma.user.findUnique({
-        where: { id },
+      const user = await this.prisma.user.findFirst({
+        where: {
+          OR: [{ id }, { username: id }],
+        },
         include: {
           accounts: Boolean(toInclude?.accounts || false),
-          postTitles: toInclude?.title && {
+          titles: toInclude?.titles && {
             include: {
               posts: Boolean(toInclude?.posts || false),
             },
           },
         },
       });
+      // console.log(user, toInclude);
       if (!user) {
         throw new HttpException('User not found', 404);
       }
@@ -31,30 +35,12 @@ export class UsersService {
     }
   }
 
-  async findOneByUsername(username: string, include: UserInclude) {
+  async findAll(query?: QueryType) {
     try {
-      const user = await this.prisma.user.findUnique({
-        where: { username },
-        include,
+      const users = await this.prisma.user.findMany({
+        take: Number(query?.take || 10),
+        skip: Number(query?.skip || 0),
       });
-      if (!user) {
-        throw new HttpException('User not found', 404);
-      }
-      return user;
-    } catch (error) {
-      console.error(`[findOne]: ${error.code} ${error}`);
-      if (error.code == 'P2002') {
-        throw new HttpException('User already exists', 409);
-      }
-      errorMessages.SERVER_ERROR(error);
-    }
-  }
-
-  async findAll(include?: UserInclude, take = 10, skip?: number) {
-    try {
-      if (take < 1) take = 1;
-      if (skip && skip < 0) skip = 0;
-      const users = await this.prisma.user.findMany({ take, skip, include });
       if (!users) {
         throw new HttpException('Users not found', 404);
       }

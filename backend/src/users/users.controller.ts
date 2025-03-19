@@ -1,23 +1,32 @@
-import { Body, Controller, Get, Put, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthGuard } from 'src/auth/auth.guards';
 import { UpdateUserDto } from './dto/user.dto';
 import { UserInclude } from 'src/types/userFields.types';
+import { QueryType } from 'src/types/query.types';
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  async getAll() {
-    const users = await this.usersService.findAll({ accounts: true });
+  async getAll(@Query() query: QueryType) {
+    const users = await this.usersService.findAll(query);
     return users;
   }
-
+  // todo: exclude accounts on every request
   @Get(':id')
-  async getOne(id: string, @Query() query: UserInclude) {
-    query.accounts = true,
-    const user = await this.usersService.findOneById(id, {
+  async getOne(@Param('id') id: string, @Query() query: UserInclude) {
+    query.accounts = true;
+    const user = await this.usersService.findOne(id, {
       ...query,
     });
     return user;

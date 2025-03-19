@@ -29,7 +29,7 @@ model User {
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
   posts      Post[]
-  postTitles Title[]
+  titles Title[]
   accounts   Account[]
 }
 
