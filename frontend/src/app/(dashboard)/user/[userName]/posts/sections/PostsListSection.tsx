@@ -10,7 +10,7 @@ import { Pen, Plus, Save } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import DeleteModal from "@/components/DeleteModal";
-// import useAuthStore from "@/lib/store/auth.store";
+import useAuthStore from "@/lib/store/auth.store";
 import { useParams } from "next/navigation";
 // import { useRouter } from "next/router";
 import useAuthorStore from "@/lib/store/author.store";
@@ -20,7 +20,7 @@ const PostsListSection = () => {
 
   const [editTitle, setEditTitle] = useState(false);
   const [titlePayload, setTitlePayload] = useState<string>("");
-  // const { authUser } = useAuthStore();
+  const { authUser } = useAuthStore();
   // if (!authUser) router.push("/login");
   const {
     handleTitleUpdate,
@@ -75,7 +75,6 @@ const PostsListSection = () => {
 
   return (
     <div className="">
-      {" "}
       <div className="flex flex-wrap gap-2 w-full items-center justify-center p-2">
         {authorGetLoading ? (
           [...Array(3)].map((_, index) => <PostCardSkeleton key={index} />)
@@ -84,7 +83,7 @@ const PostsListSection = () => {
             {author?.titles?.map((title, index) => (
               <div className="space-y-1 flex flex-col" key={index}>
                 <div className="flex gap-2 justify-center flex-wrap mx-auto">
-                  {editTitle ? (
+                  {editTitle && title.authorId == authUser?.id ? (
                     <div className="flex-1 flex gap-2">
                       <Input
                         type="text"
@@ -113,28 +112,34 @@ const PostsListSection = () => {
                       >
                         {title?.title}
                       </h2>
-                      <Button
-                        variant="outline"
-                        size={"icon"}
-                        className="cursor-pointer"
-                        onClick={() => handleTitleEdit(title?.title)}
-                      >
-                        <Pen />
-                      </Button>
-                      <DeleteModal
-                        title="Delete Post"
-                        description="Are you sure you want to proceed with this action?"
-                        detail="This will delete all chats of this title and action cannot be undone"
-                        onClick={() => handleTitleDelete(title?.id)}
-                        loading={titleDeleteLoading}
-                      />
-                      <ChatFormModal
-                        title={"Attach a new chat"}
-                        description=" Create a new chat under the current title"
-                        // post={chat}
-                        Icon={Plus}
-                        titleId={title?.id}
-                      />
+                      {title.authorId == authUser?.id && (
+                        <Button
+                          variant="outline"
+                          size={"icon"}
+                          className="cursor-pointer"
+                          onClick={() => handleTitleEdit(title?.title)}
+                        >
+                          <Pen />
+                        </Button>
+                      )}
+                      {title.authorId == authUser?.id && (
+                        <DeleteModal
+                          title="Delete Post"
+                          description="Are you sure you want to proceed with this action?"
+                          detail="This will delete all chats of this title and action cannot be undone"
+                          onClick={() => handleTitleDelete(title?.id)}
+                          loading={titleDeleteLoading}
+                        />
+                      )}
+                      {title.authorId == authUser?.id && (
+                        <ChatFormModal
+                          title={"Attach a new chat"}
+                          description=" Create a new chat under the current title"
+                          // post={chat}
+                          Icon={Plus}
+                          titleId={title?.id}
+                        />
+                      )}
                     </div>
                   )}
                 </div>
@@ -144,21 +149,23 @@ const PostsListSection = () => {
                       className="flex-1 border rounded-lg min-w-72 p-2  max-w-4xl mx-auto"
                       key={index}
                     >
-                      <div className="flex gap-2 justify-end">
-                        <DeleteModal
-                          title="Delete Chat"
-                          description="Are you sure you want to delete this chat?"
-                          detail="This will delete only this one chat and action cannot be undone"
-                          onClick={() => handlePostDelete(chat?.id)}
-                          loading={postDeleteLoading}
-                        />
-                        <ChatFormModal
-                          title={"Update this chat"}
-                          description=" Modify any of the input fields update and click done"
-                          post={chat}
-                          Icon={Pen}
-                        />
-                      </div>
+                      {title.authorId == authUser?.id && (
+                        <div className="flex gap-2 justify-end">
+                          <DeleteModal
+                            title="Delete Chat"
+                            description="Are you sure you want to delete this chat?"
+                            detail="This will delete only this one chat and action cannot be undone"
+                            onClick={() => handlePostDelete(chat?.id)}
+                            loading={postDeleteLoading}
+                          />
+                          <ChatFormModal
+                            title={"Update this chat"}
+                            description=" Modify any of the input fields update and click done"
+                            post={chat}
+                            Icon={Pen}
+                          />
+                        </div>
+                      )}
                       <ChatCard post={chat} />
                     </div>
                   ))}

@@ -18,6 +18,7 @@ export type TitlePayloadType = {
 
 export type TitleType = {
   id: string;
+  authorId: string;
   slug: string;
   createdAt: string;
   updatedAt: string;
