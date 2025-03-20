@@ -154,7 +154,7 @@ const PostsListSection = () => {
                           <DeleteModal
                             title="Delete Chat"
                             description="Are you sure you want to delete this chat?"
-                            detail="This will delete only this one chat and action cannot be undone"
+                            detail="This will delete only this one chat and action cannot be undone. Will delete title if it's the only chat"
                             onClick={() => handlePostDelete(chat?.id)}
                             loading={postDeleteLoading}
                           />
