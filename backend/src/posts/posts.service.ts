@@ -90,6 +90,14 @@ export class PostsService {
       if (!post) {
         throw new HttpException('Post not found', 404);
       }
+      const title = await this.prisma.title.findUnique({
+        where: { id: post.titleId },
+        include: { posts: true },
+      });
+      // Delete title if no other posts are found
+      if (!title?.posts[0]) {
+        await this.prisma.title.delete({ where: { id: post.titleId } });
+      }
       return post;
     } catch (error) {
       console.error(`[postDelete]: ${error}`);
