@@ -15,7 +15,6 @@ const PostCard = ({
   total?: number;
   post?: PostType;
 }) => {
-
   return (
     <Link
       href={`/explore/${title?.slug}`}
@@ -37,25 +36,27 @@ const PostCard = ({
       <div className="space-y-5">
         <h2
           title={title?.title}
-          className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500"
+          className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500 break-words"
         >
           {stringLimiter(title?.title, 30)}
         </h2>
         <div className="space-y-2 transition-all duration-200">
           {post?.prompt && (
             <div
-              className="shadow-md bg-gradient-to-r from-indigo-400 to-indigo-700 p-2 rounded-2xl rounded-tr-none text-indigo-50 font-semibold text-sm w-[80%] ml-auto"
+              className="shadow-md p-2 rounded-2xl rounded-tr-none border w-[80%] ml-auto"
               title={post?.prompt}
             >
-              <p className="">{stringLimiter(post?.prompt, 100)}</p>
+              <p className="break-words">{stringLimiter(post?.prompt, 100)}</p>
             </div>
           )}
           {post?.response && (
             <div
-              className="shadow-md bg-gradient-to-r from-pink-700 to-pink-400 p-2 rounded-2xl rounded-tl-none text-indigo-50 font-semibold text-sm w-[80%]"
+              className="shadow-md p-2 rounded-2xl rounded-tl-none border w-[80%]"
               title={post?.response}
             >
-              {stringLimiter(post?.response, 100)}
+              <p className="break-words">
+                {stringLimiter(post?.response, 100)}
+              </p>
             </div>
           )}
         </div>

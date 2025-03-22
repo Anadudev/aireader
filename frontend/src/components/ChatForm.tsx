@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import {
@@ -15,6 +14,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import usePostStore from "@/lib/store/post.store";
 import { PostType } from "@/types/Post.type";
+import TipTapRichText from "@/components/TipTapRichText";
 
 const formSchema = z.object({
   chat: z.object({
@@ -88,12 +88,9 @@ const ChatForm = ({
                 <FormItem>
                   <FormLabel>Prompt</FormLabel>
                   <FormControl>
-                    <Textarea
-                      rows={3}
-                      disabled={postUpdateLoading || postCreateLoading}
-                      className="max-h-40 p-2 "
-                      {...field}
-                      placeholder={`Enter your prompt`}
+                    <TipTapRichText
+                      setValue={field.onChange}
+                      value={field.value}
                     />
                   </FormControl>
                   <FormMessage />
@@ -106,12 +103,9 @@ const ChatForm = ({
                 <FormItem>
                   <FormLabel>Response</FormLabel>
                   <FormControl>
-                    <Textarea
-                      rows={3}
-                      disabled={postUpdateLoading || postCreateLoading}
-                      className="max-h-40 p-2 "
-                      {...field}
-                      placeholder={`Enter your response`}
+                    <TipTapRichText
+                      setValue={field.onChange}
+                      value={field.value}
                     />
                   </FormControl>
                   <FormMessage />

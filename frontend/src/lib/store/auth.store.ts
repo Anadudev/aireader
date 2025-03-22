@@ -1,9 +1,7 @@
 import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
-// import { persist } from "zustand/middleware";
 import toast from "react-hot-toast";
 import { UserType } from "@/types/User.type";
-// import { AccessTokenLocalStorage, RemoveItem } from "../localStorage";
 
 type AuthStore = {
   authUser: UserType | null;

@@ -2,39 +2,52 @@
 import Placeholder from "@tiptap/extension-placeholder";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { all, createLowlight } from "lowlight";
 
-const TipTapRichText = ({ description }: { description: string }) => {
+export type TipTapRichTextProps = {
+  value: string;
+  placeholder?: string;
+  setValue: (value: string) => void;
+};
+
+const lowlight = createLowlight(all);
+
+const TipTapRichText: React.FC<TipTapRichTextProps> = ({
+  value,
+  setValue,
+  placeholder,
+}) => {
   const editor = useEditor({
+    onUpdate: ({ editor }) => {
+      const richValue = editor.getHTML();
+      setValue(richValue);
+    },
+    immediatelyRender: false,
     extensions: [
       StarterKit,
       Placeholder.configure({
-        // Use a placeholder:
-        placeholder: "Write something …",
-        // Use different placeholders depending on the node type:
-        // placeholder: ({ node }) => {
-        //   if (node.type.name === 'heading') {
-        //     return 'What’s the title?'
-        //   }
-
-        //   return 'Can you add some further context?'
-        // },
-        showOnlyWhenEditable: false,
+        placeholder,
+      }),
+      CodeBlockLowlight.configure({
+        lowlight,
       }),
     ],
 
-    content: description,
-    // onUpdate({ editor }) {
-    //   onChange(editor.getHTML());
-    // },
-    // content: "<p>Hello World! 🌎️</p>",
+    content: value,
     editorProps: {
       attributes: {
-        class: "border rounded-md  p-2 mx-auto min-h-12",
+        class: "border rounded-md  p-2 mx-auto h-full max-h-xl w-full",
       },
     },
   });
 
-  return <EditorContent editor={editor} />;
+  return (
+    <div className="">
+      <EditorContent editor={editor} />
+      <input type="hidden" value={value} />
+    </div>
+  );
 };
 
 export default TipTapRichText;

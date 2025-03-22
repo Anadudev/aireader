@@ -4,10 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Minus, Plus } from "lucide-react";
 import toast from "react-hot-toast";
-// import { usePathname } from "next/navigation";
-// import { Form } from "@/components/ui/form";
-// import Image from "next/image";
-import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import {
@@ -22,16 +18,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import PostDeleteToast from "@/components/PostDeleteToast";
 import usePostStore from "@/lib/store/post.store";
 import useTitleStore from "@/lib/store/title.store";
+import TipTapRichText from "@/components/TipTapRichText";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   title: z.string().min(15, {
     message: "Title must be at least 15 characters.",
   }),
   chats: z.array(
     z.object({
       chatId: z.number(),
-      prompt: z.string().min(2, {
-        message: "Prompt must be at least 2 characters.",
+      prompt: z.string().min(20, {
+        message: "Prompt must be at least 20 characters.",
       }),
       response: z.string().min(50, {
         message: "Response must be at least 50 characters.",
@@ -46,6 +43,7 @@ const PostForm = () => {
   const [trigger, setTrigger] = React.useState(false);
   const { handlePostCreate, postCreateLoading } = usePostStore();
   const { titleCreateLoading, handleTitleCreate } = useTitleStore();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -187,10 +185,10 @@ const PostForm = () => {
                   <FormItem>
                     <FormLabel>Prompt</FormLabel>
                     <FormControl>
-                      <Input
-                        disabled={postCreateLoading || titleCreateLoading}
-                        {...field}
-                        placeholder={`Enter your prompt "${index + 1}"`}
+                      <TipTapRichText
+                        value={field.value}
+                        placeholder="Prompt"
+                        setValue={field.onChange}
                       />
                     </FormControl>
                     <FormMessage />
@@ -204,14 +202,11 @@ const PostForm = () => {
                   <FormItem>
                     <FormLabel>Response</FormLabel>
                     <FormControl>
-                      <Textarea
-                        disabled={postCreateLoading || titleCreateLoading}
-                        className="w-full h-96 p-2 "
-                        {...field}
-                        placeholder={`Enter your response for prompt "${
-                          index + 1
-                        }"`}
-                      ></Textarea>
+                      <TipTapRichText
+                        value={field.value}
+                        placeholder="Response"
+                        setValue={field.onChange}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

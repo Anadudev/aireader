@@ -1,5 +1,5 @@
 import React from "react";
-import ChatForm from "./ChatForm";
+import ChatForm from "@/components/ChatForm";
 import { PostType } from "@/types/Post.type";
 // ------------------------
 import { LucideIcon } from "lucide-react";
