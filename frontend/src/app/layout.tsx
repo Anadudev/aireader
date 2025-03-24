@@ -5,8 +5,8 @@ import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import DashboardAction from "@/components/DashboardAction";
 import ThemeProvider from "@/components/ThemeProvider";
-import AccessTokenGet from "@/hooks/localStorage/AccessTokenGet";
 import Footer from "@/components/Footer";
+import ProtectedRoute from "@/lib/protectedRoute";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,7 +58,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AccessTokenGet />
+          <ProtectedRoute />
           <Navbar />
           <DashboardAction />
           {children}

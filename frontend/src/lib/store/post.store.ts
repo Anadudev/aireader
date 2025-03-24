@@ -19,11 +19,7 @@ const usePostStore = create<PostStoreType>((set) => ({
   handlePostCreate: async (postPayload: PostPayloadType) => {
     try {
       set({ postCreateLoading: true });
-      await axiosInstance.post("/posts", postPayload, {
-        headers: {
-          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
-        },
-      });
+      await axiosInstance.post("/posts", postPayload);
       toast.success("Post created successfully");
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -59,11 +55,7 @@ const usePostStore = create<PostStoreType>((set) => ({
   handlePostDelete: async (id: string) => {
     try {
       set({ postDeleteLoading: true });
-      await axiosInstance.delete(`/posts/${id}`, {
-        headers: {
-          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
-        },
-      });
+      await axiosInstance.delete(`/posts/${id}`);
       toast.success("Post deleted successfully");
     } catch (error) {
       toast.error(error.response.data.message);
@@ -79,11 +71,7 @@ const usePostStore = create<PostStoreType>((set) => ({
   handlePostUpdate: async (postPayload: ChatPayload) => {
     try {
       set({ postUpdateLoading: true });
-      await axiosInstance.patch(`/posts/${postPayload.id}`, postPayload, {
-        headers: {
-          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
-        },
-      });
+      await axiosInstance.patch(`/posts/${postPayload.id}`, postPayload);
       toast.success("Post updated successfully");
     } catch (error) {
       toast.error(error.response.data.message);

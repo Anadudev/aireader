@@ -42,7 +42,7 @@ export class AuthService {
     if (accounts[0]) {
       const isPasswordValid = await bcrypt.compare(
         data.password,
-        accounts[0].password as string,
+        accounts[0].password,
       );
 
       if (!isPasswordValid) {

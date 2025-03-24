@@ -67,11 +67,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
     try {
       set({ titleDeleteLoading: true });
       //   const response =
-      await axiosInstance.delete(`/titles/${id}`, {
-        headers: {
-          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
-        },
-      });
+      await axiosInstance.delete(`/titles/${id}`);
       //   set({ titles: response.data });
       toast.success("Posts fetched successfully");
     } catch (error) {
@@ -89,11 +85,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
   handleTitleCreate: async (titlePayload: { title: string }) => {
     try {
       set({ titleCreateLoading: true });
-      const response = await axiosInstance.post("/titles", titlePayload, {
-        headers: {
-          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
-        },
-      });
+      const response = await axiosInstance.post("/titles", titlePayload);
       toast.success("Title created successfully");
       console.log(response.data);
       return response.data;
@@ -113,11 +105,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
   handleTitleUpdate: async (titlePayload: TitlePayloadType) => {
     try {
       set({ titleUpdateLoading: true });
-      await axiosInstance.patch(`/titles/${titlePayload.id}`, titlePayload, {
-        headers: {
-          Authorization: `Bearer ${useAuthStore.getState().access_token}`,
-        },
-      });
+      await axiosInstance.patch(`/titles/${titlePayload.id}`, titlePayload);
       toast.success("Title updated successfully");
     } catch (error) {
       toast.error(error.response.data.message);

@@ -4,6 +4,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { all, createLowlight } from "lowlight";
+import CodeBlock from '@tiptap/extension-code-block'
 
 export type TipTapRichTextProps = {
   value: string;
@@ -26,6 +27,7 @@ const TipTapRichText: React.FC<TipTapRichTextProps> = ({
     immediatelyRender: false,
     extensions: [
       StarterKit,
+      CodeBlock,
       Placeholder.configure({
         placeholder,
       }),
@@ -37,7 +39,7 @@ const TipTapRichText: React.FC<TipTapRichTextProps> = ({
     content: value,
     editorProps: {
       attributes: {
-        class: "border rounded-md  p-2 mx-auto h-full max-h-xl w-full",
+        class: "border rounded-md  p-2 mx-auto h-full max-h-xl w-full break-words",
       },
     },
   });
