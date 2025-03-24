@@ -56,10 +56,10 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-full max-w-lg flex-1 mx-auto sm:mx-0 bg-accent rounded-2xl px-5 py-10">
+    <div className="w-full max-w-lg flex-1 mx-auto sm:mx-0 bg-accent rounded-2xl px-5 py-12">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-9">
-          <FormDescription className="text-center text-2xl font-bold capitalize">
+          <FormDescription className="sm:hidden block text-center text-2xl font-bold capitalize">
             Welcome back
           </FormDescription>
           <FormField
