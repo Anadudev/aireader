@@ -9,13 +9,24 @@ const useAuthStore = create<AuthStore>((set, get) => ({
   logoutLoading: false,
 
   authUserHandler: async () => {
-    const request = await axiosInstance.get("/auth/profile");
-    if (!request.data) {
-      toast.error("You are not logged in");
+    try {
+      const request = await axiosInstance.get("/auth/profile");
+      console.log(request.data);
+      if (!request.data) {
+        toast.error("You are not logged in");
+        set({ authUser: null });
+        if (window.location.pathname !== "/auth/login") {
+          window.location.href = "/auth/login";
+        }
+      }
+      set({ authUser: request.data || null });
+    } catch (error) {
+      console.log(error);
       set({ authUser: null });
-      window.location.href = "/auth/login";
+      // error.response && error.response.data.message
+      //   ? toast.error(error.response.data.message)
+      //   : toast.error("Something went wrong");
     }
-    set({ authUser: request.data || null });
   },
 
   loginHandler: async (loginPayload) => {

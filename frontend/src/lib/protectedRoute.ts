@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 
 const ProtectedRoute = () => {
   const router = useRouter();
-  const { authUserHandler, authUser } = useAuthStore();
+  const { authUserHandler } = useAuthStore();
 
   useEffect(() => {
     authUserHandler();
-  }, [authUser, authUserHandler, router]);
+  }, [authUserHandler, router]);
 
   return null;
 };

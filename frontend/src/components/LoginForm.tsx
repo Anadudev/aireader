@@ -52,6 +52,7 @@ const LoginForm = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     loginHandler(data).then(() => {
       form.reset();
+      router.push(`/user/${data.username}`);
     });
   };
 
@@ -72,6 +73,7 @@ const LoginForm = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
+                  autoComplete="on"
                     disabled={loadingLogin}
                     className="text-5 p-5"
                     placeholder="Username"
@@ -91,6 +93,7 @@ const LoginForm = () => {
                 <FormControl className="relative">
                   <div className="">
                     <Input
+                    autoComplete="on"
                       disabled={loadingLogin}
                       type={showPassword ? "text" : "password"}
                       className="text-5 p-5"

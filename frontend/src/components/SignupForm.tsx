@@ -81,6 +81,7 @@ const SignupForm = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
+                    autoComplete="on"
                     disabled={loadingSignUp}
                     className="text-5 p-5"
                     placeholder="Username"
@@ -100,6 +101,7 @@ const SignupForm = () => {
                 <FormControl className="relative">
                   <div className="">
                     <Input
+                      autoComplete="on"
                       disabled={loadingSignUp}
                       type={showPassword ? "text" : "password"}
                       className="text-5 p-5"
@@ -133,6 +135,7 @@ const SignupForm = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
+                    autoComplete="on"
                     disabled={loadingSignUp}
                     type="password"
                     className="text-5 p-5"
