@@ -5,10 +5,15 @@ import { useRouter } from "next/navigation";
 
 const ProtectedRoute = () => {
   const router = useRouter();
-  const { authUserHandler } = useAuthStore();
+  const { authUserHandler, authUser } = useAuthStore();
 
   useEffect(() => {
     authUserHandler();
+
+    if (!authUser) {
+      router.push("/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authUserHandler, router]);
 
   return null;

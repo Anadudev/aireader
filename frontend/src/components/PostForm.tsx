@@ -143,7 +143,7 @@ const PostForm = () => {
   };
 
   return (
-    <div className="min-h-98 space-y-4 max-w-2xl flex-1 p-4 py-8 border border-zinc-200 rounded-2xl">
+    <div className="min-h-98 space-y-4 mb-8 max-w-2xl flex-1 p-4 py-8 border border-zinc-200 rounded-2xl">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-9">
           <FormField
