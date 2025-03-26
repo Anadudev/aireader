@@ -12,22 +12,6 @@
   width: 100%;
   overflow: auto;
 }
-.tiptap code {
-  /* max-height: 15rem; */
-  background-color: rgb(60, 63, 65);
-  color: rgb(240, 240, 240);
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  /* max-width: 100%; */
-  overflow: auto;
-  display: block;
-  /* text-wrap: nowrap; */
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-family: 'Fira Code', monospace;
-}
-
-
 
 :root {
   --background: oklch(1 0 0);
