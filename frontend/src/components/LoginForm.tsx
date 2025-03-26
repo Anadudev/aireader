@@ -52,7 +52,7 @@ const LoginForm = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     loginHandler(data).then(() => {
       form.reset();
-      router.push(`/user/${data.username}`);
+      // router.push(`/user/${data.username}`);
     });
   };
 
