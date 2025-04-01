@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axiosInstance from "@/lib/axios.config";
 import toast from "react-hot-toast";
+import { AuthStore } from "@/types";
 
 const useAuthStore = create<AuthStore>((set, get) => ({
   loadingSignUp: false,
