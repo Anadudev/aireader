@@ -7,6 +7,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ChatCardSkeleton from "@/components/loading/skeleton/ChatCardSkeleton";
+import { Share2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import share from "@/lib/share";
 
 const PostDetailsCard = ({ slug }: { slug: string }) => {
   const settings = {
@@ -42,10 +45,13 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
                 {post?.author?.username}
               </div>
             </div>
-            <div>
+            <div className="flex justify-center gap-4">
               <h1 className="ext-xl font-extrabold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500 text-4xl sm:text-5xl text-center">
                 {post?.title}
               </h1>
+              <Button className="cursor-pointer"  onClick={()=>share(post?.title)} size="icon">
+              <Share2 className="size-5" />
+              </Button>
             </div>
           </div>
           <div className="space-y-2 max-w-4xl mx-auto">
