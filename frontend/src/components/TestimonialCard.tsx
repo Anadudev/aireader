@@ -1,5 +1,6 @@
 import React from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import { TestimonialType } from "@/types";
 
 const TestimonialCard: React.FC<TestimonialType> = ({
   testimony,
