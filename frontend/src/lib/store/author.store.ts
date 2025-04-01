@@ -5,7 +5,7 @@ import {
   AuthorStoreType,
   AuthorQueryType,
   AuthorIncludeType,
-} from "@/types/Author.type";
+} from "@/types";
 
 const useAuthorStore = create<AuthorStoreType>((set) => ({
   authorGetLoading: false,

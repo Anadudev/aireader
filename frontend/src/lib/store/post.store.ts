@@ -6,7 +6,7 @@ import {
   PostPayloadType,
   PostQueryType,
   ChatPayload,
-} from "@/types/Post.type";
+} from "@/types";
 
 const usePostStore = create<PostStoreType>((set) => ({
   postGetLoading: false,

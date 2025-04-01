@@ -1,7 +1,7 @@
 import React from "react";
-import { PostType } from "@/types/Post.type";
 import { formatDateString } from "@/lib/TimeFormat";
 import RenderRichText from "@/components/RenderRichText";
+import { PostType } from "@/types";
 
 const ChatCard = ({ post }: { post: PostType }) => {
   return (

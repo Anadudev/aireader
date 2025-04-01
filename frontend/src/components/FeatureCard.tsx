@@ -1,5 +1,5 @@
 import React from "react";
-import { FeatureType } from "@/types/feature";
+import { FeatureType } from "@/types";
 
 const FeatureCard: React.FC<FeatureType> = ({ title, description, Icon }) => {
   return (

@@ -1,7 +1,6 @@
 import React from "react";
 import stringLimiter from "@/lib/stringLimiter";
-import { PostType } from "@/types/Post.type";
-import { TitleType } from "@/types/Title.type";
+import { PostType, TitleType } from "@/types";
 import { MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

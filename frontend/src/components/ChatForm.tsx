@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import usePostStore from "@/lib/store/post.store";
-import { PostType } from "@/types/Post.type";
+import { PostType } from "@/types";
 import TipTapRichText from "@/components/TipTapRichText";
 
 const formSchema = z.object({

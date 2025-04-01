@@ -1,6 +1,6 @@
 import React from "react";
 import ChatForm from "@/components/ChatForm";
-import { PostType } from "@/types/Post.type";
+import { PostType } from "@/types";
 // ------------------------
 import { LucideIcon } from "lucide-react";
 

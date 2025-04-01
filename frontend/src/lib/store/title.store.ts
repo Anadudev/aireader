@@ -6,7 +6,7 @@ import {
   TitlePayloadType,
   TitleQueryType,
   TitleIncludeType,
-} from "@/types/Title.type";
+} from "@/types";
 
 const useTitleStore = create<TitleStoreType>((set) => ({
   titleGetLoading: false,
