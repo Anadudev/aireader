@@ -40,8 +40,7 @@ export class AuthController {
     const { access_token } = await this.authService.login(formdata);
     res.cookie('access_token', access_token, {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === 'production',
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'none',
       maxAge: 60 * 60 * 24 * 7, // 7 days
     });
