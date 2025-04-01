@@ -3,10 +3,10 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { NewUser } from 'src/types/userFields.types';
+import { NewUser } from 'src/types';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
-import { errorMessages } from 'errors/error-messages';
+// import { errorMessages } from 'errors/error-messages';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
 

@@ -1,9 +1,8 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
-import { UserInclude, NewUser, UpdateUser } from 'src/types/userFields.types';
 import * as bcrypt from 'bcrypt';
-import { QueryType } from 'src/types/query.types';
+import { UserInclude, NewUser, UpdateUser, QueryType } from 'src/types';
 
 @Injectable()
 export class UsersService {

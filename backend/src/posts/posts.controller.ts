@@ -14,8 +14,7 @@ import {
 import { PostsService } from './posts.service';
 import { AuthGuard } from 'src/auth/auth.guards';
 import { NewPostDto, UpdatePostDto } from './dto/posts.dto';
-import { PostQueryType } from 'src/types/postQuery.types';
-import { ExtendedRequest } from 'src/types/ExtendRequest';
+import { PostQueryType, ExtendedRequest } from 'src/types';
 
 @Controller('posts')
 export class PostsController {

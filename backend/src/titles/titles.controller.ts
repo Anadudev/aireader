@@ -14,8 +14,7 @@ import {
 import { AuthGuard } from 'src/auth/auth.guards';
 import { NewTitleDto } from 'src/posts/dto/posts.dto';
 import { TitlesService } from './titles.service';
-import { TitleIncludeType, TitleQueryType } from 'src/types/titleQuery.types';
-import { ExtendedRequest } from 'src/types/ExtendRequest';
+import { TitleIncludeType, TitleQueryType, ExtendedRequest } from 'src/types';
 import slugify from 'slugify';
 import { v4 as uuidv4 } from 'uuid';
 

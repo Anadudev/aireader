@@ -10,8 +10,7 @@ import {
 import { UsersService } from './users.service';
 import { AuthGuard } from 'src/auth/auth.guards';
 import { UpdateUserDto } from './dto/user.dto';
-import { UserInclude } from 'src/types/userFields.types';
-import { QueryType } from 'src/types/query.types';
+import { UserInclude, QueryType } from 'src/types';
 
 @Controller('users')
 export class UsersController {

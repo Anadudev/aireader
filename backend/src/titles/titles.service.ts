@@ -1,8 +1,12 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { errorMessages } from 'errors/error-messages';
 import { PrismaConfigService } from 'src/config/prisma.config.service';
-import { NewTitleType, UpdateTitleType } from 'src/types/postFields.types';
-import { TitleIncludeType, TitleQueryType } from 'src/types/titleQuery.types';
+import {
+  NewTitleType,
+  UpdateTitleType,
+  TitleIncludeType,
+  TitleQueryType,
+} from 'src/types';
 import slugify from 'slugify';
 import { v4 as uuidv4 } from 'uuid';
 
