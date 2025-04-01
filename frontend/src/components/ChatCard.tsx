@@ -5,7 +5,7 @@ import RenderRichText from "@/components/RenderRichText";
 
 const ChatCard = ({ post }: { post: PostType }) => {
   return (
-    <div className="space-y-2 transition-all duration-200 p-2">
+    <div className="w-full space-y-2 transition-all duration-200 p-2">
       {post?.prompt && (
         <div className="sm:w-[80%] ml-auto">
           <div className="shadow-md p-4 rounded-2xl rounded-tr-none border break-words">
