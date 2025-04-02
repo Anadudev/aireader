@@ -9,7 +9,11 @@ const PORT = process.env.PORT ?? 5000;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: ['http://localhost:3000', 'https://aireader-six.vercel.app'],
+    origin: [
+      'http://localhost:3000',
+      'https://aireader-six.vercel.app',
+      'https://aireader-git-dev-anadu.vercel.app/',
+    ],
     credentials: true,
   });
   app.use(cookieParser());
