@@ -34,7 +34,7 @@ const PostCard = ({
       </div>
       <div className="space-y-5">
         <h2
-          title={title?.title}
+          title={stringLimiter(title?.title, 0)}
           className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 bg-clip-text text-transparent to-pink-500 break-words"
         >
           {stringLimiter(title?.title, 30)}
@@ -43,7 +43,6 @@ const PostCard = ({
           {post?.prompt && (
             <div
               className="shadow-md p-2 rounded-2xl rounded-tr-none border w-[80%] ml-auto"
-              title={post?.prompt}
             >
               <p className="break-words">{stringLimiter(post?.prompt, 100)}</p>
             </div>
@@ -51,7 +50,6 @@ const PostCard = ({
           {post?.response && (
             <div
               className="shadow-md p-2 rounded-2xl rounded-tl-none border w-[80%]"
-              title={post?.response}
             >
               <p className="break-words">
                 {stringLimiter(post?.response, 100)}
