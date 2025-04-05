@@ -17,7 +17,7 @@ const Share = ({ path }: { path: string }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Share2 className="cursor-pointer bg-transparent" />
+        <Share2 className="cursor-pointer bg-transparent font-extrabold text-xl size-9" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="space-y-2">
         <DropdownMenuLabel className="uppercase">

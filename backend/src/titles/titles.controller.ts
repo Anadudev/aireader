@@ -33,7 +33,7 @@ export class TitlesController {
       throw new UnauthorizedException();
     }
     const payload = {
-      slug: `${slugify(formPayload.title, '-')}${uuidv4()}`,
+      slug: `${slugify(formPayload.title, '-')}-${uuidv4()}`,
       authorId,
       ...formPayload,
     };
