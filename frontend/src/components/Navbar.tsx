@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useAuthStore from "@/lib/store/auth.store";
 import ThemeToggle from "@/components/ThemeToggle";
+import stringLimiter from "@/lib/stringLimiter";
 
 const navItems = [
   { name: "Home", href: "/", Icon: Home },
@@ -23,7 +24,7 @@ const navItems = [
 ];
 
 const Navbar = () => {
-  const [showNav, setShowNav] = useState(false);
+  const [showNav, setShowNav] = useState(true);
   const pathName = usePathname();
   const toggleNav = () => setShowNav(!showNav);
 
@@ -50,7 +51,7 @@ const Navbar = () => {
           <Logo />
         </div>
         <div
-          className={`fixed sm:static bg-zinc-200/50 sm:bg-transparent bottom-4 left-1/2 sm:left-0 flex justify-center border sm:border-none rounded-full transform -translate-x-1/2 sm:translate-x-0 w-fit gap-4 p-1 sm:p-0 backdrop-blur-sm ${
+          className={`fixed sm:static bg-zinc-500/50 sm:bg-transparent bottom-4 left-1/2 sm:left-0 flex justify-center border sm:border-none rounded-full transform -translate-x-1/2 sm:translate-x-0 w-fit gap-4 p-1 sm:p-0 backdrop-blur-sm ${
             showNav ? "block" : "hidden sm:flex"
           }`}
         >
@@ -59,7 +60,7 @@ const Navbar = () => {
               key={index}
               asChild
               variant={"link"}
-              className={`hover:text-zinc-800 border flex items-center hover:no-underline p-3
+              className={`hover:text-zinc-800 border flex items-center hover:no-underline p-0
  text-zinc-500 text-md ${
    pathName === item.href
      ? "rounded-full bg-zinc-100 sm:bg-transparent border-zinc-300 sm:border-none"
@@ -68,7 +69,7 @@ const Navbar = () => {
               title={item.name}
             >
               <Link href={item.href} className="space-x-3">
-                <item.Icon className="sm:hidden size-lg" />
+                <item.Icon className={`sm:hidden size-lg text-black p-0`} />
                 <p
                   className={` ${
                     pathName === item.href
@@ -87,7 +88,8 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger className="cursor-pointer">
                 <div className="flex items-center gap-1 rounded border cursor-pointer hover:shadow border-zinc-300 p-1 transition-shadow duration-300">
-                  <UserRound size="20" /> {authUser?.username}
+                  <UserRound size="20" />{" "}
+                  {stringLimiter(authUser?.username, 10)}
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
