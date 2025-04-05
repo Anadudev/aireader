@@ -5,7 +5,7 @@ import ChatCard from "@/components/ChatCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import ChatCardSkeleton from "@/components/loading/skeleton/ChatCardSkeleton";
 import Share from "@/components/Share";
 
@@ -20,6 +20,7 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    adaptiveHeight: true,
     afterChange: (index: number) => setSlideIndex(index),
   };
   const { handleTitleGet, post, titleGetLoading } = useTitleStore();
@@ -36,11 +37,10 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
       ) : (
         <div className="p-2 space-y-8 max-w-4xl mx-auto">
           <div className="">
-            <div className="text-slate-500 capitalize font-extrabold ">
-              <div className="flex items-center justify-end gap-1">
-                <Avatar className="">
-                  <AvatarImage src="https://github.com/shadcn.pg" />
-                  <AvatarFallback className="uppercase">
+            <div className="capitalize font-extrabold ">
+              <div className="flex gap-2 items-center justify-end my-2 pr-4">
+                <Avatar className="size-12">
+                  <AvatarFallback className="uppercase text-2xl text-slate-500 ">
                     {post?.author?.username.slice(0, 2)}
                   </AvatarFallback>
                 </Avatar>
@@ -63,7 +63,7 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
                 {slideIndex + 1}/{post?.posts?.length}
               </span>
             </div>
-            <Slider {...settings} className="">
+            <Slider {...settings} className="cursor-grab">
               {post?.posts?.map((post, index) => (
                 <ChatCard key={index} post={post} />
               ))}
