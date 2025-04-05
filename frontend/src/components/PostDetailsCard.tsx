@@ -21,8 +21,9 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     adaptiveHeight: true,
-    afterChange: (index: number) => setSlideIndex(index),
+    beforeChange: (_: number, index: number) => setSlideIndex(index),
   };
+
   const { handleTitleGet, post, titleGetLoading } = useTitleStore();
 
   useEffect(() => {
