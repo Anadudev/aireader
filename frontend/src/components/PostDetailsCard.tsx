@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useTitleStore from "@/lib/store/title.store";
 import ChatCard from "@/components/ChatCard";
 import Slider from "react-slick";
@@ -10,7 +10,8 @@ import ChatCardSkeleton from "@/components/loading/skeleton/ChatCardSkeleton";
 import Share from "@/components/Share";
 
 const PostDetailsCard = ({ slug }: { slug: string }) => {
-  const [path, setPath] = React.useState("");
+  const [path, setPath] = useState("");
+  const [slideIndex, setSlideIndex] = useState(0);
   const settings = {
     dots: true,
     arrows: false,
@@ -19,6 +20,7 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    afterChange: (index: number) => setSlideIndex(index),
   };
   const { handleTitleGet, post, titleGetLoading } = useTitleStore();
 
@@ -53,6 +55,14 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
             </div>
           </div>
           <div className="space-y-2 max-w-4xl mx-auto">
+            <div className="text-center flex flex-col space-2">
+              <span className="text-slate-500">
+                Swipe content left or right to navigate
+              </span>
+              <span className="font-semibold text-3xl animate-pulse">
+                {slideIndex + 1}/{post?.posts?.length}
+              </span>
+            </div>
             <Slider {...settings} className="">
               {post?.posts?.map((post, index) => (
                 <ChatCard key={index} post={post} />

@@ -5,6 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { all, createLowlight } from "lowlight";
 import CodeBlock from '@tiptap/extension-code-block'
+// import TextAlign from '@tiptap/extension-text-align'
 
 export type TipTapRichTextProps = {
   value: string;
@@ -34,6 +35,9 @@ const TipTapRichText: React.FC<TipTapRichTextProps> = ({
       CodeBlockLowlight.configure({
         lowlight,
       }),
+      // TextAlign.configure({
+      //   types: ['heading', 'paragraph'],
+      // }),
     ],
 
     content: value,
