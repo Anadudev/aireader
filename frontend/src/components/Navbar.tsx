@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BookOpen, Home, Info, Loader, Menu, UserRound } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,12 @@ const Navbar = () => {
   const pathName = usePathname();
   const toggleNav = () => setShowNav(!showNav);
 
-  const { authUser, logoutLoading, logoutHandler } = useAuthStore();
+  const { authUser, logoutLoading, logoutHandler, authUserHandler } =
+    useAuthStore();
+
+  useEffect(() => {
+    authUserHandler();
+  }, [authUser, authUserHandler]);
 
   return (
     <nav className="h-14 w-full flex">
