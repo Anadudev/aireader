@@ -54,7 +54,7 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
               <Share path={path} />
             </div>
           </div>
-          <div className="space-y-2 max-w-4xl mx-auto">
+          <div className="space-y-5 max-w-4xl mx-auto">
             <div className="text-center flex flex-col space-2">
               <span className="text-slate-500">
                 Swipe content left or right to navigate
@@ -68,6 +68,14 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
                 <ChatCard key={index} post={post} />
               ))}
             </Slider>
+            <div className="text-right flex flex-col pt-4 space-2">
+              <span className="text-slate-500">
+                Swipe content left or right to navigate
+              </span>
+              <span className="font-semibold text-3xl animate-pulse">
+                {slideIndex + 1}/{post?.posts?.length}
+              </span>
+            </div>
           </div>
         </div>
       )}
