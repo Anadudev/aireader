@@ -9,14 +9,17 @@ export class AppService {
   }
 
   doCron() {
-    setInterval(() => {
-      try {
-        void fetch(ROOT_PATH).then((res) => {
-          console.log('Status: ', res.status);
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }, 1000);
+    setInterval(
+      () => {
+        try {
+          void fetch(ROOT_PATH).then((res) => {
+            console.log('Status: ', res.status);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      INTERVAL * 60 * 1000,
+    );
   }
 }
