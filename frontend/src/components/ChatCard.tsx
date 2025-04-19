@@ -2,6 +2,7 @@ import React from "react";
 import { formatDateString } from "@/lib/TimeFormat";
 import RenderRichText from "@/components/RenderRichText";
 import { PostType } from "@/types";
+import '../styles/richtext.css';
 
 const ChatCard = ({ post }: { post: PostType }) => {
   return (
