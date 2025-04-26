@@ -3,11 +3,12 @@ import React, { useEffect } from "react";
 import PostCardSkeleton from "@/components/loading/skeleton/PostCardSkeleton";
 import PostCard from "@/components/PostCard";
 import useTitleStore from "@/lib/store/title.store";
+import EmptyData from "@/components/EmptyData";
 
 const PostsList = () => {
   const { titles, handleTitlesGet, titleGetLoading } = useTitleStore();
   useEffect(() => {
-    handleTitlesGet({posts: true});
+    handleTitlesGet({ posts: true });
   }, [handleTitlesGet]);
 
   return (
@@ -22,6 +23,7 @@ const PostsList = () => {
           total={title?.posts?.length}
         />
       ))}
+      {!titles[0] && !titleGetLoading && <EmptyData />}
     </div>
   );
 };

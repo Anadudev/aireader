@@ -3,7 +3,7 @@ import PostsList from "@/app/explore/sections/PostsList";
 
 const ExplorePage = () => {
   return (
-    <div>
+    <div className="py-12">
       <div className="p-2">
         <PostsList />
       </div>
