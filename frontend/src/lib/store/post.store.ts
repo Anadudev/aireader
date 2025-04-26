@@ -44,8 +44,8 @@ const usePostStore = create<PostStoreType>((set) => ({
       toast.error(error.response.data.message);
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       error.response && error.response.data.message
-        ? toast.error(error.response.data.message)
-        : toast.error("Something went wrong");
+        ? toast.error(error.response.data.message, { id: "get-many-error" })
+        : toast.error("Something went wrong", { id: "get-many-error" });
       console.error("[handlePostsGet]: ", error);
     } finally {
       set({ postGetLoading: false });
@@ -60,8 +60,8 @@ const usePostStore = create<PostStoreType>((set) => ({
       toast.error(error.response.data.message);
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       error.response && error.response.data.message
-        ? toast.error(error.response.data.message)
-        : toast.error("Something went wrong");
+        ? toast.error(error.response.data.message, { id: "delete-one-error" })
+        : toast.error("Something went wrong", { id: "delete-one-error" });
       console.error("[handlePostDelete]: ", error);
     } finally {
       set({ postDeleteLoading: false });
