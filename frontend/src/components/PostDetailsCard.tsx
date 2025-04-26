@@ -84,7 +84,7 @@ const PostDetailsCard = ({ slug }: { slug: string }) => {
             </div>
           ) : (
             <EmptyData
-              message="The dialogue was not found"
+              message="Dialogue not found"
               href="/explore"
               link={"Explore dialogues"}
             />
