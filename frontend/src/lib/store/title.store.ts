@@ -23,9 +23,9 @@ const useTitleStore = create<TitleStoreType>((set) => ({
         params: queries,
       });
       set({ titles: response.data });
-      toast.success("Posts fetched successfully", {
-        id: "get-many",
-      });
+      // toast.success("Posts fetched successfully", {
+      //   id: "get-many",
+      // });
     } catch (error) {
       toast.error(error.response.data.message);
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -47,9 +47,9 @@ const useTitleStore = create<TitleStoreType>((set) => ({
       });
       set({ post: response.data });
       // console.log(response.data);
-      toast.success("Post fetched successfully", {
-        id: "get-one",
-      });
+      // toast.success("Post fetched successfully", {
+      //   id: "get-one",
+      // });
     } catch (error) {
       toast.error(error.response.data.message);
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -68,7 +68,7 @@ const useTitleStore = create<TitleStoreType>((set) => ({
       //   const response =
       await axiosInstance.delete(`/titles/${id}`);
       //   set({ titles: response.data });
-      toast.success("Posts fetched successfully");
+      // toast.success("Posts fetched successfully");
     } catch (error) {
       toast.error(error.response.data.message);
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
