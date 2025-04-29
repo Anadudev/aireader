@@ -51,11 +51,11 @@ const useTitleStore = create<TitleStoreType>((set) => ({
       //   id: "get-one",
       // });
     } catch (error) {
-      toast.error(error.response.data.message, { id: "get-one-error" });
+      toast.error(error.response.data.message, { id: "post-error" });
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       error.response && error.response.data.message
-        ? toast.error(error.response.data.message)
-        : toast.error("Something went wrong");
+        ? toast.error(error.response.data.message,{ id: "post-error" })
+        : toast.error("Something went wrong",{ id: "post-error" });
       console.error("[handleTitlesGet]: ", error);
     } finally {
       set({ titleGetLoading: false });

@@ -127,7 +127,7 @@ const LoginForm = () => {
           </Button>
         </form>
       </Form>
-      <div className="flex justify-center text-sm mt-5 space-x-2">
+      <div className="flex justify-center items-center text-sm mt-5 gap-2">
         <p className={`font-semibold`}>Don&apos;t have an account yet?</p>
         <Link href="/signup" className="font-semibold text-blue-500">
           Signup
