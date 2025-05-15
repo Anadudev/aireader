@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    # restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: ailogoue_user
+      POSTGRES_PASSWORD: ailogue_password
+      POSTGRES_DB: ailogoue_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ailogoue_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer_ui
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
+    driver: local
+
+# uri
+# postgres://ailogoue_user:ailogue_password@localhost:5432/ailogoue_db
