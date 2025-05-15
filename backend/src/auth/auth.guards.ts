@@ -11,16 +11,22 @@ import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+
     const request: Request = context.switchToHttp().getRequest();
-    // const token = this.extractTokenFromHeader(request);
-    const token = this.extractTokenFromCookie(request);
-    if (!token) {
+    const headerToken = this.extractTokenFromHeader(request);
+
+    const cookieToken = this.extractTokenFromCookie(request);
+    if (!cookieToken && !headerToken) {
       throw new UnauthorizedException();
     }
     try {
+      const token = cookieToken || headerToken;
+      if (!token) {
+        throw new UnauthorizedException();
+      }
       const payload: User = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
       });

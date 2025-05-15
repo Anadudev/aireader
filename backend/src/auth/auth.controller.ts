@@ -20,7 +20,7 @@ export class AuthController {
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
-  ) {}
+  ) { }
   @HttpCode(200)
   @Post('signup')
   async signup(@Body() formdata: AuthDto) {
@@ -44,7 +44,7 @@ export class AuthController {
       sameSite: 'none',
       maxAge: 60 * 60 * 24 * 7, // 7 days
     });
-    return { message: 'Login successful' };
+    return { message: 'Login successful', access_token };
   }
 
   @Post('logout')

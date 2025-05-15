@@ -1,3 +1,4 @@
 pgdata/
 .idea/
 **/install.sh
+test.ts

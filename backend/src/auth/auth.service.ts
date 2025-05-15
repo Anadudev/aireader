@@ -16,7 +16,7 @@ export class AuthService {
     private userService: UsersService,
     private jwtService: JwtService,
     private prisma: PrismaConfigService,
-  ) {}
+  ) { }
 
   async signup(data: NewUser) {
     const user = await this.userService.create(data);
@@ -27,36 +27,38 @@ export class AuthService {
   }
 
   async login(data: NewUser) {
-    // try {
-    const user = await this.prisma.user.findUnique({
-      where: { username: data.username },
-      include: { accounts: true },
-    });
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { username: data.username },
+        include: { accounts: true },
+      });
 
-    if (!user) {
-      throw new UnauthorizedException('Invalid Credentials');
-    }
-
-    const { accounts, ...userWithoutAccounts } = user;
-
-    if (accounts[0]) {
-      const isPasswordValid = await bcrypt.compare(
-        data.password,
-        accounts[0].password,
-      );
-
-      if (!isPasswordValid) {
+      if (!user) {
         throw new UnauthorizedException('Invalid Credentials');
       }
 
-      return {
-        access_token: await this.jwtService.signAsync(userWithoutAccounts),
-      };
+      const { accounts, ...userWithoutAccounts } = user;
+
+      if (accounts[0]) {
+        const isPasswordValid = await bcrypt.compare(
+          data.password,
+          accounts[0].password,
+        );
+
+        if (!isPasswordValid) {
+          throw new UnauthorizedException('Invalid Credentials');
+        }
+        const access_token = await this.jwtService.signAsync(userWithoutAccounts);
+        console.log(access_token);
+        return {
+          access_token,
+        };
+      }
+      throw new UnauthorizedException('Invalid Credentials');
+    } catch (error) {
+      console.error("[AuthService>login]", error);
+      throw new UnauthorizedException('Invalid Credentials');
+
     }
-    throw new UnauthorizedException('Invalid Credentials');
-    // } catch (error) {
-    //   console.error(`[login]: ${error}`);
-    //   errorMessages.SERVER_ERROR(error);
-    // }
   }
 }
